@@ -1,2 +1,3 @@
 /eeprom-bin
 __pycache__
+*.workspace
