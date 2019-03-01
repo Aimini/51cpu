@@ -1,3 +1,5 @@
+from instructions.Component import *
+
 INSTRUCTIONS = [ 
 #00,   1,   NOP,       
 [],
@@ -392,7 +394,7 @@ INSTRUCTIONS = [
 #C3,   1,   CLR,      C
 [],
 #C4,   1,   SWAP,     A
-[],
+[['ACC_SHIFT_LEFT'], ['ACC_SHIFT_LEFT'], ['ACC_SHIFT_LEFT'],['ACC_SHIFT_LEFT']],
 #C5,   2,   XCH,      A, direct
 [],
 #C6,   1,   XCH,      A, @R0

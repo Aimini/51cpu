@@ -1,11 +1,16 @@
 import pathlib,math
 import instructions.implement as i_impl
 import instructions.info as i_info
+import instructions.Component as i_comp
+import instructions.controlSingal
+
+
 
 oscillation_cycle = 12
 oscillation_cycle_max = 24
 final_instructions = [x for x in i_impl.INSTRUCTIONS]
-
+instructionControlSignal = i_comp.InstructionControlSignal(instructions.controlSingal.circuit_control_label)
+instructionControlSignal.function = instructions.controlSingal.control_function
 # ---------------------------------- RETI,
 ignore_interrupt_check_instruction = [0x32, ]
 
@@ -55,6 +60,6 @@ def write_to_bin():
     add_fetch(final_instructions)
     add_recount_and_interrupt_check(final_instructions)
     print_instructions(final_instructions)
-
+    instructionControlSignal.create_instruction_bin_list(final_instructions)
 
 write_to_bin()

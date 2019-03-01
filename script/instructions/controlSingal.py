@@ -17,6 +17,6 @@ control_function = {
     "ALU_XOR":('ALU_M','ALU_S2','ALU_S1'),
     "ALU_NOT" : ('ALU_M',),
     "ACC_IN" : ('ACC_S0', 'ACC_S1'),
-    "ACC_SHFIT_LEFT" : ('ACC_S0',),
-    "ACC_SHFIT_RIGHT" : ('ACC_S1',),
+    "ACC_SHIFT_LEFT" : ('ACC_S0',),
+    "ACC_SHIFT_RIGHT" : ('ACC_S1',),
 }
