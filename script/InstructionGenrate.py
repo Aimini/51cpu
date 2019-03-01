@@ -12,8 +12,8 @@ ignore_interrupt_check_instruction = [0x32, ]
 
 def add_fetch(instructions):
     for one in instructions:
-        one.insert(0, ['PC_O', 'PAR_I'])
-        one.insert(1, ['PC_INC', 'FLASH_O', 'IR_I'])
+        one.insert(0, ['PC_OUT', 'PAR_IN'])
+        one.insert(1, ['PC_INC', 'FLASH_OUT', 'IR_IN'])
 
 
 def add_recount_and_interrupt_check(instructions):
