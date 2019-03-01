@@ -63,9 +63,6 @@ class InstructionControlSignal():
 
 
 
-    def create_instruction_file(self,instruction_list):
-        instruction_bin_list = self.create_instruction_bin_list(instruction_list)
-
 
 if __name__ == '__main__':
     a = InstructionControlSignal(["A_O","A_I","B_O","B_I","C_S0","C_S1"])
