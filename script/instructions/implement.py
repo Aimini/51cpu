@@ -1,5 +1,3 @@
-from instructions.Component import *
-
 INSTRUCTIONS = [ 
 #00,   1,   NOP,       
 [],
