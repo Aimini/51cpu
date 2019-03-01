@@ -1,6 +1,6 @@
 from functools import reduce
 # label maybe use
-class InstructionControlSingal():
+class InstructionControlSignal():
     def __init__(self,control_singal_label):
         self.control_singal_label = control_singal_label
         self.function = dict()
@@ -24,7 +24,7 @@ class InstructionControlSingal():
                     print("unknow control singal label '{}' in instruction {:X} at step {}:".format(e.args[0], instruction_order,step_order))
                     exit(-1)
             self.instructions_bin.append(one_instruction_bin)
-        return self.instructions_bin,self.used_control_label
+        return self.instructions_bin, self.used_control_label
 
 
     def extract_instruction(self,instructions_list):
@@ -68,7 +68,7 @@ class InstructionControlSingal():
 
 
 if __name__ == '__main__':
-    a = InstructionControlSingal(["A_O","A_I","B_O","B_I","C_S0","C_S1"])
+    a = InstructionControlSignal(["A_O","A_I","B_O","B_I","C_S0","C_S1"])
     a.function.update({"C_IN":["C_S0","C_S1"]})
     bin_list,used_label = a.create_instruction_bin_list([
         [["A_O","B_I"],["B_O"]],
@@ -77,28 +77,7 @@ if __name__ == '__main__':
     print(bin_list)
     
 
-circuit_control_label = {
-    'INT_CHK','MIC_CLR',
-    "ALU_OUT", "ALU_M", "ALU_S0", "ALU_S1", "ALU_S2", "ALU_S3", "ALU_S3", "ALU_CN",
-    "PAR_IN", "FLASH_OUT",
-    "IR_IN", "IR_IN",
-    "PC_IN", "PC_OUT" ,"PC_INC_OUT" , "PC_INC",
-    "ACC_OUT" ,"ACC_S0", "ACC_S1",
-    "B_IN","B_OUT"}
 
-#function obtained by combining signals
-ALU_FUNCTION_ADD = ['ALU_CN','ALU_S3','ALU_S0']
-ALU_FUNCTION_ADDD = ['ALU_S3','ALU_S0']
-ALU_FUNCTION_SUB  = ['ALU_CN' , 'ALU_S2' , 'ALU_S1']
-ALU_FUNCTION_SUBB = ['ALU_S2' , 'ALU_S1'   ]
-ALU_FUNCTION_AND  = ['ALU_M' , 'ALU_S3' , 'ALU_S1' , 'ALU_S0' ]
-ALU_FUNCTION_OR   = ['ALU_M' , 'ALU_S3' , 'ALU_S2' , 'ALU_S1' ]
-ALU_FUNCTION_NOT  = ['ALU_M' ]
-ALU_FUNCTION_XOR  = ['ALU_M' , 'ALU_S2' , 'ALU_S1']
-
-ACC_FUNCTION_IN = ['ACC_S0' , 'ACC_S1']
-ACC_FUNCTION_SHIFT_LEFT = 'ACC_S0' 
-ACC_FUNCTION_SHIFT_RIGHT = 'ACC_S1'
 
 
 
