@@ -1,14 +1,14 @@
-import pathlib,math
+import pathlib,math,os
 import instructions.implement as i_impl
 import instructions.info as i_info
 import instructions.Component as i_comp
+import instructions.implementWithFlag as i_impl_flag
 import instructions.controlSingal
 
 
 
 oscillation_cycle = 12
 oscillation_cycle_max = 24
-final_instructions = [x for x in i_impl.INSTRUCTIONS]
 instructionControlSignal = i_comp.InstructionControlSignal(instructions.controlSingal.circuit_control_label)
 instructionControlSignal.function = instructions.controlSingal.control_function
 # ---------------------------------- RETI,
@@ -38,7 +38,21 @@ def add_recount_and_interrupt_check(instructions):
             one[add_where - 1].append('INT_CHK')
 
 
-directory = pathlib.Path("../eeprom-bin")
+def generate_fetch_interrupt_instruction(instructions):
+    new_instructions_list = [x for x in instructions]
+    add_fetch(new_instructions_list)
+    add_recount_and_interrupt_check(new_instructions_list)
+    return new_instructions_list
+
+def generate_fetch_interrupt_flag_instruction(instrcutions):
+    new_instructions = dict()
+    for k,v in instrcutions:
+        dict.update({k:generate_fetch_interrupt_instruction(v)})
+    return new_instructions
+        
+
+directory = pathlib.Path("eeprom-bin")
+file_prefix = "instruction"
 
 
 def write_as_bin(number8bit):
@@ -50,16 +64,58 @@ def write_to_file(file, write_func):
 
 
 def print_instructions(instructions):
-    for x in instructions:
+    for idx,x in enumerate(instructions):
+        print("{:<8}(0x{:0>2X}) -> ".format(i_info.HEX_TO_NAME[idx],idx),end='')
         print(x)
+
+
+def write_part_of_instrcution(file,max_cycle,instructions_bin,eeprom_index):
+    flags_counter_max = 2**len(i_impl_flag.FLAG)
+    #  generate_fetch_interrupt_flag_instruction(i_impl_flag.FLAG_INSTRUCTION)
+
+    # final_flags_instructions
+    # for flags_counter in range(flags_counter_max):
+    for instruction_hex, one_instruction in enumerate(instructions_bin):
+        # for flag_idx,flag_name in enumerate(i_impl_flag.FLAG):
+        #     if flags_counter & (1<<flag_idx) != 0:
+        #         try:
+        #             one_instruction =  i_impl_flag.FLAG_INSTRUCTION[flag_name][instruction_hex]
+        #             print("instrucion{:>5}(0x{:0>2X}) in flag {}".format(i_info.HEX_TO_NAME[instruction_hex],instruction_hex,flag_name))
+        #         except:
+        #             pass;
+        instruction_len = len(one_instruction)
+        for step_order in range(max_cycle):
+            if step_order < instruction_len:
+                file.write(write_as_bin(0xFF & (one_instruction[step_order] >> (eeprom_index * 8))))
+            else:
+                file.write(write_as_bin(0))
+
+
+def print_use_label(instruction_bin_generater):
+    print("used control signal:")
+    used_control_label = sorted(instruction_bin_generater.used_control_label, key=lambda label: instruction_bin_generater.contol_labels_bin[label])
+    for label in used_control_label:
+        print(("{:<10} {:0>"+ str(len(instruction_bin_generater.control_singal_label)) +"b}").format(label,instruction_bin_generater.contol_labels_bin[label]))
+
 
 def write_to_bin():
     # file = open(directory / "instructions.bin",'bw')
     # write_to_file(file,write_as_bin)
     # file.close()
-    add_fetch(final_instructions)
-    add_recount_and_interrupt_check(final_instructions)
+    
+    final_instructions = generate_fetch_interrupt_instruction(i_impl.INSTRUCTIONS)
     print_instructions(final_instructions)
-    instructionControlSignal.create_instruction_bin_list(final_instructions)
+    instructions_bin, use_control_label = instructionControlSignal.create_instruction_bin_list(final_instructions)
+    print_use_label(instructionControlSignal)
 
+    mi_counter_max = 2**math.ceil(math.log2(oscillation_cycle_max))
+    # 检查用到几个微指令需要几个eeprom，一个eeprom可以控制8个微指令
+    eeprom_nmuber = math.ceil(len(instructionControlSignal.control_singal_label) / 8)
+    for x in range(eeprom_nmuber):  
+        file = open(directory / (file_prefix + "-" + str(x) + ".bin"), 'bw')
+        write_part_of_instrcution(file,mi_counter_max,instructions_bin,x)
+        file.close()
+        
+    
+print(os.getcwd())
 write_to_bin()
