@@ -1,9 +1,9 @@
-FLAG = {'Carry','ACC_ZF','TMP_ZF','BIT'}
+FLAG = ['Carry','ACC_ZF','TMP_ZF','BIT']
 
 FLAG_INSTRUCTION ={
     'Carry':{
 	#2	ADDC	A, #immed
-    0x34:[[]],
+    0x34:[['PC_OUT','PAR_IN','ACC_OUT','ALU_A_IN'],['FLASH_OUT','ALU_B_IN'],['ALU_ADDD','ALU_OUT','ACC_IN']],
 	#2	ADDC	A, direct
     0x35:[[]],
 	#1	ADDC	A, @R0

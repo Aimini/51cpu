@@ -1,5 +1,5 @@
 circuit_control_label = [
-    'MIR_RST', 'INT_CHK', 'INT_SVC_END',
+    'MIC_RST', 'INT_CHK', 'INT_SVC_END',
 
     "PC_IN", "PC_OUT" ,"PC_INC_OUT" , "PC_INC",
     "PAR_IN", "FLASH_OUT",
@@ -9,7 +9,7 @@ circuit_control_label = [
     "ALUADDRTE","ALUTOADDR",
 
     "ALU_OUT","ALU_EXTOUT","H8\~L8", "ALU_M", "ALU_S0", "ALU_S1", "ALU_S2", "ALU_S3", "ALU_S3", "~ALU_CN",
-    "ALU_A_L8E","ALU_A_H8E","ALU_A_OUT",
+    "ALU_A_L8LE","ALU_A_H8LE","ALU_A_OUT",
     "ALU_B_S0","ALU_B_S1","ALU_B_OUT",
 
     
@@ -38,6 +38,8 @@ control_function = {
     "ALU_XOR" : ('ALU_M','ALU_S2','ALU_S1'),
     "ALU_NOT" : ('ALU_M',),
     "ALU_DEC" : ('~ALU_CN','ALU_S3','ALU_S2','ALU_S1','ALU_S0'),
+    "ALU_A_IN" : ('ALU_A_L8LE','ALU_A_H8LE'),
+    "ALU_B_IN" :('ALU_B_S0','ALU_B_S1')
 }
 
 if __name__ == '__main__':

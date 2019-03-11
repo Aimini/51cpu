@@ -1,5 +1,14 @@
 from functools import reduce
 # label maybe use
+class MINotFoundError(Exception):
+    def __init__(self,order,step,key):
+        self.order = order
+        self.step = step
+        self.key = key
+
+    def __str__(self):
+        return "unknow control singal label '{}' in order {:X} at step {}".format(self.key,self.order, self.step)
+
 class InstructionControlSignal():
     def __init__(self,control_singal_label):
         self.control_singal_label = control_singal_label
@@ -21,8 +30,7 @@ class InstructionControlSignal():
                 try:
                     one_instruction_bin.append(self.merge_step_microinstructions(one_step))
                 except KeyError as e:
-                    print("unknow control singal label '{}' in instruction {:X} at step {}:".format(e.args[0], instruction_order,step_order))
-                    exit(-1)
+                    raise MINotFoundError(instruction_order,step_order, e.args[0])
             self.instructions_bin.append(one_instruction_bin)
         return self.instructions_bin, self.used_control_label
 

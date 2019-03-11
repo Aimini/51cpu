@@ -28,8 +28,9 @@ def add_recount_and_interrupt_check(instructions):
             print("The instruction {}(0x{:0>2x})"
                   " uses an excessively long oscillation period".format(i_info.HEX_TO_NAME[idx], idx))
         add_where = math.ceil(instruction_len/oscillation_cycle)*oscillation_cycle
-        one.extend([[] for __ in range(add_where - instruction_len)])
-        one[add_where - 1].append('MIC_CLR')
+        one.extend([[] for __ in range(add_where  - instruction_len)])
+        if add_where < oscillation_cycle_max:
+            one.append(['MIC_RST'])
 
         if idx in ignore_interrupt_check_instruction:
             print("{}(0x{:0>2x}) ignore interrupt check.".format(i_info.HEX_TO_NAME[idx], idx))
@@ -85,8 +86,12 @@ def generate_instruction_flag_bin_map(instruction_with_flag,instructionControlSi
     for flag,instructions_map in instruction_with_flag.items():
         hex = instructions_map.keys()
         instructions_list = instructions_map.values()
-        instructions_bin,used_control_label =  instructionControlSignal.create_instruction_bin_list(instructions_list)
-        instruction_flag_bin_map.update({flag: dict(zip(hex,instructions_bin))})
+        try:
+            instructions_bin,used_control_label =  instructionControlSignal.create_instruction_bin_list(instructions_list)
+            instruction_flag_bin_map.update({flag: dict(zip(hex,instructions_bin))})
+        except i_comp.MINotFoundError  as e:
+            print("flag '{}':unknow control singal label '{}' in instruction 0X{:0>2X} at step {}:".format(flag, e.key, list(hex)[e.order], e.step))
+            exit(-1)
     return instruction_flag_bin_map
 
 
@@ -108,6 +113,23 @@ def print_use_label(instruction_bin_generater):
         print(("{:<10} {:0>"+ str(len(instruction_bin_generater.control_singal_label)) +"b}").format(label,instruction_bin_generater.contol_labels_bin[label]))
 
 
+def print_mi_map(startcounter,label_order,mi_bin_map):
+    l = len(mi_bin_map)
+    count = 0
+    for key in label_order:
+        v = mi_bin_map[key]
+        chip_n = math.floor( count / 8)
+        if count % 8 == 0:
+            print("---chip " + str(chip_n))
+        if count >= startcounter:
+           counter_str = str(count - startcounter)
+        else:
+            counter_str = ''
+        print(("{:<16} {:>2} {:0>8b}").format(key,counter_str, (v >> 8*chip_n)&0xFF))
+
+        count += 1
+        
+
 def write_to_bin():
     # file = open(directory / "instructions.bin",'bw')
     # write_to_file(file,write_as_bin)
@@ -115,12 +137,17 @@ def write_to_bin():
     
     final_instructions = generate_fetch_interrupt_instruction(i_impl.INSTRUCTIONS)
     print_instructions(final_instructions)
-
+    try:
+        instructions_bin, use_control_label = instructionControlSignal.create_instruction_bin_list(final_instructions)
+    except i_comp.MINotFoundError  as e:
+        print("unknow control singal label '{}' in instruction 0X{:0>2X} at step {}:".format( e.key, e.order, e.step))
+        exit(-1)
     final_instructions_with_flag = generate_fetch_interrupt_flag_instruction(i_impl_flag.FLAG_INSTRUCTION)
     instruction_flag_bin_map = generate_instruction_flag_bin_map(final_instructions_with_flag,instructionControlSignal)
-    instructions_bin, use_control_label = instructionControlSignal.create_instruction_bin_list(final_instructions)
+    
     print_use_label(instructionControlSignal)
-
+    print('---------------chip map------------------')
+    print_mi_map(3,instructionControlSignal.control_singal_label,instructionControlSignal.contol_labels_bin)  
     mi_counter_max = 2**math.ceil(math.log2(oscillation_cycle_max))
     # 检查用到几个微指令需要几个eeprom，一个eeprom可以控制8个微指令
     eeprom_nmuber = math.ceil(len(instructionControlSignal.control_singal_label) / 8)
@@ -130,7 +157,8 @@ def write_to_bin():
             file = open(directory / (file_prefix + "-" + str(x) + ".bin"), 'bw')
             write_part_of_instrcution(file,mi_counter_max,ins_with_flag, x)
             file.close()
-        
+
+    
     
 
 write_to_bin()

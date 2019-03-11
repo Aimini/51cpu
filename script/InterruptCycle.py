@@ -50,12 +50,13 @@ def create_instruction_bin(instructions, mi_label_to_bin):
     return inss_bin, used_mi
 
 
-def print_mi_map(mi_bin_map):
+def print_mi_map(label_order,mi_bin_map):
     l = len(mi_bin_map)
     s = '{:0>' + str(l) + 'b}'  # fill 0 ,aligin right
     count = 0
-    for k, v in mi_bin_map.items():
-        print(("{:<12}" + s).format(k, v >> 8*math.floor( count / 8)))
+    for key in label_order:
+        v = mi_bin_map[key]
+        print(("{:<12}" + s).format(key, v >> 8*math.floor( count / 8)))
         count += 1
         if count % 8 == 0:
             print()
