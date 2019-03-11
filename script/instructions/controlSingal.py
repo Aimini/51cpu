@@ -56,7 +56,14 @@ control_function = {
     "TMP_BOP_LOAD_DA_CF":('TMP_BOP_BS0','TMP_BOP_BS2'),
     "TMP_BOP_OR_TMPN":('TMP_BOP_BS1','TMP_BOP_BS2'),
     "TMP_BOP_AND_TMPN":('TMP_BOP_BS0','TMP_BOP_BS1','TMP_BOP_BS2'),
+    "NEXT_BYTE":('PC_OUT','PC_INC','PAR_IN'),
+    "ALU_A_DBUS_L8E":('DTOALU','ADT_L8E','ALU_A_L8LE'),
+    "RAR-@RI":('RAR_IDXR0-1','RAM_OUT','RAR_IN'),
+    "RAR-RI_IN":('RAR_IDXR0-7','RAM_IN'),
+    "RAR_RI_OUT":('RAR_IDXR0-7','RAM_OUT'),
 }
+
+    
 
 if __name__ == '__main__':
     print(len(circuit_control_label))
