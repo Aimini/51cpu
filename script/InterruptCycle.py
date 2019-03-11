@@ -6,7 +6,7 @@ from functools import reduce
 MI_LABEL = ["IC_END","INT_ADDR_OUT",
     "PC_IN", "PC_OUT",
     "ALU_A_L8LE","ALU_OUT",
-    "DTOALU","ADDRDT_L8E","ADDRDT_H8E","ALUADDRTE",
+    "DTOALU","ADT_L8E","ADT_H8E","ALUADDRTE",
     "RAR_IN","RAM_IN","SP_IN","SP_OUT",
    ]
 # record used label
@@ -15,11 +15,11 @@ USED_MI_LABEL = {}
 MI_LABEL_BIN_MAP = {v: 1 << i for i, v in enumerate(MI_LABEL)}
 # Micro instruction that takes place at each step of the interrupt cycle
 INSTRUCTIONS = [
-    ["SP_OUT","DTOALU","ADDRDT_L8E","ALU_A_L8LE"],
-    ["ALU_OUT","ALU_A_L8LE","ADDRDT_L8E","RAR_IN"],
-    ["PC_OUT", "ALUADDRTE","ADDRDT_L8E","RAM_IN"],
-    ["ALU_OUT","ALU_A_L8LE","ADDRDT_L8E","RAR_IN","SP_IN"],
-    ["PC_OUT", "ALUADDRTE","ADDRDT_H8E","RAM_IN"],
+    ["SP_OUT","DTOALU","ADT_L8E","ALU_A_L8LE"],
+    ["ALU_OUT","ALU_A_L8LE","ADT_L8E","RAR_IN"],
+    ["PC_OUT", "ALUADDRTE","ADT_L8E","RAM_IN"],
+    ["ALU_OUT","ALU_A_L8LE","ADT_L8E","RAR_IN","SP_IN"],
+    ["PC_OUT", "ALUADDRTE","ADT_H8E","RAM_IN"],
     ["INT_ADDR_OUT", "PC_IN" ],
     ["IC_END"]
 ]
@@ -76,7 +76,7 @@ def write_to_file():
             file.write(write_as_bin(0xFF & (i >> (x * 8))))
         file.close()
 
-    print_mi_map(MI_LABEL_BIN_MAP)
+    print_mi_map(MI_LABEL, MI_LABEL_BIN_MAP)
 
 
 write_to_file()
