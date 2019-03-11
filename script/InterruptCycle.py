@@ -3,21 +3,28 @@ import math
 from functools import reduce
 
 # label maybe use
-MI_LABEL = {"PC_O", "PC_I", "BUFFER_I", "BUFFER_L8O", "BUFFER_H8O", "SP_O", "SP_A1", "MEM_I", "MAR_I", "MIC_AR",
-            "IC_F_AR", "INT_VEC_O"}
+MI_LABEL = ["IC_END","INT_ADDR_OUT",
+    "PC_IN", "PC_OUT",
+    "ALU_A_L8LE","ALU_OUT",
+    "DTOALU","ADDRDT_L8E","ADDRDT_H8E","ALUADDRTE",
+    "RAR_IN","RAM_IN","SP_IN","SP_OUT",
+   ]
 # record used label
 USED_MI_LABEL = {}
 # Label corresponding binary
 MI_LABEL_BIN_MAP = {v: 1 << i for i, v in enumerate(MI_LABEL)}
 # Micro instruction that takes place at each step of the interrupt cycle
 INSTRUCTIONS = [
-    ["PC_O", "BUFFER_I", "SP_O", "MAR_I"],
-    ["BUFFER_L8O", "MEM_I", "SP_A1"],
-    ["SP_O", "MAR_I"],
-    ["BUFFER_H8O", "MEM_I", "SP_A1", "INT_VEC_O", "PC_I", "MIC_AR", "IC_F_AR"],
+    ["SP_OUT","DTOALU","ADDRDT_L8E","ALU_A_L8LE"],
+    ["ALU_OUT","ALU_A_L8LE","ADDRDT_L8E","RAR_IN"],
+    ["PC_OUT", "ALUADDRTE","ADDRDT_L8E","RAM_IN"],
+    ["ALU_OUT","ALU_A_L8LE","ADDRDT_L8E","RAR_IN","SP_IN"],
+    ["PC_OUT", "ALUADDRTE","ADDRDT_H8E","RAM_IN"],
+    ["INT_ADDR_OUT", "PC_IN" ],
+    ["IC_END"]
 ]
 
-directory = pathlib.Path("../eeprom-bin")
+directory = pathlib.Path("eeprom-bin")
 file_prefix = "int-cycle"
 
 
@@ -46,13 +53,18 @@ def create_instruction_bin(instructions, mi_label_to_bin):
 def print_mi_map(mi_bin_map):
     l = len(mi_bin_map)
     s = '{:0>' + str(l) + 'b}'  # fill 0 ,aligin right
+    count = 0
     for k, v in mi_bin_map.items():
-        print(("{:<12}" + s).format(k, v))
+        print(("{:<12}" + s).format(k, v >> 8*math.floor( count / 8)))
+        count += 1
+        if count % 8 == 0:
+            print()
+
 
 
 def write_to_file():
     instructions_bin, used_mi = create_instruction_bin(INSTRUCTIONS, MI_LABEL_BIN_MAP)
-    unused_mi = MI_LABEL.difference(used_mi)
+    unused_mi = set(MI_LABEL).difference(used_mi)
     if len(unused_mi) != 0:
         print("unused micro instruction LABEL:")
         print(",".join(unused_mi))
