@@ -6,8 +6,8 @@ import instructions.Component as i_comp
 import instructions.implementWithFlag as i_impl_flag
 import instructions.controlSingal
 
-oscillation_cycle = 12
-oscillation_cycle_max = 24
+oscillation_cycle = 8
+oscillation_cycle_max = 16
 instructionControlSignal = i_comp.InstructionControlSignal(instructions.controlSingal.circuit_control_label)
 instructionControlSignal.function = instructions.controlSingal.control_function
 # ---------------------------------- RETI,
@@ -151,12 +151,11 @@ def write_to_bin():
     mi_counter_max = 2**math.ceil(math.log2(oscillation_cycle_max))
     # 检查用到几个微指令需要几个eeprom，一个eeprom可以控制8个微指令
     eeprom_nmuber = math.ceil(len(instructionControlSignal.control_singal_label) / 8)
-
-    for ins_with_flag in replace_with_flag(instructions_bin,instruction_flag_bin_map):
-        for x in range(eeprom_nmuber):  
-            file = open(directory / (file_prefix + "-" + str(x) + ".bin"), 'bw')
+    for x in range(eeprom_nmuber):  
+        file = open(directory / (file_prefix + "-" + str(x) + ".bin"), 'bw')
+        for ins_with_flag in replace_with_flag(instructions_bin,instruction_flag_bin_map):
             write_part_of_instrcution(file,mi_counter_max,ins_with_flag, x)
-            file.close()
+        file.close()
 
     
     
