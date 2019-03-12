@@ -1,38 +1,40 @@
+STEP_DIRECT_ADDRESS = [['NEXT_BYTE'],['FLASH_OUT','RAR_IN']]
+
 INSTRUCTIONS = [ 
 #00,   1,   NOP,       
-[],
+0,
 #01,   2,   AJMP,     addr11
 [],
 #02,   3,   LJMP,     addr16
 [],
 #03,   1,   RR,       A
-[],
+[['ACC_OUT','TMP_IN'],['TMP_RR_SHIFT'],['TMP_OUT','ACC_IN']],
 #04,   1,   INC,      A
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','ACC_IN']],
 #05,   2,   INC,      direct
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','RAM_IN']],
 #06,   1,   INC,      @R0
-[],
+[['RAR-@RI'],['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','RAM_IN']],
 #07,   1,   INC,      @R1
-[],
+-1,
 #08,   1,   INC,      R0
-[],
+[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_A_OUT','ADT_L8E','RAR-RI_IN']],
 #09,   1,   INC,      R1
-[],
+-1,
 #0A,   1,   INC,      R2
-[],
+-1,
 #0B,   1,   INC,      R3
-[],
+-1,
 #0C,   1,   INC,      R4
-[],
+-1,
 #0D,   1,   INC,      R5
-[],
+-1,
 #0E,   1,   INC,      R6
-[],
+-1,
 #0F,   1,   INC,      R7
-[],
+-1,
 #10,   3,   JBC,      bit, offset
-[],
+0,
 #11,   2,   ACALL,    addr11
 [],
 #12,   3,   LCALL,    addr16
@@ -40,61 +42,61 @@ INSTRUCTIONS = [
 #13,   1,   RRC,      A
 [],
 #14,   1,   DEC,      A
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','ACC_IN']],
 #15,   2,   DEC,      direct
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','RAM_IN']],
 #16,   1,   DEC,      @R0
-[],
+[['RAR-@RI'],['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','RAM_IN']],
 #17,   1,   DEC,      @R1
-[],
+-1,
 #18,   1,   DEC,      R0
-[],
+[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','RAR-RI_IN']],
 #19,   1,   DEC,      R1
-[],
+-1,
 #1A,   1,   DEC,      R2
-[],
+-1,
 #1B,   1,   DEC,      R3
-[],
+-1,
 #1C,   1,   DEC,      R4
-[],
+-1,
 #1D,   1,   DEC,      R5
-[],
+-1,
 #1E,   1,   DEC,      R6
-[],
+-1,
 #1F,   1,   DEC,      R7
-[],
+-1,
 #20,   3,   JB,       bit, offset
-[],
+0,
 #21,   2,   AJMP,     addr11
 [],
 #22,   1,   RET,       
 [],
 #23,   1,   RL,       A
-[],
+[['ACC_OUT','TMP_IN'],['TMP_RL_SHIFT'],['TMP_OUT','ACC_IN']],
 #24,   2,   ADD,      A, #immed
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
 #25,   2,   ADD,      A, direct
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
 #26,   1,   ADD,      A, @R0
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-@RI'],['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
 #27,   1,   ADD,      A, @R1
-[],
+-1,
 #28,   1,   ADD,      A, R0
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-RI_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
 #29,   1,   ADD,      A, R1
-[],
+-1,
 #2A,   1,   ADD,      A, R2
-[],
+-1,
 #2B,   1,   ADD,      A, R3
-[],
+-1,
 #2C,   1,   ADD,      A, R4
-[],
+-1,
 #2D,   1,   ADD,      A, R5
-[],
+-1,
 #2E,   1,   ADD,      A, R6
-[],
+-1,
 #2F,   1,   ADD,      A, R7
-[],
+-1,
 #30,   3,   JNB,      bit, offset
 [],
 #31,   2,   ACALL,    addr11
@@ -232,29 +234,29 @@ INSTRUCTIONS = [
 #73,   1,   JMP,      @A+DPTR
 [],
 #74,   2,   MOV,      A, #immed
-[],
+[['NEXT_BYTE'],['FLASH_OUT','ACC_IN']],
 #75,   3,   MOV,      direct, #immed
-[],
+[*STEP_DIRECT_ADDRESS,['NEXT_BYTE'],['FLASH_OUT','RAM_IN']],
 #76,   2,   MOV,      @R0, #immed
-[],
+[['NEXT_BYTE','RAR-@RI'],['FLASH_OUT','RAM_IN']],
 #77,   2,   MOV,      @R1, #immed
-[],
+-1,
 #78,   2,   MOV,      R0, #immed
-[],
+[['NEXT_BYTE'],['FLASH_OUT','RAR-RI_IN']],
 #79,   2,   MOV,      R1, #immed
-[],
+-1,
 #7A,   2,   MOV,      R2, #immed
-[],
+-1,
 #7B,   2,   MOV,      R3, #immed
-[],
+-1,
 #7C,   2,   MOV,      R4, #immed
-[],
+-1,
 #7D,   2,   MOV,      R5, #immed
-[],
+-1,
 #7E,   2,   MOV,      R6, #immed
-[],
+-1,
 #7F,   2,   MOV,      R7, #immed
-[],
+-1,
 #80,   2,   SJMP,     offset
 [],
 #81,   2,   AJMP,     addr11
@@ -266,33 +268,33 @@ INSTRUCTIONS = [
 #84,   1,   DIV,      AB
 [],
 #85,   3,   MOV,      direct, direct
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','TMP_IN'],*STEP_DIRECT_ADDRESS,['TMP_OUT','RAM_IN']],
 #86,   2,   MOV,      direct, @R0
-[],
+[['RAR-@RI'],['RAM_OUT','TMP_IN'],*STEP_DIRECT_ADDRESS,['TMP_OUT','RAM_IN']],
 #87,   2,   MOV,      direct, @R1
-[],
+-1,
 #88,   2,   MOV,      direct, R0
-[],
+[['RAR-RI_OUT','TMP_IN'],*STEP_DIRECT_ADDRESS,['TMP_OUT','RAM_IN']],
 #89,   2,   MOV,      direct, R1
-[],
+-1,
 #8A,   2,   MOV,      direct, R2
-[],
+-1,
 #8B,   2,   MOV,      direct, R3
-[],
+-1,
 #8C,   2,   MOV,      direct, R4
-[],
+-1,
 #8D,   2,   MOV,      direct, R5
-[],
-#8E,   2,   MOV,      direct, R6
-[],
+-1,
+#8E,   2,   MOV,      direct, R6`
+-1,
 #8F,   2,   MOV,      direct, R7
-[],
+-1,
 #90,   3,   MOV,      DPTR, #immed
-[],
+[['NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_H8E','ALU_A_H8IN','NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_L8E','ALU_A_L8IN'],['ALU_A_OUT','DPTR_IN']],
 #91,   2,   ACALL,    addr11
 [],
 #92,   2,   MOV,      bit, C
-[],
+[['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN','NEXT_BYTE'],['TMP_BOP_TMPN','FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['BOP_OUT','RAM_IN']],
 #93,   1,   MOVC,     A, @A+DPTR
 [],
 #94,   2,   SUBB,     A, #immed
@@ -324,7 +326,7 @@ INSTRUCTIONS = [
 #A1,   2,   AJMP,     addr11
 [],
 #A2,   2,   MOV,      C, bit
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN','PSW_OUT','TMP_IN'],['BOP_OUT','PSW_LOAD_BUS']],
 #A3,   1,   INC,      DPTR
 [],
 #A4,   1,   MUL,      AB
@@ -332,25 +334,25 @@ INSTRUCTIONS = [
 #A5,    ,   reserved,  
 [],
 #A6,   2,   MOV,      @R0, direct
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','TMP_IN'],['RAR-@RI'],['TMP_OUT','RAM_IN']],
 #A7,   2,   MOV,      @R1, direct
-[],
+-1,
 #A8,   2,   MOV,      R0, direct
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','TMP_IN'],['TMP_OUT','RAR-RI_IN']],
 #A9,   2,   MOV,      R1, direct
-[],
+-1,
 #AA,   2,   MOV,      R2, direct
-[],
+-1,
 #AB,   2,   MOV,      R3, direct
-[],
+-1,
 #AC,   2,   MOV,      R4, direct
-[],
+-1,
 #AD,   2,   MOV,      R5, direct
-[],
+-1,
 #AE,   2,   MOV,      R6, direct
-[],
+-1,
 #AF,   2,   MOV,      R7, direct
-[],
+-1,
 #B0,   2,   ANL,      C, /bit
 [],
 #B1,   2,   ACALL,    addr11

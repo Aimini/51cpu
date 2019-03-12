@@ -1,4 +1,5 @@
 import pathlib,math,os,sys
+import copy
 
 import instructions.implement as i_impl
 import instructions.info as i_info
@@ -12,6 +13,7 @@ instructionControlSignal = i_comp.InstructionControlSignal(instructions.controlS
 instructionControlSignal.function = instructions.controlSingal.control_function
 # ---------------------------------- RETI,
 ignore_interrupt_check_instruction = [0x32, ]
+
 
 
 def add_fetch(instructions):
@@ -38,8 +40,29 @@ def add_recount_and_interrupt_check(instructions):
             one[add_where - 1].append('INT_CHK')
 
 
+def generate_complete_instruction(instructions):
+    new_instructions_list = []
+    for idx,x in enumerate( instructions):
+    
+        if isinstance(x,list):
+            new_instructions_list.append(x)
+            if len(x) == 0:
+                print('no implement instruction {}(0x{:0>2X})'.format(i_info.HEX_TO_NAME[idx],idx))
+        elif x > 0:
+            new_instructions_list.append(copy.deepcopy(new_instructions_list[x]))
+        elif x == 0:
+            new_instructions_list.append([])
+            print('no action instruction {}(0x{:0>2X})'.format(i_info.HEX_TO_NAME[idx],idx))
+        elif x == -1:
+            new_instructions_list.append(copy.deepcopy(new_instructions_list[idx - 1]))
+        else:
+            print("can't complete instructions 0x{0:2>X}.".format(idx))
+            exit(-1)
+    return new_instructions_list
+
+
 def generate_fetch_interrupt_instruction(instructions):
-    new_instructions_list = [x for x in instructions]
+    new_instructions_list = generate_complete_instruction(instructions)
     add_fetch(new_instructions_list)
     add_recount_and_interrupt_check(new_instructions_list)
     return new_instructions_list
@@ -110,7 +133,7 @@ def print_use_label(instruction_bin_generater):
     print("used control signal:")
     used_control_label = sorted(instruction_bin_generater.used_control_label, key=lambda label: instruction_bin_generater.contol_labels_bin[label])
     for label in used_control_label:
-        print(("{:<10} {:0>"+ str(len(instruction_bin_generater.control_singal_label)) +"b}").format(label,instruction_bin_generater.contol_labels_bin[label]))
+        print(("{:<18} {:0>"+ str(len(instruction_bin_generater.control_singal_label)) +"b}").format(label,instruction_bin_generater.contol_labels_bin[label]))
 
 
 def print_mi_map(startcounter,label_order,mi_bin_map):
@@ -139,6 +162,7 @@ def write_to_bin():
     print_instructions(final_instructions)
     try:
         instructions_bin, use_control_label = instructionControlSignal.create_instruction_bin_list(final_instructions)
+        print_use_label(instructionControlSignal)
     except i_comp.MINotFoundError  as e:
         print("unknow control singal label '{}' in instruction 0X{:0>2X} at step {}:".format( e.key, e.order, e.step))
         exit(-1)
