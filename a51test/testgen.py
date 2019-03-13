@@ -28,5 +28,11 @@ def X_D5():
     for x in sfr_addrs.keys():
         print("MOV {},0xFF".format(x))
         print("LOOP_{}:".format(x))
-        print("DJNZ {0},LOOP_{0}".format(x,x))
+        print("DJNZ {},LOOP_{}".format(x,x))
         print()
+
+def X_05():
+    print("START:")
+    for x in range(256):
+	    print("INC {}".format(x))
+    print("LJMP START")

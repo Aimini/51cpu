@@ -17,7 +17,7 @@ INSTRUCTIONS = [
 #04,   1,   INC,      A
 [['ACC_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','ACC_IN']],
 #05,   2,   INC,      direct
-[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','RAM_IN']],
+[*STEP_DIRECT_ADDRESS,['RAM_LATCH_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','RAM_IN']],
 #06,   1,   INC,      @R0
 [['RAR-@RI'],['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','RAM_IN']],
 #07,   1,   INC,      @R1
