@@ -9,7 +9,7 @@ INSTRUCTIONS = [
 #00,   1,   NOP,       
 0,
 #01,   2,   AJMP,     addr11
-[],
+[['IR_OUT','ALU_A_DBUS_H8IN','NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_L8E','ALU_A_L8IN'],['ALUEXT_ADDR11','ALUADDRTE','ALUTOADDR','PC_IN','ADT_L8E']],
 #02,   3,   LJMP,     addr16
 [],
 #03,   1,   RR,       A
@@ -73,7 +73,7 @@ INSTRUCTIONS = [
 #20,   3,   JB,       bit, offset
 0,
 #21,   2,   AJMP,     addr11
-[],
+1,
 #22,   1,   RET,       
 [],
 #23,   1,   RL,       A
@@ -137,7 +137,7 @@ INSTRUCTIONS = [
 #40,   2,   JC,       offset
 [],
 #41,   2,   AJMP,     addr11
-[],
+1,
 #42,   2,   ORL,      direct, A
 [],
 #43,   3,   ORL,      direct, #immed
@@ -201,7 +201,7 @@ INSTRUCTIONS = [
 #60,   2,   JZ,       offset
 [],
 #61,   2,   AJMP,     addr11
-[],
+1,
 #62,   2,   XRL,      direct, A
 [],
 #63,   3,   XRL,      direct, #immed
@@ -265,7 +265,7 @@ INSTRUCTIONS = [
 #80,   2,   SJMP,     offset
 [['NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #81,   2,   AJMP,     addr11
-[],
+1,
 #82,   2,   ANL,      C, bit
 [],
 #83,   1,   MOVC,     A, @A+PC
@@ -329,7 +329,7 @@ INSTRUCTIONS = [
 #A0,   2,   ORL,      C, /bit
 [],
 #A1,   2,   AJMP,     addr11
-[],
+1,
 #A2,   2,   MOV,      C, bit
 [['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN','PSW_OUT','TMP_IN'],['BOP_OUT','PSW_LOAD_BUS']],
 #A3,   1,   INC,      DPTR
@@ -393,7 +393,7 @@ INSTRUCTIONS = [
 #C0,   2,   PUSH,     direct
 [],
 #C1,   2,   AJMP,     addr11
-[],
+1,
 #C2,   2,   CLR,      bit
 [],
 #C3,   1,   CLR,      C
@@ -457,7 +457,7 @@ INSTRUCTIONS = [
 #E0,   1,   MOVX,     A, @DPTR
 [],
 #E1,   2,   AJMP,     addr11
-[],
+1,
 #E2,   1,   MOVX,     A, @R0
 [],
 #E3,   1,   MOVX,     A, @R1

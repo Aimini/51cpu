@@ -1,5 +1,5 @@
 ; test for      DJNZ,     direct, offset(D5)
-
+$NOMOD51
 P0 EQU 0x80
 TCON EQU 0x88
 IE EQU 0xA8
