@@ -23,7 +23,7 @@ INSTRUCTIONS = [
 #07,   1,   INC,      @R1
 -1,
 #08,   1,   INC,      R0
-[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_A_OUT','ADT_L8E','RAR-RI_IN']],
+[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ADT_L8E','RAR-RI_IN']],
 #09,   1,   INC,      R1
 -1,
 #0A,   1,   INC,      R2

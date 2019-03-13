@@ -8,6 +8,8 @@ sfr_addrs = {
     "B ": 0xF0,
 }
 
+
+
 # MOV,      A, #immed
 def X_74():
      for x in range(256):
@@ -36,3 +38,16 @@ def X_05():
     for x in range(256):
 	    print("INC {}".format(x))
     print("LJMP START")
+
+# INC Ri
+def X_08():
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        print("MOV 0xF0,#0xFF")
+        print("START{}:".format(rs))
+        for x in range(8):
+            print("INC R{}".format(x))
+        print("DJNZ 0xF0,START{}".format(rs))
+        print()
+
+
