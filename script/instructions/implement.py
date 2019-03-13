@@ -1,4 +1,9 @@
 STEP_DIRECT_ADDRESS = [['NEXT_BYTE'],['FLASH_OUT','RAR_IN']]
+STEP_PC_ADD_OFFSET = [['FLASH_OUT','ALU_A_DBUS_L8IN'],["ALUEXT_TWO_CMP","ALU_B_IN"],["PC_OUT","ALUADDRTE","ALU_A_IN"],['ALU_ADD','ALUADDRTE','ALUTOADDR','PC_IN']]
+def merge_first(a,b):
+    r = [_ for _ in a]
+    r.extend(b[0])
+    return [r,*(b[1:])]
 
 INSTRUCTIONS = [ 
 #00,   1,   NOP,       
@@ -76,7 +81,7 @@ INSTRUCTIONS = [
 #24,   2,   ADD,      A, #immed
 [['ACC_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
 #25,   2,   ADD,      A, direct
-[['ACC_OUT','ALU_A_DBUS_L8IN'],*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
+[*merge_first(['ACC_OUT','ALU_A_DBUS_L8IN'],STEP_DIRECT_ADDRESS),['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
 #26,   1,   ADD,      A, @R0
 [['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-@RI'],['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_ADD','ADT_L8E','ACC_IN']],
 #27,   1,   ADD,      A, @R1
@@ -268,13 +273,13 @@ INSTRUCTIONS = [
 #84,   1,   DIV,      AB
 [],
 #85,   3,   MOV,      direct, direct
-[*STEP_DIRECT_ADDRESS,['RAM_OUT','TMP_IN'],*STEP_DIRECT_ADDRESS,['TMP_OUT','RAM_IN']],
+[*STEP_DIRECT_ADDRESS,*merge_first(['RAM_OUT','TMP_IN'],STEP_DIRECT_ADDRESS),['TMP_OUT','RAM_IN']],
 #86,   2,   MOV,      direct, @R0
-[['RAR-@RI'],['RAM_OUT','TMP_IN'],*STEP_DIRECT_ADDRESS,['TMP_OUT','RAM_IN']],
+[['RAR-@RI'],*merge_first(['RAM_OUT','TMP_IN'],STEP_DIRECT_ADDRESS),['TMP_OUT','RAM_IN']],
 #87,   2,   MOV,      direct, @R1
 -1,
 #88,   2,   MOV,      direct, R0
-[['RAR-RI_OUT','TMP_IN'],*STEP_DIRECT_ADDRESS,['TMP_OUT','RAM_IN']],
+[*merge_first(['RAR-RI_OUT','TMP_IN'],STEP_DIRECT_ADDRESS),['TMP_OUT','RAM_IN']],
 #89,   2,   MOV,      direct, R1
 -1,
 #8A,   2,   MOV,      direct, R2
@@ -285,7 +290,7 @@ INSTRUCTIONS = [
 -1,
 #8D,   2,   MOV,      direct, R5
 -1,
-#8E,   2,   MOV,      direct, R6`
+#8E,   2,   MOV,      direct, R6
 -1,
 #8F,   2,   MOV,      direct, R7
 -1,
@@ -428,7 +433,7 @@ INSTRUCTIONS = [
 #D4,   1,   DA,       A
 [],
 #D5,   3,   DJNZ,     direct, offset
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAM_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #D6,   1,   XCHD,     A, @R0
 [],
 #D7,   1,   XCHD,     A, @R1
@@ -492,25 +497,25 @@ INSTRUCTIONS = [
 #F4,   1,   CPL,      A
 [],
 #F5,   2,   MOV,      direct, A
-[],
+[*merge_first(['ACC_OUT','TMP_IN'],STEP_DIRECT_ADDRESS),['TMP_OUT','RAM_IN']],
 #F6,   1,   MOV,      @R0, A
-[],
+[['ACC_OUT','TMP_IN'],['RAR-@RI'],['TMP_OUT','RAM_IN']],
 #F7,   1,   MOV,      @R1, A
-[],
+-1,
 #F8,   1,   MOV,      R0, A
-[],
+[['ACC_OUT','TMP_IN'],['TMP_OUT','RAR-RI_IN']],
 #F9,   1,   MOV,      R1, A
-[],
+-1,
 #FA,   1,   MOV,      R2, A
-[],
+-1,
 #FB,   1,   MOV,      R3, A
-[],
+-1,
 #FC,   1,   MOV,      R4, A
-[],
+-1,
 #FD,   1,   MOV,      R5, A
-[],
+-1,
 #FE,   1,   MOV,      R6, A
-[],
+-1,
 #FF,   1,   MOV,      R7, A
-[]
+-1
 ]

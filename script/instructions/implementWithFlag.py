@@ -1,5 +1,5 @@
 FLAG = ['Carry','ACC_ZF','TMP_ZF','BIT']
-
+STEP_DIRECT_ADDRESS = [['NEXT_BYTE'],['FLASH_OUT','RAR_IN']]
 FLAG_INSTRUCTION ={
     'Carry':{
 	#2	ADDC	A, #immed
@@ -87,7 +87,7 @@ FLAG_INSTRUCTION ={
     },
     'TMP_ZF':{
     #3	DJNZ	direct, offset
-    0xD5:[],
+    0xD5:[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAM_IN','NEXT_BYTE']],
     #2	DJNZ	R0, offset
     0xD8:[],
     #2	DJNZ	R1, offset
