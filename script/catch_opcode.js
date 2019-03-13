@@ -36,8 +36,17 @@ function print_opcode(t) {
     console.warn(`HEX_TO_BIN = {${bin_name}}`)
 }
 
+function print_excel(t){
+    let text = ''
+    t.forEach(function(v){
+        let [s0, s1, s2, s3] = v;
+        text += (`0x${s0}\t${s1}\t${s2}\t${s3}\n`)
+    })
+    console.warn(text);
+}
 
 tables.forEach(get_op_code);
 print_opcode(op_codes);
+print_excel(op_codes);
 
 
