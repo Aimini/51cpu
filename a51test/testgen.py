@@ -50,4 +50,19 @@ def X_08():
         print("DJNZ 0xF0,START{}".format(rs))
         print()
 
+def X_10():
+    for x in range(16):
+    	print("MOV 0x{:0>2X},#0x{:0>2X}".format(0x20 + x, (1 << (x%8))))
+    print()
+    print('SJMP L15')
+    print()
+    print('START:')
+    for x in range(16):
+        print("L{}: MOV A,#{}".format(x,x))
+        print("JBC 0x{:0>2X},{}".format((x << 3) + (x%8), "L" + str(x - 1)  if x> 0 else "START"))
+        
+    print('MOV  A,#0xFF')
+
+
+
 

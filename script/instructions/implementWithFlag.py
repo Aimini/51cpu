@@ -1,5 +1,7 @@
 FLAG = ['Carry','TMP_ZF','BIT']
+
 STEP_DIRECT_ADDRESS = [['NEXT_BYTE'],['FLASH_OUT','RAR_IN']]
+STEP_PC_ADD_OFFSET = [['FLASH_OUT','ALU_A_DBUS_L8IN'],["ALUEXT_TWO_CMP","ALU_B_IN"],["PC_OUT","ALUADDRTE","ALU_A_IN"],['ALU_ADD','ALUADDRTE','ALUTOADDR','PC_IN']]
 FLAG_INSTRUCTION ={
     'Carry':{
 	#2	ADDC	A, #immed
@@ -105,7 +107,7 @@ FLAG_INSTRUCTION ={
     },
     'BIT':{
     #JBC	bit, offset
-    0x10:[],
+    0x10:[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['BOP_IN','TMP_BITADDR_OUT','RAR_IN'],['RAM_LATCH_OUT','TMP_IN'],['NEXT_BYTE'],*STEP_PC_ADD_OFFSET,['TMP_BOP_CLR'],['BOP_OUT','RAM_IN']],
     #JB	    bit, offset
     0x20:[],
     #JNB    bit, offset

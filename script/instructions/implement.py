@@ -39,7 +39,7 @@ INSTRUCTIONS = [
 #0F,   1,   INC,      R7
 -1,
 #10,   3,   JBC,      bit, offset
-0,
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['BOP_IN','TMP_BITADDR_OUT','RAR_IN'],['RAM_LATCH_OUT','TMP_IN'],],
 #11,   2,   ACALL,    addr11
 [],
 #12,   3,   LCALL,    addr16
