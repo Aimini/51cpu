@@ -1,0 +1,7 @@
+mov 0,#0x80
+mov 1,#0x7F
+START1:
+	INC @R0
+	INC @R1
+	SJMP START1
+
