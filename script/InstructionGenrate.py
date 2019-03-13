@@ -42,7 +42,7 @@ def add_recount_and_interrupt_check(instructions):
 
 def generate_complete_instruction(instructions):
     new_instructions_list = []
-    for idx,x in enumerate( instructions):
+    for idx,x in enumerate(instructions):
     
         if isinstance(x,list):
             new_instructions_list.append(x)
@@ -133,7 +133,7 @@ def print_use_label(instruction_bin_generater):
     print("used control signal:")
     used_control_label = sorted(instruction_bin_generater.used_control_label, key=lambda label: instruction_bin_generater.contol_labels_bin[label])
     for label in used_control_label:
-        print(("{:<18} {:0>"+ str(len(instruction_bin_generater.control_singal_label)) +"b}").format(label,instruction_bin_generater.contol_labels_bin[label]))
+        print(("{:<16} {:0>"+ str(len(instruction_bin_generater.control_singal_label)) +"b}").format(label,instruction_bin_generater.contol_labels_bin[label]))
 
 
 def print_mi_map(startcounter,label_order,mi_bin_map):

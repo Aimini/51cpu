@@ -66,6 +66,10 @@ control_function = {
     "RAR-@RI":("RAR_ADDRS0","RAR_ADDRS1",'RAM_OUT','RAR_IN'),
     "RAR-RI_IN":("RAR_ADDRS0",'RAM_IN'),
     "RAR-RI_OUT":("RAR_ADDRS0",'RAM_OUT'),
+    "ALUEXT_ADDR11":("ALU_S1", "ALU_S2", "ALU_S3","ALU_EXTOUT"),
+    "ALUEXT_XCHD":("ALU_S0", "ALU_S2", "ALU_S3","ALU_EXTOUT"),
+    "ALUEXT_TWO_CMP":("ALU_S0", "ALU_S1", "ALU_S3","ALU_EXTOUT"),
+    "ALUEXT_SWAP":("ALU_S0", "ALU_S1", "ALU_S2","ALU_EXTOUT"),
 }
 
     
