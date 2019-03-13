@@ -263,7 +263,7 @@ INSTRUCTIONS = [
 #7F,   2,   MOV,      R7, #immed
 -1,
 #80,   2,   SJMP,     offset
-[],
+[['NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #81,   2,   AJMP,     addr11
 [],
 #82,   2,   ANL,      C, bit
