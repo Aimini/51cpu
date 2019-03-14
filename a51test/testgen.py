@@ -103,3 +103,14 @@ def X_18():
             print("DEC R{}".format(x))
         print("DJNZ 0xF0,START{}".format(rs))
         print()
+
+# ADD A, Ri
+def X_28():
+    for x in range(32):
+        print("mov {0},#{0}".format(x))
+        
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("add A,R{}".format(x))
+        print()
