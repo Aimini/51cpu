@@ -76,7 +76,7 @@ INSTRUCTIONS = [
 #21,   2,   AJMP,     addr11
 1,
 #22,   1,   RET,       
-[],
+[['SP_OUT','RAR_IN','ALU_A_DBUS_L8IN'],['RAM_OUT','TMP_IN'],['ALU_DEC','ALU_A_L8IN','ALU_A_H8IN','RAR_IN','ADT_L8E'],['ALU_DEC','ADT_L8E','SP_IN'],['TMP_OUT','ALU_A_DBUS_H8IN'],['RAM_OUT','DTOALU','ADT_L8E','ALU_A_L8IN'],['ALU_A_OUT','ALUTOADDR','ALUADDRTE','PC_IN']],
 #23,   1,   RL,       A
 [['ACC_OUT','TMP_IN'],['TMP_RL_SHIFT'],['TMP_OUT','ACC_IN']],
 #24,   2,   ADD,      A, #immed
