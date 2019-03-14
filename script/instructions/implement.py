@@ -1,5 +1,6 @@
 STEP_DIRECT_ADDRESS = [['NEXT_BYTE'],['FLASH_OUT','RAR_IN']]
 STEP_PC_ADD_OFFSET = [['FLASH_OUT','ALU_A_DBUS_L8IN'],["ALUEXT_TWO_CMP","ALU_B_IN"],["PC_OUT","ALUADDRTE","ALU_A_IN"],['ALU_ADD','ALUADDRTE','ALUTOADDR','PC_IN']]
+
 def merge_first(a,b):
     r = [_ for _ in a]
     r.extend(b[0])
@@ -41,7 +42,7 @@ INSTRUCTIONS = [
 #10,   3,   JBC,      bit, offset
 [['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['BOP_IN','TMP_BITADDR_OUT','RAR_IN'],['RAM_LATCH_OUT','TMP_IN'],],
 #11,   2,   ACALL,    addr11
-[],
+[['NEXT_BYTE','SP_OUT','ALU_A_DBUS_L8IN'],['ALU_INC','ALU_A_L8IN','ALU_A_H8IN','ADT_L8E','RAR_IN'],['PC_OUT','ALUADDRTE','ADT_L8E','RAM_IN'],['ALU_INC','ADT_L8E','RAR_IN','SP_IN'],['PC_OUT','ALUADDRTE','ADT_H8E','RAM_IN'],['IR_OUT','ALU_A_DBUS_H8IN'],['FLASH_OUT','DTOALU','ADT_L8E','ALU_A_L8IN'],['ALUEXT_ADDR11','ALUADDRTE','ALUTOADDR','PC_IN']],
 #12,   3,   LCALL,    addr16
 [],
 #13,   1,   RRC,      A
@@ -105,7 +106,7 @@ INSTRUCTIONS = [
 #30,   3,   JNB,      bit, offset
 [],
 #31,   2,   ACALL,    addr11
-[],
+0X11,
 #32,   1,   RETI,      
 [],
 #33,   1,   RLC,      A
@@ -169,7 +170,7 @@ INSTRUCTIONS = [
 #50,   2,   JNC,      offset
 [],
 #51,   2,   ACALL,    addr11
-[],
+0x11,
 #52,   2,   ANL,      direct, A
 [],
 #53,   3,   ANL,      direct, #immed
@@ -233,7 +234,7 @@ INSTRUCTIONS = [
 #70,   2,   JNZ,      offset
 [],
 #71,   2,   ACALL,    addr11
-[],
+0X11,
 #72,   2,   ORL,      C, bit
 [],
 #73,   1,   JMP,      @A+DPTR
@@ -297,7 +298,7 @@ INSTRUCTIONS = [
 #90,   3,   MOV,      DPTR, #immed
 [['NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_H8E','ALU_A_H8IN','NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_L8E','ALU_A_L8IN'],['ALU_A_OUT','DPTR_IN']],
 #91,   2,   ACALL,    addr11
-[],
+0x11,
 #92,   2,   MOV,      bit, C
 [['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN','NEXT_BYTE'],['TMP_BOP_TMPN','FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['BOP_OUT','RAM_IN']],
 #93,   1,   MOVC,     A, @A+DPTR
@@ -361,7 +362,7 @@ INSTRUCTIONS = [
 #B0,   2,   ANL,      C, /bit
 [],
 #B1,   2,   ACALL,    addr11
-[],
+0X11,
 #B2,   2,   CPL,      bit
 [],
 #B3,   1,   CPL,      C
@@ -425,7 +426,7 @@ INSTRUCTIONS = [
 #D0,   2,   POP,      direct
 [],
 #D1,   2,   ACALL,    addr11
-[],
+0x11,
 #D2,   2,   SETB,     bit
 [],
 #D3,   1,   SETB,     C
@@ -489,7 +490,7 @@ INSTRUCTIONS = [
 #F0,   1,   MOVX,     @DPTR, A
 [],
 #F1,   2,   ACALL,    addr11
-[],
+0x11,
 #F2,   1,   MOVX,     @R0, A
 [],
 #F3,   1,   MOVX,     @R1, A

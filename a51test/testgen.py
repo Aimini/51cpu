@@ -1,3 +1,5 @@
+
+
 sfr_addrs = {
     "P0" : 0x80,
     "TCON ": 0x88,
@@ -63,6 +65,23 @@ def X_10():
         
     print('MOV  A,#0xFF')
 
+# ACALL addr11
+def X_11():
+    print('MOV 0X81,#0X07')#init SP
+    for x in range(8):
+        b = x+1
+        print("MOV A,#{}".format(b))
+        print("ACALL 0x{0:2>X}".format((x << 8) + b*2 + 0xa))
+        print()
+        print("CSEG AT 0x{0:2>X}".format((x << 8) + b*2 + 0xa))
+    print('''MOV A,#0X0F
+ACALL 0X7FF
 
+CSEG AT 0X7FF
+MOV A,#0XF0
+ACALL 0X8FF
 
+CSEG AT 0X8FF
+MOV A,#0XFF
+''')    
 
