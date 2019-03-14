@@ -1,0 +1,19 @@
+ADD A,#1
+
+;0x10 Cy=0 OV = 0 AC=1
+ADD	A,#0x0F
+
+;0x1F Cy=0 OV = 0 AC=0
+ADD A,#0x0F
+
+;0x44 Cy=0 OV = 0 AC=1
+ADD A,#0x25
+
+;0x33 Cy=1 OV = 0 AC=1
+ADD A, #0xEF
+
+;0x85 Cy=0 OV = 1 AC = 0 
+ADD A, #0x52
+
+;0x84 Cy=1 OV = 0 AC = 1
+ADD A, #0xFF
