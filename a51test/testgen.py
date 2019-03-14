@@ -91,3 +91,15 @@ def X_15():
     for x in range(256):
 	    print("DEC {}".format(x))
     print("LJMP START")
+
+
+# DEC Ri
+def X_18():
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        print("MOV 0xF0,#0xFF")
+        print("START{}:".format(rs))
+        for x in range(8):
+            print("DEC R{}".format(x))
+        print("DJNZ 0xF0,START{}".format(rs))
+        print()
