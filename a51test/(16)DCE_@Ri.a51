@@ -1,0 +1,6 @@
+MOV 0, #0xF0
+MOV 1, #0x80
+START:
+	DEC @R0
+	DEC @R1
+	SJMP START
