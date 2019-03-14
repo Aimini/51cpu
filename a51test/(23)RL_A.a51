@@ -1,0 +1,4 @@
+MOV A,#9
+START:
+    RL A
+    SJMP START
