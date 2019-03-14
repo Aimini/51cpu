@@ -1,0 +1,4 @@
+START:
+ INC 0xF0
+ DEC A
+ SJMP START
