@@ -50,9 +50,9 @@ INSTRUCTIONS = [
 #14,   1,   DEC,      A
 [['ACC_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','ACC_IN']],
 #15,   2,   DEC,      direct
-[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','RAM_IN']],
+[*STEP_DIRECT_ADDRESS,['RAM_LATCH_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','RAM_IN']],
 #16,   1,   DEC,      @R0
-[['RAR-@RI'],['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','RAM_IN']],
+[['RAR-@RI'],['RAM_LATCH_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','RAM_IN']],
 #17,   1,   DEC,      @R1
 -1,
 #18,   1,   DEC,      R0

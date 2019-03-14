@@ -85,3 +85,9 @@ CSEG AT 0X8FF
 MOV A,#0XFF
 ''')    
 
+
+def X_15():
+    print("START:")
+    for x in range(256):
+	    print("DEC {}".format(x))
+    print("LJMP START")
