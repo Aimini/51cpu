@@ -114,3 +114,16 @@ def X_28():
         for x in range(8):
             print("add A,R{}".format(x))
         print()
+
+# MOV @Ri,A
+def X_F6():
+    for x in range(32):
+        print("mov {},#0x{:0>2X}".format(x,0x20+x))
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("INC A")
+            print("MOV  @R{}, A".format(x))
+        
