@@ -466,7 +466,7 @@ INSTRUCTIONS = [
 #E4,   1,   CLR,      A
 [],
 #E5,   2,   MOV,      A, direct
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','TMP_IN'],['TMP_OUT','ACC_IN']],
 #E6,   1,   MOV,      A, @R0
 [],
 #E7,   1,   MOV,      A, @R1
