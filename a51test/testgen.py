@@ -144,5 +144,11 @@ INIT:
 DJNZ 0xF0,INIT
     """)
 
+def X_F8():
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("INC A")
+            print("MOV  R{}, A".format(x))
 
 
