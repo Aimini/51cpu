@@ -296,7 +296,7 @@ INSTRUCTIONS = [
 #8F,   2,   MOV,      direct, R7
 -1,
 #90,   3,   MOV,      DPTR, #immed
-[['NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_H8E','ALU_A_H8IN','NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_L8E','ALU_A_L8IN'],['ALU_A_OUT','DPTR_IN']],
+[['NEXT_BYTE'],['FLASH_OUT','ALU_A_DBUS_H8IN','NEXT_BYTE'],['FLASH_OUT','DTOALU','ADT_L8E','ALU_A_L8IN'],['ALU_A_OUT','ALUADDRTE','ALUTOADDR','DPTR_IN']],
 #91,   2,   ACALL,    addr11
 0x11,
 #92,   2,   MOV,      bit, C
