@@ -1,0 +1,6 @@
+START:
+	MOV A, #0xF1
+	CLR A
+	CPL A
+	CLR A
+SJMP START
