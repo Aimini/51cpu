@@ -1,0 +1,25 @@
+;可用指令
+MOV     A,      #immed
+MOV     direct, #immed
+DJNZ    direct, offset
+SJMP    offset
+RR      A
+LJMP    addr16
+INC     A
+INC     direct
+JBC     bit, offset
+ACALL   addr11
+LCALL   add16
+RRC     A
+DEC     A
+DEC     direct
+DEC     @Ri
+DEC     Ri
+RET
+RL      A
+ADD     A, #immed
+ADD     A, direct
+ADD     A,@Ri
+ADD     A,Rn
+MOV     direct,direct
+MOV     @Ri,A
