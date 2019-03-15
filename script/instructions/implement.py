@@ -472,21 +472,21 @@ INSTRUCTIONS = [
 #E7,   1,   MOV,      A, @R1
 -1,
 #E8,   1,   MOV,      A, R0
-[],
+[['RAR-RI_OUT','ACC_IN']],
 #E9,   1,   MOV,      A, R1
-[],
+-1,
 #EA,   1,   MOV,      A, R2
-[],
+-1,
 #EB,   1,   MOV,      A, R3
-[],
+-1,
 #EC,   1,   MOV,      A, R4
-[],
+-1,
 #ED,   1,   MOV,      A, R5
-[],
+-1,
 #EE,   1,   MOV,      A, R6
-[],
+-1,
 #EF,   1,   MOV,      A, R7
-[],
+-1,
 #F0,   1,   MOVX,     @DPTR, A
 [],
 #F1,   2,   ACALL,    addr11

@@ -1,0 +1,39 @@
+MOV 0xF0,#0x20
+INIT:
+	MOV 0x00,A ; use R0 to r/w indirect address 
+	MOV @R0,A
+	INC A
+DJNZ 0xF0,INIT
+    
+
+MOV 0xD0,#0x00
+MOV  A,@R0
+NOP
+NOP
+MOV  A,@R1
+NOP
+NOP
+
+MOV 0xD0,#0x08
+MOV  A,@R0
+NOP
+NOP
+MOV  A,@R1
+NOP
+NOP
+
+MOV 0xD0,#0x10
+MOV  A,@R0
+NOP
+NOP
+MOV  A,@R1
+NOP
+NOP
+
+MOV 0xD0,#0x18
+MOV  A,@R0
+NOP
+NOP
+MOV  A,@R1
+NOP
+NOP

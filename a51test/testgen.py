@@ -142,6 +142,7 @@ INIT:
 	MOV @R0,A
 	INC A
 DJNZ 0xF0,INIT
+MOV 0x00,#0x00
     """)
 # MOV Rn,A
 def X_F8():
@@ -177,3 +178,12 @@ def X_E6():
             print("MOV  A,@R{}".format(x))
             print("NOP")
             print("NOP")
+
+# MOV A, @Ri
+def X_E8():
+    init_Ri()
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("MOV  A,R{}".format(x))
