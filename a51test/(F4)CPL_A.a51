@@ -1,0 +1,4 @@
+MOV A, #0xF1
+START:
+	CPL A
+	SJMP START

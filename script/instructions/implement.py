@@ -496,7 +496,7 @@ INSTRUCTIONS = [
 #F3,   1,   MOVX,     @R1, A
 [],
 #F4,   1,   CPL,      A
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['ALU_NOT','ADT_L8E','ACC_IN']],
 #F5,   2,   MOV,      direct, A
 [*merge_first(['ACC_OUT','TMP_IN'],STEP_DIRECT_ADDRESS),['TMP_OUT','RAM_IN']],
 #F6,   1,   MOV,      @R0, A
