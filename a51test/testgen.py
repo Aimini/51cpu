@@ -126,4 +126,23 @@ def X_F6():
         for x in range(2):
             print("INC A")
             print("MOV  @R{}, A".format(x))
-        
+
+# use
+#   MOV direct,#immed
+#   MOV direct,A
+#   MOV direct,#immed
+#   MOV @Ri,A
+#   INC A
+#   DJNZ direct,offset
+def init_Ri():
+    print("""
+MOV 0xF0,#0x20
+INIT:
+	MOV 0x00,A ; use R0 to r/w indirect address 
+	MOV @R0,A
+	INC A
+DJNZ 0xF0,INIT
+    """)
+
+
+
