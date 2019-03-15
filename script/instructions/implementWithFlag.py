@@ -89,21 +89,21 @@ FLAG_INSTRUCTION ={
     #3	DJNZ	direct, offset
     0xD5:[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAM_IN','NEXT_BYTE']],
     #2	DJNZ	R0, offset
-    0xD8:[],
+    0xD8:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     #2	DJNZ	R1, offset
-    0xD9:[],
+    0xD9:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     #2	DJNZ	R2, offset
-    0xDA:[],
+    0xDA:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     #2	DJNZ	R3, offset
-    0xDB:[],
+    0xDB:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     #2	DJNZ	R4, offset
-    0xDC:[],
+    0xDC:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     #2	DJNZ	R5, offset
-    0xDD:[],
+    0xDD:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     #2	DJNZ	R6, offset
-    0xDE:[],
+    0xDE:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     #2	DJNZ	R7, offset
-    0xDF:[],
+    0xDF:[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE']],
     },
     'BIT':{
     #JBC	bit, offset

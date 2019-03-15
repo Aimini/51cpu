@@ -440,21 +440,21 @@ INSTRUCTIONS = [
 #D7,   1,   XCHD,     A, @R1
 [],
 #D8,   2,   DJNZ,     R0, offset
-[],
+[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #D9,   2,   DJNZ,     R1, offset
-[],
+-1,
 #DA,   2,   DJNZ,     R2, offset
-[],
+-1,
 #DB,   2,   DJNZ,     R3, offset
-[],
+-1,
 #DC,   2,   DJNZ,     R4, offset
-[],
+-1,
 #DD,   2,   DJNZ,     R5, offset
-[],
+-1,
 #DE,   2,   DJNZ,     R6, offset
-[],
+-1,
 #DF,   2,   DJNZ,     R7, offset
-[],
+-1,
 #E0,   1,   MOVX,     A, @DPTR
 [],
 #E1,   2,   AJMP,     addr11

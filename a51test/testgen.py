@@ -187,3 +187,14 @@ def X_E8():
         print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
         for x in range(8):
             print("MOV  A,R{}".format(x))
+
+
+# DJNZ Ri,offset
+def X_D8():
+    init_Ri()
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            label = "START_{}_{}".format(rs,x)
+            print("{}:\n DJNZ R{},{}".format(label,x,label))
