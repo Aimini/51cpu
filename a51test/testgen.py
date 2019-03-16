@@ -134,7 +134,9 @@ def X_F6():
 #   MOV @Ri,A
 #   INC A
 #   DJNZ direct,offset
-def init_Ri():
+def init_Ri(start=0):
+    if start != 0:
+        print("MOV A,#0x{:0>2X}".format(start))
     print("""
 MOV 0xF0,#0x20
 INIT:
@@ -198,3 +200,33 @@ def X_D8():
         for x in range(8):
             label = "START_{}_{}".format(rs,x)
             print("{}:\n DJNZ R{},{}".format(label,x,label))
+
+#MOV    @R0, direct
+def X_76():
+    print("""
+MOV 0x70,#0x40 ;direct start address
+MOV 0x71,#0x20 ;direct start value
+MOV	0x72,#0x00 ;R0~R7 start addrss
+MOV	0x73,#0x20 ;target address for @Ri
+MOV	0xF0,#0x20 ; count
+
+MOV 0x7F,0x73
+INIT:
+	MOV A, 0x71
+    MOV	0x00,0x70
+	MOV @R0,A
+	MOV	A, 0x73
+	MOV	0x00,0x72
+	MOV @R0,A
+	INC 0x70
+	INC 0x71
+	INC 0x72
+	INC 0x73
+DJNZ 0xF0,INIT
+MOV 0x00,0x7F
+""")
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("MOV @R{},#0x{:0>2X}".format(x,0x30 + x + rs*8))
