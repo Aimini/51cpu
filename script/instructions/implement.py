@@ -270,7 +270,7 @@ INSTRUCTIONS = [
 #82,   2,   ANL,      C, bit
 [],
 #83,   1,   MOVC,     A, @A+PC
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['PC_OUT','ALUADDRTE','ALU_B_IN'],['ALU_ADD','ALUADDRTE','ALUTOADDR','PAR_IN'],['FLASH_OUT','ACC_IN']],
 #84,   1,   DIV,      AB
 [],
 #85,   3,   MOV,      direct, direct
