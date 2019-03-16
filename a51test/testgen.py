@@ -266,4 +266,19 @@ def X_06():
             print("INC @R{}".format(x))
         print("DJNZ 0x7F,{}".format(label))
         print()
+
+
+# MOV Rn,direct
+def X_A8():
+    ADDR = 0X40
+    for x in range(0x20):
+        print("MOV 0x{:0>2X},#0x{:0>2X}".format(x+ADDR,x+0x10))
+    print()
+
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("MOV R{},0x{:0>2X}".format(x,ADDR))
+            ADDR += 1
+        print()
     
