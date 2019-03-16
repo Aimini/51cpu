@@ -282,3 +282,30 @@ def X_A8():
             ADDR += 1
         print()
     
+# MOV direct,@Ri
+def X_86():
+    print("""
+MOV	0x70,#0x00 ;R0~R7 start addrss
+MOV	0x71,#0x20 ;indirect address for @Ri
+MOV 0x72,#0x40 ;indirect start value
+MOV	0xF0,#0x20 ; count
+
+MOV 0x7F,0x71
+INIT:
+    MOV	R0,0x70
+	MOV @R0,0x71
+    MOV R0,0x71
+    MOV @R0,0x72
+	INC 0x70
+	INC 0x71
+	INC 0x72
+DJNZ 0xF0,INIT
+MOV R0,0x7F
+""")
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("MOV 0x{:0>2X},@R{}".format(0x60 + x + rs*8,x))
+
+
