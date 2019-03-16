@@ -247,3 +247,23 @@ def X_78():
         print("MOV 0xD0,#0x{:0>2X}".format(rs << 3))
         for x in range(8):
             print("MOV R{},#0x{:0>2X}".format(x,0x80 - rs*0x10 - x))
+
+
+#MOV    INC,@Ri
+def X_06():
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("MOV R{},#0x{:0>2X}".format(x,0x20 +rs*0x10 + x))  
+        print()
+    
+    for rs in range(4):
+        label = "RS_{}".format(rs)
+        print("MOV 0x7F,#0xFF")
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        print(label+":")
+        for x in range(2):
+            print("INC @R{}".format(x))
+        print("DJNZ 0x7F,{}".format(label))
+        print()
+    
