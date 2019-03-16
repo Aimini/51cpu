@@ -400,7 +400,7 @@ INSTRUCTIONS = [
 #C3,   1,   CLR,      C
 [],
 #C4,   1,   SWAP,     A
-[[], [], [],[]],
+[['ACC_OUT','ALU_A_DBUS_H8IN'],['ALUEXT_SWAP','ADT_H8E','ACC_IN']],
 #C5,   2,   XCH,      A, direct
 [],
 #C6,   1,   XCH,      A, @R0
