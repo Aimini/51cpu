@@ -309,3 +309,16 @@ MOV R0,0x7F
             print("MOV 0x{:0>2X},@R{}".format(0x60 + x + rs*8,x))
 
 
+# MOV direct,Rn
+def X_88():
+    start = 0x20
+    for  x in range(0x20):
+        print("MOV 0x{:0>2X},#0x{:0>2X}".format(x, start + x))
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("MOV 0x{:0>2X},R{}".format(0x40 + rs*8 + x,x))
+
+
