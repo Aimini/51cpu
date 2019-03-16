@@ -430,7 +430,7 @@ INSTRUCTIONS = [
 #D2,   2,   SETB,     bit
 [],
 #D3,   1,   SETB,     C
-[],
+[['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN','TMP_BOP_CLR'],['TMP_BOP_CPL'],['BOP_OUT','PSW_LOAD_BUS']],
 #D4,   1,   DA,       A
 [],
 #D5,   3,   DJNZ,     direct, offset

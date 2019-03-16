@@ -1,0 +1,6 @@
+START:
+    SETB C
+    MOV	A,0xD0
+    RL	A
+    MOV 0XD0,A
+    SJMP START 

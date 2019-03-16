@@ -321,4 +321,15 @@ def X_88():
         for x in range(8):
             print("MOV 0x{:0>2X},R{}".format(0x40 + rs*8 + x,x))
 
-
+#SETB bit  
+def X_D2():
+    for idx in range(8):
+        
+        print("""MOV A,#0
+START{}:
+MOV 0xF0,0x08
+SETB 0xE{}
+RL  A
+DJNZ START{}
+        """.format(idx,idx,idx))
+        print()
