@@ -428,7 +428,7 @@ INSTRUCTIONS = [
 #D1,   2,   ACALL,    addr11
 0x11,
 #D2,   2,   SETB,     bit
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN','TMP_BOP_CLR'],['RAM_OUT','TMP_IN','TMP_BOP_CPL'],['BOP_OUT','RAM_IN']],
 #D3,   1,   SETB,     C
 [['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN','TMP_BOP_CLR'],['TMP_BOP_CPL'],['BOP_OUT','PSW_LOAD_BUS']],
 #D4,   1,   DA,       A

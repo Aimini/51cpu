@@ -326,10 +326,10 @@ def X_D2():
     for idx in range(8):
         
         print("""MOV A,#0
+MOV 0xF0,#0x08
 START{}:
-MOV 0xF0,0x08
 SETB 0xE{}
 RL  A
-DJNZ START{}
+DJNZ 0xF0,START{}
         """.format(idx,idx,idx))
         print()
