@@ -334,7 +334,7 @@ INSTRUCTIONS = [
 #A2,   2,   MOV,      C, bit
 [['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN','PSW_OUT','TMP_IN'],['BOP_OUT','PSW_LOAD_BUS']],
 #A3,   1,   INC,      DPTR
-[],
+[["DPTR_OUT","ALUADDRTE","ALU_A_IN"],['ALU_INC','ALUADDRTE','ALUTOADDR','DPTR_IN']],
 #A4,   1,   MUL,      AB
 [],
 #A5,    ,   reserved,  
