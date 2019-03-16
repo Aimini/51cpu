@@ -333,3 +333,10 @@ RL  A
 DJNZ 0xF0,START{}
         """.format(idx,idx,idx))
         print()
+
+#SETB bit  
+def X_D2_2():
+    for idx in range(0x10):
+        print("SETB 0x{:X}{:X}".format(idx,idx%8))
+        print("SETB 0x{:X}{:X}".format(idx,idx%8 + 8))
+        print()
