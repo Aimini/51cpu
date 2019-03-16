@@ -302,7 +302,7 @@ INSTRUCTIONS = [
 #92,   2,   MOV,      bit, C
 [['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN','NEXT_BYTE'],['TMP_BOP_TMPN','FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['BOP_OUT','RAM_IN']],
 #93,   1,   MOVC,     A, @A+DPTR
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['DPTR_OUT','ALUADDRTE','ALU_B_IN'],['ALU_ADD','ALUADDRTE','ALUTOADDR','PAR_IN'],['FLASH_OUT','ACC_IN']],
 #94,   2,   SUBB,     A, #immed
 [],
 #95,   2,   SUBB,     A, direct
