@@ -340,3 +340,16 @@ def X_D2_2():
         print("SETB 0x{:X}{:X}".format(idx,idx%8))
         print("SETB 0x{:X}{:X}".format(idx,idx%8 + 8))
         print()
+
+
+#ANL direct,A
+def X_52():
+    for x in range(8):
+        print("MOV 0x{:0>2X},#0xFF".format(x))
+    print()
+
+    
+    print("MOV A,#0xFE")
+    for x in range(8):
+        print("ANL 0x{:0>2X},A".format(x))
+        print("RL A")
