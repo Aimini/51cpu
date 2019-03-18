@@ -425,3 +425,9 @@ def X_42():
     for x in addr:
         print("ORL {},A".format(x))
         print("RL A")
+
+
+#ORL direct,#immed
+def X_43():
+    for x in range(0x100):
+        print("ORL 0x{:0>2X},#0x{:0>2X}".format(x,1<<(x%8)))
