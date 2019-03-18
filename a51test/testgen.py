@@ -431,3 +431,13 @@ def X_42():
 def X_43():
     for x in range(0x100):
         print("ORL 0x{:0>2X},#0x{:0>2X}".format(x,1<<(x%8)))
+
+
+#ORL A,direct
+def X_45():
+    for x in range(0x8):
+        print("MOV 0x{:0>2X},#0x{:0>2X}".format(0x20 + x,1<<x))
+
+    for x in range(0x8):
+        print("ORL A,0x{:0>2X}".format(0x20 + x))
+

@@ -22,4 +22,24 @@ ADD     A, direct
 ADD     A,@Ri
 ADD     A,Rn
 MOV     direct,direct
+MOV     direct,A
 MOV     @Ri,A
+MOV     Rn,A
+MOV     A,direct
+MOV     A,@Ri
+MOV     A,Rn
+CPL     A
+CLR     A
+DJNZ    Rn, offset
+MOV     DPTR, #immed
+MOV     @Ri,direct
+MOV     @Ri,#immed
+MOV     Rn,#immed
+INC     DPTR
+INC     @Ri
+INC     Rn
+MOV     Rn,direct
+MOV     direct,@Ri
+MOV     direct,Rn
+MOVC    A,@A+PC
+MOVC    A,@A+DPTR
