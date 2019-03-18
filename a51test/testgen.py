@@ -377,3 +377,23 @@ def X_55():
         print("MOV 0x{:0>2X},#0x{:0>2X}".format(0x20 + x,(~(1<<x))&0xFF))
     for x in range(0x8):
         print("ANL A,0x{:0>2X}".format(0x20 + x))
+
+#ANL A,@Ri
+def X_56():
+    addr = ['0x2A', '0x33', '0x44', '0x6E', '0x40', '0x6A', '0x63', '0x3D']
+    print("MOV A,#0xFF")
+    for idx,value in enumerate(addr):
+         print("MOV {},#0x{:0>2X}".format(value, (~(1 << idx)&0xFF)))
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("MOV R{},#{}".format(x, addr[x+rs*2]))
+        
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("ANL A,@R{}".format(x))
