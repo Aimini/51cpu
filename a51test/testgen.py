@@ -363,7 +363,7 @@ def X_53():
         print("ANL 0x{:0>2X},#0x{:0>2X}".format(x,1<<(x%8)))
 
 
-#ANL direct,#immed
+#ANL A,#immed
 def X_54():
     print("MOV A,#0xFF")
 
@@ -441,3 +441,8 @@ def X_45():
     for x in range(0x8):
         print("ORL A,0x{:0>2X}".format(0x20 + x))
 
+
+#ORL A,#immed
+def X_44():
+    for x in range(0x8):
+        print("ORL A,#0x{:0>2X}".format(1<<x))
