@@ -446,3 +446,24 @@ def X_45():
 def X_44():
     for x in range(0x8):
         print("ORL A,#0x{:0>2X}".format(1<<x))
+
+
+#ORL A,@Ri
+def X_46():
+    addr = ['0x6E', '0x43', '0x3B', '0x67', '0x21', '0x6C', '0x3F', '0x4C']
+    for idx,value in enumerate(addr):
+         print("MOV {},#0x{:0>2X}".format(value, 1 << idx))
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("MOV R{},#{}".format(x, addr[x+rs*2]))
+        
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("ORL A,@R{}".format(x))
+
