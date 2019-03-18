@@ -369,3 +369,11 @@ def X_54():
 
     for x in range(0x8):
         print("ANL A,#0x{:0>2X}".format((~(1<<x))&0xFF))
+
+#ANL A,direct
+def X_55():
+    print("MOV A,#0xFF")
+    for x in range(0x8):
+        print("MOV 0x{:0>2X},#0x{:0>2X}".format(0x20 + x,(~(1<<x))&0xFF))
+    for x in range(0x8):
+        print("ANL A,0x{:0>2X}".format(0x20 + x))
