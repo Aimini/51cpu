@@ -397,3 +397,18 @@ def X_56():
         print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
         for x in range(2):
             print("ANL A,@R{}".format(x))
+
+#ANL A,Rn
+def X_58():
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("MOV R{},#0x{:0>2X}".format(x,(~(1 << x)&0xFF)))
+        print()
+
+    for rs in range(4):
+        print("MOV A,#0xFF")
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("ANL A,R{}".format(x))
+        print()
