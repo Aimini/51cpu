@@ -140,35 +140,35 @@ INSTRUCTIONS = [
 #41,   2,   AJMP,     addr11
 1,
 #42,   2,   ORL,      direct, A
-[],
+[*merge_first(['ACC_OUT','ALU_B_DBUS_L8IN'], STEP_DIRECT_ADDRESS),['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_OR','ADT_L8E','RAM_IN']],
 #43,   3,   ORL,      direct, #immed
-[],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_B_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_A_DBUS_L8IN'],['ALU_OR','ADT_L8E','RAM_IN']],
 #44,   2,   ORL,      A, #immed
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_OR','ADT_L8E','ACC_IN']],
 #45,   2,   ORL,      A, direct
-[],
+[*merge_first(['ACC_OUT','ALU_A_DBUS_L8IN'],STEP_DIRECT_ADDRESS),['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_OR','ADT_L8E','ACC_IN']],
 #46,   1,   ORL,      A, @R0
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-@RI'],['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_OR','ADT_L8E','ACC_IN']],
 #47,   1,   ORL,      A, @R1
-[],
+-1,
 #48,   1,   ORL,      A, R0
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-RI_OUT','ALU_B_DBUS_L8IN'],['ALU_OR','ADT_L8E','ACC_IN']],
 #49,   1,   ORL,      A, R1
-[],
+-1,
 #4A,   1,   ORL,      A, R2
-[],
+-1,
 #4B,   1,   ORL,      A, R3
-[],
+-1,
 #4C,   1,   ORL,      A, R4
-[],
+-1,
 #4D,   1,   ORL,      A, R5
-[],
+-1,
 #4E,   1,   ORL,      A, R6
-[],
+-1,
 #4F,   1,   ORL,      A, R7
-[],
+-1,
 #50,   2,   JNC,      offset
-[],
+-1,
 #51,   2,   ACALL,    addr11
 0x11,
 #52,   2,   ANL,      direct, A

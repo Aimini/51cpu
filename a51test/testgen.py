@@ -412,3 +412,16 @@ def X_58():
         for x in range(8):
             print("ANL A,R{}".format(x))
         print()
+
+#ORL direct,A
+def X_42():
+    addr = ['0x30', '0x48', '0x71', '0x5E', '0x45', '0x52', '0x70', '0x30', '0x39', '0x29', '0x76', '0x34', '0x25', '0x73', '0x4D', '0x55']
+    for x in addr:
+        print("MOV {},#0x00".format(x))
+    print()
+
+    
+    print("MOV A,#0x1")
+    for x in addr:
+        print("ORL {},A".format(x))
+        print("RL A")
