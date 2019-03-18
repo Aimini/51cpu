@@ -110,7 +110,7 @@ INSTRUCTIONS = [
 #32,   1,   RETI,      
 [],
 #33,   1,   RLC,      A
-[],
+[['ACC_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_S0', 'TMP_SIS1','TMP_BOP_TMPN'],['TMP_OUT','ACC_IN'],['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['BOP_OUT','PSW_LOAD_BUS']],
 #34,   2,   ADDC,     A, #immed
 [],
 #35,   2,   ADDC,     A, direct
