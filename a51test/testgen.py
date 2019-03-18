@@ -353,3 +353,11 @@ def X_52():
     for x in range(8):
         print("ANL 0x{:0>2X},A".format(x))
         print("RL A")
+
+#ANL direct,#immed
+def X_53():
+    for x in range(0x100):
+        print("MOV 0x{:0>2X},#0xFF".format(x))
+
+    for x in range(0x100):
+        print("ANL 0x{:0>2X},#0x{:0>2X}".format(x,1<<(x%8)))
