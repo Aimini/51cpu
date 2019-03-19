@@ -467,3 +467,16 @@ def X_46():
         for x in range(2):
             print("ORL A,@R{}".format(x))
 
+#ORL A,Rn
+def X_48():
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("MOV R{},#0x{:0>2X}".format(x,1 << x))
+        print()
+
+    for rs in range(4):
+        print("MOV A,#0x00")
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("ORL A,R{}".format(x))
