@@ -525,3 +525,40 @@ def X_65():
 def X_64():
     for x in range(0x8):
         print("XRL A,#0x{:0>2X}".format((3<<x) >> 1))
+
+
+#XRL A,@Ri
+def X_66():
+    addr = ['0x6E', '0x43', '0x3B', '0x67', '0x21', '0x6C', '0x3F', '0x4C']
+    vaule = [((3<<x) >> 1) for x in range(8)]
+    for idx,value in enumerate(addr):
+         print("MOV {},#0x{:0>2X}".format(value, vaule[idx]))
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3))
+        for x in range(2):
+            print("MOV R{},#{}".format(x, addr[x+rs*2]))
+        
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("XRL A,@R{}".format(x))
+
+
+#OXRLRL A,Rn
+def X_68():
+    vaule = [((3<<x) >> 1) for x in range(8)]
+    for rs in range(4):
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("MOV R{},#0x{:0>2X}".format(x,vaule[x]))
+        print()
+
+    for rs in range(4):
+        print("MOV A,#0x00")
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            print("XRL A,R{}".format(x))
