@@ -496,3 +496,15 @@ def X_62():
         print("XRL {},A".format(x))
         print("RL A")
 
+
+#XRL direct,#immed
+def X_63():
+    for x in range(0x100):
+        if x%2 == 0:
+            number = 1<<(x%8)
+        else:
+            number = 0xFF&(~(1<<(x%8)))
+        print("MOV 0x{:0>2X},#0x{:0>2X}".format(x, number ))
+
+    for x in range(0x100):
+        print("XRL 0x{:0>2X},#0x{:0>2X}".format(x,1<<(x%8)))
