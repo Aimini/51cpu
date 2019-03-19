@@ -592,3 +592,14 @@ def X_C0():
 
     for x in addr:
         print("PUSH  {}".format(x))
+
+#POP direct
+def X_D0():
+    addr = ['0x49', '0x7E', '0x3C', '0x4C', '0x42', '0x57', '0x32', '0x70']
+    value = ['0x3B', '0x49', '0x25', '0x70', '0x6D', '0x73', '0x60', '0x76']
+    for x in range(len(addr)):
+        print("MOV  0x{:0>2X},#{}".format(x,value[x]))
+    print("MOV SP,#0x{:0>2X}".format(len(value)-1))
+
+    for x in addr:
+        print("POP  {}".format(x))
