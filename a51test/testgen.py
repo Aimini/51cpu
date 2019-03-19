@@ -519,3 +519,9 @@ def X_65():
     print("MOV A,#0x1")
     for x in addr:
         print("XRL A,{}".format(x))
+
+
+#XRL A,#immed
+def X_64():
+    for x in range(0x8):
+        print("XRL A,#0x{:0>2X}".format((3<<x) >> 1))
