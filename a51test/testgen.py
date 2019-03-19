@@ -584,3 +584,11 @@ def X_D6():
         for x in range(2):
             print("XCHD A,@R{}".format(x))
 
+#PUSH direct
+def X_C0():
+    addr = ['0x66', '0x73', '0x25', '0x30', '0x56', '0x54', '0x4C', '0x65']
+    for idx,value in enumerate(addr):
+        print("MOV  {},#0x{:0>2X}".format(value,idx))
+
+    for x in addr:
+        print("PUSH  {}".format(x))

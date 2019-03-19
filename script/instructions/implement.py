@@ -392,7 +392,7 @@ INSTRUCTIONS = [
 #BF,   3,   CJNE,     R7, #immed, offset
 [],
 #C0,   2,   PUSH,     direct
-[],
+[*merge_first(['SP_OUT','ALU_A_DBUS_L8IN'],STEP_DIRECT_ADDRESS),['RAM_OUT','TMP_IN'],['ALU_INC','ALU_A_L8IN','ALU_A_H8IN','ADT_L8E','RAR_IN','SP_IN'],['TMP_OUT','RAM_IN']],
 #C1,   2,   AJMP,     addr11
 1,
 #C2,   2,   CLR,      bit
