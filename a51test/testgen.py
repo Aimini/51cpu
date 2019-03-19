@@ -562,3 +562,25 @@ def X_68():
         print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
         for x in range(8):
             print("XRL A,R{}".format(x))
+
+
+#XCHD A,@Ri
+def X_D6():
+    addr = ['0x6E', '0x43', '0x3B', '0x67', '0x21', '0x6C', '0x3F', '0x4C']
+    vaule = [(x + (x<<4)) for x in range(8)]
+    for idx,value in enumerate(addr):
+         print("MOV {},#0x{:0>2X}".format(value, vaule[idx]))
+
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3))
+        for x in range(2):
+            print("MOV R{},#{}".format(x, addr[x+rs*2]))
+        
+    print("MOV A,#0xFF")
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            print("XCHD A,@R{}".format(x))
+

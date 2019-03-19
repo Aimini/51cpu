@@ -436,9 +436,9 @@ INSTRUCTIONS = [
 #D5,   3,   DJNZ,     direct, offset
 [*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAM_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #D6,   1,   XCHD,     A, @R0
-[],
+[['RAR-@RI'],['RAM_OUT','ALU_A_DBUS_L8IN'],['ACC_OUT','ALU_A_H8IN','ADT_H8E','DTOALU'],['ALUEXT_XCHD','ADT_L8E','RAM_IN'],['ALUEXT_XCHD','ADT_H8E','ACC_IN']],
 #D7,   1,   XCHD,     A, @R1
-[],
+-1,
 #D8,   2,   DJNZ,     R0, offset
 [['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #D9,   2,   DJNZ,     R1, offset
