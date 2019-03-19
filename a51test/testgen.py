@@ -480,3 +480,19 @@ def X_48():
         print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
         for x in range(8):
             print("ORL A,R{}".format(x))
+
+
+
+#XRL direct,A
+def X_62():
+    addr = ['0x30', '0x48', '0x71', '0x5E', '0x45', '0x52', '0x70', '0x30', '0x39', '0x29', '0x76', '0x34', '0x25', '0x73', '0x4D', '0x55']
+    for x in addr:
+        print("MOV {},#0xFF".format(x))
+    print()
+
+    
+    print("MOV A,#0x1")
+    for x in addr:
+        print("XRL {},A".format(x))
+        print("RL A")
+
