@@ -366,7 +366,7 @@ INSTRUCTIONS = [
 #B2,   2,   CPL,      bit
 [],
 #B3,   1,   CPL,      C
-[],
+[['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_BOP_TMPN'],['TMP_BOP_CPL'],['BOP_OUT','PSW_LOAD_BUS']],
 #B4,   3,   CJNE,     A, #immed, offset
 [],
 #B5,   3,   CJNE,     A, direct, offset
