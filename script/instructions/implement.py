@@ -364,7 +364,7 @@ INSTRUCTIONS = [
 #B1,   2,   ACALL,    addr11
 0X11,
 #B2,   2,   CPL,      bit
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN'],['TMP_BOP_CPL'],['BOP_OUT','RAM_IN']],
 #B3,   1,   CPL,      C
 [['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_BOP_TMPN'],['TMP_BOP_CPL'],['BOP_OUT','PSW_LOAD_BUS']],
 #B4,   3,   CJNE,     A, #immed, offset
