@@ -398,7 +398,7 @@ INSTRUCTIONS = [
 #C2,   2,   CLR,      bit
 [],
 #C3,   1,   CLR,      C
-[],
+[['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN','TMP_BOP_CLR'],['BOP_OUT','PSW_LOAD_BUS']],
 #C4,   1,   SWAP,     A
 [['ACC_OUT','ALU_A_DBUS_H8IN'],['ALUEXT_SWAP','ADT_H8E','ACC_IN']],
 #C5,   2,   XCH,      A, direct
