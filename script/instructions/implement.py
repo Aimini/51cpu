@@ -396,7 +396,7 @@ INSTRUCTIONS = [
 #C1,   2,   AJMP,     addr11
 1,
 #C2,   2,   CLR,      bit
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN','TMP_BOP_CLR'],['BOP_OUT','RAM_IN']],
 #C3,   1,   CLR,      C
 [['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN','TMP_BOP_CLR'],['BOP_OUT','PSW_LOAD_BUS']],
 #C4,   1,   SWAP,     A
