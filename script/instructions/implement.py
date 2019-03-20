@@ -404,9 +404,9 @@ INSTRUCTIONS = [
 #C5,   2,   XCH,      A, direct
 [],
 #C6,   1,   XCH,      A, @R0
-[],
+[['RAR-@RI'],['ACC_OUT','TMP_IN'],['RAM_OUT','ACC_IN'],['TMP_OUT','RAM_IN']],
 #C7,   1,   XCH,      A, @R1
-[],
+-1,
 #C8,   1,   XCH,      A, R0
 [['ACC_OUT','TMP_IN'],['RAR-RI_OUT','ACC_IN'],['TMP_OUT','RAR-RI_IN']],
 #C9,   1,   XCH,      A, R1

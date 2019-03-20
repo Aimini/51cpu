@@ -611,8 +611,26 @@ def gen_Rn(do):
         print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
         for x in range(8):
             do(rs,x,rs*8+x)
+
 #XCH A,Rn
 def X_C8():
     init_Ri()
     print("MOV A,#0xFF")
     gen_Rn(lambda rs,i,order: print("XCH A,R{}".format(i)))
+
+def gen_Ri(do):
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(2):
+            do(rs,x,rs*2+x)
+
+def X_C6():
+    addr = ['0x75', '0x6A', '0x7F', '0x46', '0x3E', '0x2C', '0x69', '0x70']
+    value = ['0x01','0x02','0x03','0x04','0x05','0x06','0x07','0x08']
+    gen_Ri(lambda rs,i,order:print("MOV R{},#{}".format(i,addr[order])))
+    for idx,a in enumerate(addr):
+        print("MOV {},#{}".format(a,value[idx]))
+    
+    print("MOV A,#0xFF")
+    gen_Ri(lambda rs,i,order:print("XCH A,@R{}".format(i)))
