@@ -634,3 +634,12 @@ def X_C6():
     
     print("MOV A,#0xFF")
     gen_Ri(lambda rs,i,order:print("XCH A,@R{}".format(i)))
+
+def X_C5():
+    addr =['0x2C', '0x5E', '0x62', '0x2D', '0x2B', '0x74', '0x3F', '0x6D']
+    value = ['0x01','0x02','0x03','0x04','0x05','0x06','0x07','0x08']
+    for idx,a in enumerate(addr):
+        print("MOV {},#{}".format(a,value[idx]))
+    print("MOV A,#0xFF")
+    for x in addr:
+        print("XCH A,{}".format(x)

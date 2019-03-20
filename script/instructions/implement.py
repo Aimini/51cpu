@@ -402,7 +402,7 @@ INSTRUCTIONS = [
 #C4,   1,   SWAP,     A
 [['ACC_OUT','ALU_A_DBUS_H8IN'],['ALUEXT_SWAP','ADT_H8E','ACC_IN']],
 #C5,   2,   XCH,      A, direct
-[],
+[*merge_first(['ACC_OUT','TMP_IN'],STEP_DIRECT_ADDRESS),['RAM_OUT','ACC_IN'],['TMP_OUT','RAM_IN']],
 #C6,   1,   XCH,      A, @R0
 [['RAR-@RI'],['ACC_OUT','TMP_IN'],['RAM_OUT','ACC_IN'],['TMP_OUT','RAM_IN']],
 #C7,   1,   XCH,      A, @R1
