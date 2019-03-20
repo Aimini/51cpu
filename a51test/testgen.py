@@ -603,3 +603,16 @@ def X_D0():
 
     for x in addr:
         print("POP  {}".format(x))
+
+# do (rs, Ri, order)
+def gen_Rn(do):
+    for rs in range(4):
+        print()
+        print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
+        for x in range(8):
+            do(rs,x,rs*8+x)
+#XCH A,Rn
+def X_C8():
+    init_Ri()
+    print("MOV A,#0xFF")
+    gen_Rn(lambda rs,i,order: print("XCH A,R{}".format(i)))

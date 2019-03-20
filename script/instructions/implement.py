@@ -408,21 +408,21 @@ INSTRUCTIONS = [
 #C7,   1,   XCH,      A, @R1
 [],
 #C8,   1,   XCH,      A, R0
-[],
+[['ACC_OUT','TMP_IN'],['RAR-RI_OUT','ACC_IN'],['TMP_OUT','RAR-RI_IN']],
 #C9,   1,   XCH,      A, R1
-[],
+-1,
 #CA,   1,   XCH,      A, R2
-[],
+-1,
 #CB,   1,   XCH,      A, R3
-[],
+-1,
 #CC,   1,   XCH,      A, R4
-[],
+-1,
 #CD,   1,   XCH,      A, R5
-[],
+-1,
 #CE,   1,   XCH,      A, R6
-[],
+-1,
 #CF,   1,   XCH,      A, R7
-[],
+-1,
 #D0,   2,   POP,      direct
 [['SP_OUT','RAR_IN','ALU_A_DBUS_L8IN'],*merge_first(['RAM_OUT','TMP_IN'],STEP_DIRECT_ADDRESS),['TMP_OUT','RAM_IN'],['ALU_DEC','ADT_L8E','SP_IN']],
 #D1,   2,   ACALL,    addr11
