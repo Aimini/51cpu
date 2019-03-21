@@ -24,7 +24,7 @@ circuit_control_label = [
     "TMP_DA_OUT","TMP_BITADDR_OUT",
     "IR_IN", "IR_OUT",
 
-    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG",
+    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT"
     ]
 
 control_function = {

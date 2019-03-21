@@ -338,7 +338,7 @@ INSTRUCTIONS = [
 #A4,   1,   MUL,      AB
 [],
 #A5,    ,   reserved,  
-[],
+[['DEBUG_HALT']],
 #A6,   2,   MOV,      @R0, direct
 [*STEP_DIRECT_ADDRESS,['RAM_OUT','TMP_IN'],['RAR-@RI'],['TMP_OUT','RAM_IN']],
 #A7,   2,   MOV,      @R1, direct
@@ -360,7 +360,7 @@ INSTRUCTIONS = [
 #AF,   2,   MOV,      R7, direct
 -1,
 #B0,   2,   ANL,      C, /bit
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN'],['TMP_BOP_CPL','PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_BOP_AND_TMPN'],['BOP_OUT','PSW_LOAD_BUS']],
 #B1,   2,   ACALL,    addr11
 0X11,
 #B2,   2,   CPL,      bit
