@@ -372,9 +372,9 @@ INSTRUCTIONS = [
 #B5,   3,   CJNE,     A, direct, offset
 [],
 #B6,   3,   CJNE,     @R0, #immed, offset
-[],
+[['RAR-@RI'],['RAM_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_SUB','ADT_H8E','TMP_IN'],['TMP_BOP_LOAD_TMP_ZF','PSW_OUT','TMP_BOP_IDX_CY_IN','TMP_IN'],['TMP_BOP_CPL'],['BOP_OUT','PSW_LOAD_BUS'],['ALU_SUB','ADT_L8E','TMP_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #B7,   3,   CJNE,     @R1, #immed, offset
-[],
+-1,
 #B8,   3,   CJNE,     R0, #immed, offset
 [['RAR-RI_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_SUB','ADT_H8E','TMP_IN'],['TMP_BOP_LOAD_TMP_ZF','PSW_OUT','TMP_BOP_IDX_CY_IN','TMP_IN'],['TMP_BOP_CPL'],['BOP_OUT','PSW_LOAD_BUS'],['ALU_SUB','ADT_L8E','TMP_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #B9,   3,   CJNE,     R1, #immed, offset

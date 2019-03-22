@@ -662,3 +662,18 @@ def X_B8():
     CJNE R{},#0x{:0>2X},{}
         """.format(label,n,n,order + 0x20,label))
     gen_Rn(do)
+
+def X_B6():
+    addrs = ['0x37', '0x6F', '0x2A', '0x50', '0x2F', '0x2C', '0x4D', '0x39']
+    def setup_Ri(rs,n,order):
+        print("MOV R{},#{}".format(n,addrs[order]))
+
+    def do(rs,n,order):
+        label = "START_RS{}_{}".format(rs,n)
+        print("""
+{}:
+    INC @R{}
+    CJNE @R{},#0x{:0>2X},{}
+        """.format(label,n,n,order + 0x20,label))
+    gen_Ri(setup_Ri)
+    gen_Ri(do)

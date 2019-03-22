@@ -1,0 +1,62 @@
+MOV 0xD0,#0x00
+MOV R0,#0x37
+MOV R1,#0x6F
+
+MOV 0xD0,#0x08
+MOV R0,#0x2A
+MOV R1,#0x50
+
+MOV 0xD0,#0x10
+MOV R0,#0x2F
+MOV R1,#0x2C
+
+MOV 0xD0,#0x18
+MOV R0,#0x4D
+MOV R1,#0x39
+
+MOV 0xD0,#0x00
+
+START_RS0_0:
+    INC @R0
+    CJNE @R0,#0x20,START_RS0_0
+        
+
+START_RS0_1:
+    INC @R1
+    CJNE @R1,#0x21,START_RS0_1
+        
+
+MOV 0xD0,#0x08
+
+START_RS1_0:
+    INC @R0
+    CJNE @R0,#0x22,START_RS1_0
+        
+
+START_RS1_1:
+    INC @R1
+    CJNE @R1,#0x23,START_RS1_1
+        
+
+MOV 0xD0,#0x10
+
+START_RS2_0:
+    INC @R0
+    CJNE @R0,#0x24,START_RS2_0
+        
+
+START_RS2_1:
+    INC @R1
+    CJNE @R1,#0x25,START_RS2_1
+        
+
+MOV 0xD0,#0x18
+
+START_RS3_0:
+    INC @R0
+    CJNE @R0,#0x26,START_RS3_0
+        
+
+START_RS3_1:
+    INC @R1
+    CJNE @R1,#0x27,START_RS3_1
