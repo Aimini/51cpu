@@ -328,7 +328,7 @@ INSTRUCTIONS = [
 #9F,   1,   SUBB,     A, R7
 [],
 #A0,   2,   ORL,      C, /bit
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN'],['TMP_BOP_CPL','PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_BOP_OR_TMPN'],['BOP_OUT','PSW_LOAD_BUS']],
 #A1,   2,   AJMP,     addr11
 1,
 #A2,   2,   MOV,      C, bit
