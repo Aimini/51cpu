@@ -236,9 +236,9 @@ INSTRUCTIONS = [
 #71,   2,   ACALL,    addr11
 0X11,
 #72,   2,   ORL,      C, bit
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN','PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_BOP_OR_TMPN'],['BOP_OUT','PSW_LOAD_BUS']],
 #73,   1,   JMP,      @A+DPTR
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],["ALU_B_S0","ALU_B_S1","ALUADDRTE","DPTR_OUT"],["ALU_ADD","ALUADDRTE","ALUTOADDR","PC_IN"]],
 #74,   2,   MOV,      A, #immed
 [['NEXT_BYTE'],['FLASH_OUT','ACC_IN']],
 #75,   3,   MOV,      direct, #immed
