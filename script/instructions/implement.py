@@ -376,21 +376,21 @@ INSTRUCTIONS = [
 #B7,   3,   CJNE,     @R1, #immed, offset
 [],
 #B8,   3,   CJNE,     R0, #immed, offset
-[],
+[['RAR-RI_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_SUB','ADT_H8E','TMP_IN'],['TMP_BOP_LOAD_TMP_ZF','PSW_OUT','TMP_BOP_IDX_CY_IN','TMP_IN'],['TMP_BOP_CPL'],['BOP_OUT','PSW_LOAD_BUS'],['ALU_SUB','ADT_L8E','TMP_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
 #B9,   3,   CJNE,     R1, #immed, offset
-[],
+-1,
 #BA,   3,   CJNE,     R2, #immed, offset
-[],
+-1,
 #BB,   3,   CJNE,     R3, #immed, offset
-[],
+-1,
 #BC,   3,   CJNE,     R4, #immed, offset
-[],
+-1,
 #BD,   3,   CJNE,     R5, #immed, offset
-[],
+-1,
 #BE,   3,   CJNE,     R6, #immed, offset
-[],
+-1,
 #BF,   3,   CJNE,     R7, #immed, offset
-[],
+-1,
 #C0,   2,   PUSH,     direct
 [*merge_first(['SP_OUT','ALU_A_DBUS_L8IN'],STEP_DIRECT_ADDRESS),['RAM_OUT','TMP_IN'],['ALU_INC','ADT_L8E','RAR_IN','SP_IN'],['TMP_OUT','RAM_IN']],
 #C1,   2,   AJMP,     addr11

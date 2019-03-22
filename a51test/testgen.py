@@ -1,4 +1,4 @@
-
+import random
 
 sfr_addrs = {
     "P0" : 0x80,
@@ -642,4 +642,23 @@ def X_C5():
         print("MOV {},#{}".format(a,value[idx]))
     print("MOV A,#0xFF")
     for x in addr:
-        print("XCH A,{}".format(x)
+        print("XCH A,{}".format(x))
+
+
+def random_addr(x = 8):
+    s = range(16)
+    addr = set()
+    while len(addr) < 8:
+        addr.add("0x{:0>2X}".format((random.choice(s[2:8]) << 4) + random.choice(s)))
+    return list(addr)
+
+
+def X_B8():
+    def do(rs,n,order):
+        label = "START_RS{}_{}".format(rs,n)
+        print("""
+{}:
+    INC R{}
+    CJNE R{},#0x{:0>2X},{}
+        """.format(label,n,n,order + 0x20,label))
+    gen_Rn(do)
