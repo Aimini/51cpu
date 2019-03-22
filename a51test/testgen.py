@@ -648,7 +648,7 @@ def X_C5():
 def random_addr(x = 8):
     s = range(16)
     addr = set()
-    while len(addr) < 8:
+    while len(addr) < x:
         addr.add("0x{:0>2X}".format((random.choice(s[2:8]) << 4) + random.choice(s)))
     return list(addr)
 
