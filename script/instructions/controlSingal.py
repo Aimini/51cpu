@@ -26,6 +26,7 @@ circuit_control_label = [
 
     "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT"
     ]
+assert( len(set(circuit_control_label)) == len(circuit_control_label))
 
 control_function = {
     "ALU_ADD" : ('ALU_S3','ALU_S0','~ALU_CN','ALU_OUT'),
