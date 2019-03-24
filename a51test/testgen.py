@@ -745,3 +745,28 @@ MOV B,#{0}
 MUL AB
     """.format(to_hex(x)))
     f.close()
+
+
+def X_20():
+    f = open_test_file(0x20,"JB bit o")
+    for x in range(0x10):
+            f.write("MOV {},#{}\n".format(to_hex(0x20+x),to_hex(1 << (x % 8))))
+    f.write("""LJMP L15
+L0:
+    MOV A,#00
+    LJMP FINAL
+
+    """)
+
+    for x in range(1,0x10):
+        f.write("""
+L{}:
+MOV A,#{}
+JB {}.{},L{}
+    """.format(x,to_hex(x), to_hex(0x20+x), x% 8,x-1))
+    f.write("""FINAL:
+    MOV 0xF0,#0xFF""")
+    f.close()
+
+
+X_20()

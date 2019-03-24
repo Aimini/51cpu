@@ -73,7 +73,7 @@ INSTRUCTIONS = [
 #1F,   1,   DEC,      R7
 -1,
 #20,   3,   JB,       bit, offset
-0,
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['BOP_IN','TMP_BITADDR_OUT','RAR_IN'],['RAM_OUT','TMP_IN'],['NEXT_BYTE'],*PC_add_off_when('PC_BITQIN')],
 #21,   2,   AJMP,     addr11
 1,
 #22,   1,   RET,       
