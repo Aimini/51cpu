@@ -60,8 +60,6 @@ FLAG_INSTRUCTION ={
     'TMP_ZF':{
     },
     'BIT':{
-    #JBC	bit, offset
-    0x10:[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['BOP_IN','TMP_BITADDR_OUT','RAR_IN'],['RAM_LATCH_OUT','TMP_IN'],['NEXT_BYTE'],*STEP_PC_ADD_OFFSET,['TMP_BOP_CLR'],['BOP_OUT','RAM_IN']],
     #JB	    bit, offset
     0x20:[],
     #JNB    bit, offset
