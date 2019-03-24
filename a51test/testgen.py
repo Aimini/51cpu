@@ -677,3 +677,53 @@ def X_B6():
         """.format(label,n,n,order + 0x20,label))
     gen_Ri(setup_Ri)
     gen_Ri(do)
+
+def to_hex(number):
+    return "0x{:0>2X}".format(number)
+
+
+def X_B5():
+    for x in range(0x20):
+        print("MOV {0},#{0}".format(to_hex(x)))
+    print("""
+MOV A,#0
+LJMP STATE_31
+STATE_0: 
+    CJNE A,0x00,FINAL
+    LJMP TEST_2
+    """)
+    print("\n")
+    for x in range(1,0x20):
+        print("STATE_{}: CJNE A,{},STATE_{}".format(x,to_hex(x),x-1))
+
+    print("""
+TEST_2:
+    MOV A,#0x10
+    MOV 0xF0, #0x10
+    MOV 0xE0, #0xF0
+    MOV 0xD0, #0x0F
+    SJMP CH_3
+    CH_1: CJNE A,0xF0,FINAL
+    SJMP DNOTHING
+    CH_2: CJNE A,0xD0,CH_1
+    CH_3: CJNE A,0xE0,CH_2
+FINAL: 
+    MOV A,0xFF
+DNOTHING:
+    NOP
+    """)
+
+def X_B4():
+    print("""LJMP STATE_255
+STATE_0:
+    MOV 0xF0,#0xFF
+    CJNE A,#0,STATE_1
+    LJMP FINAL
+    """)
+    
+    for x in range(1,0x100):
+        print("""
+STATE_{cu}:
+    MOV 0xF0,#{immed}
+    CJNE A,#{immed},STATE_{ne}""".format(cu = x,immed = to_hex(x),ne= x - 1))
+    print("FINAL: MOV A,#0xFF")
