@@ -1,7 +1,7 @@
 circuit_control_label = [
     'MIC_RST', 'INT_CHK', 'INT_SVC_END',
 
-    "PC_IN", "PC_OUT", "PC_INC",
+    "PC_S0", "PC_OUT", "PC_INC",
     "PAR_IN", "FLASH_OUT",
     "DPTR_IN","DPTR_OUT",
 
@@ -15,7 +15,7 @@ circuit_control_label = [
     
 
     "RAM_IN","RAM_OUT","RAM_LATCH_OUT",
-    "RAR_IN","RAR_OUT","RAR_ADDRS0","RAR_ADDRS1",
+    "RAR_IN","PC_S1","RAR_ADDRS0","RAR_ADDRS1",
     "ACC_IN","ACC_OUT",
     "B_IN","B_OUT",
     "SP_IN","SP_OUT",
@@ -24,7 +24,7 @@ circuit_control_label = [
     "TMP_DA_OUT","TMP_BITADDR_OUT",
     "IR_IN", "IR_OUT",
 
-    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT"
+    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT","PC_S2"
     ]
 assert( len(set(circuit_control_label)) == len(circuit_control_label))
 
@@ -79,6 +79,7 @@ control_function = {
     "ALUEXT_XCHD":("ALU_S0", "ALU_S2", "ALU_S3","ALU_EXTOUT"),
     "ALUEXT_TWO_CMP":("ALU_S0", "ALU_S1", "ALU_S3","ALU_EXTOUT"),
     "ALUEXT_SWAP":("ALU_S0", "ALU_S1", "ALU_S2","ALU_EXTOUT"),
+    "PC_IN":("PC_S0",)
 }
 
     

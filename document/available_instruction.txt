@@ -75,3 +75,14 @@ CPL     C
 CPL     bit
 ANL     C,/bit
 ORL     C,/bit
+MOV     C,bit
+MOV     bit,C
+ANL	    C,bit
+OR      C,bit
+JMP     @A+DPTR
+CJNE    Rn,#immed,offset
+CJNE    @Ri,#immed,offset
+CJNE    A,direct,offset
+CJNE    A,#immed,offset
+MUL     AB
+DIV     AB
