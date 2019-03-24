@@ -26,9 +26,6 @@ def add_recount_and_interrupt_check(instructions):
     for idx, one in enumerate(instructions):
         # check instruction's oscil cycle len
         instruction_len = len(one)
-        if instruction_len > oscillation_cycle_max:
-            print("The instruction {}(0x{:0>2x})"
-                  " uses an excessively long oscillation period".format(i_info.HEX_TO_NAME[idx], idx))
         add_where = math.ceil(instruction_len/oscillation_cycle)*oscillation_cycle
         one.extend([[] for __ in range(add_where  - instruction_len)])
         if add_where < oscillation_cycle_max:
@@ -38,6 +35,11 @@ def add_recount_and_interrupt_check(instructions):
             print("{}(0x{:0>2x}) ignore interrupt check.".format(i_info.HEX_TO_NAME[idx], idx))
         else:
             one[add_where - 1].append('INT_CHK')
+        
+        
+        if len(one) > oscillation_cycle_max:
+            print("The instruction {}(0x{:0>2x})  uses an excessively long oscillation period".format(i_info.HEX_TO_NAME[idx], idx))
+            exit(-1)
 
 
 def generate_complete_instruction(instructions):
