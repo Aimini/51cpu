@@ -79,7 +79,13 @@ control_function = {
     "ALUEXT_XCHD":("ALU_S0", "ALU_S2", "ALU_S3","ALU_EXTOUT"),
     "ALUEXT_TWO_CMP":("ALU_S0", "ALU_S1", "ALU_S3","ALU_EXTOUT"),
     "ALUEXT_SWAP":("ALU_S0", "ALU_S1", "ALU_S2","ALU_EXTOUT"),
-    "PC_IN":("PC_S0",)
+    "PC_IN":("PC_S0",),
+    "PC_ZFIN":("PC_S1",),
+    "PC_/ZFIN":("PC_S1","PC_S0"),
+    "PC_BITQIN":("PC_S2",),
+    "PC_/BITQIN":("PC_S2","PC_S0"),
+    "PC_CyIN":("PC_S2","PC_S1"),
+    "PC_/CyIN":("PC_S2","PC_S1","PC_S0")
 }
 
     
