@@ -10,7 +10,7 @@ circuit_control_label = [
 
     "ALU_OUT","ALU_EXTOUT", "ALU_M", "ALU_S0", "ALU_S1", "ALU_S2", "ALU_S3", "~ALU_CN",
     "ALU_A_S0","ALU_A_S1","ALU_A_S2",
-    "ALU_B_S0","ALU_B_S1","ALU_B_OUT",
+    "ALU_B_S0","ALU_B_S1","BOP_CLR_CY",
 
     
 
@@ -45,12 +45,16 @@ control_function = {
     "ALU_A_CNIN" : ('ALU_A_S2',),
     "ALU_A_BITIN" :('ALU_A_S2','ALU_A_S0'),
     "ALU_B_IN" :('ALU_B_S0','ALU_B_S1'),
+    "ALU_B_SHIFT_LEFT":('ALU_B_S0',),
+    "ALU_B_SHIFT_RIGHT":('ALU_B_S1',),
     "RAR_IDXR0-7":("RAR_ADDRS0",),
     "RAR_IDXR0-1":("RAR_ADDRS0","RAR_ADDRS1"),
     "PSW_LOAD_BUS":('PSW_FLAG_IN','PSW_USER_IN'),
     "PSW_LOAD_ALUFLAG":('PSW_FLAG_IN',"PSW_BUS/FLAG"),
     "TMP_RR_SHIFT":('TMP_S1', 'TMP_SIS0', 'TMP_SIS1'),
     "TMP_RL_SHIFT":('TMP_S0', 'TMP_SIS0', 'TMP_SIS1'),
+    'TMP_SHIFT_RIGHT':('TMP_S1',),
+    'TMP_SHIFT_CN':('TMP_S0','TMP_SIS0'),
     "TMP_IN":('TMP_S0','TMP_S1'),
     "TMP_BOP_IDX_0_IN":("BOP_IN","TMP_BOP_ADDS0"),
     "TMP_BOP_IDX_OV_IN":("BOP_IN","TMP_BOP_ADDS1"),
