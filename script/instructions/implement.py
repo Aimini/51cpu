@@ -137,7 +137,7 @@ INSTRUCTIONS = [
 #3F,   1,   ADDC,     A, R7
 [],
 #40,   2,   JC,       offset
-[],
+[['NEXT_BYTE'],*PC_add_off_when('PC_CyIN')],
 #41,   2,   AJMP,     addr11
 1,
 #42,   2,   ORL,      direct, A
@@ -169,7 +169,7 @@ INSTRUCTIONS = [
 #4F,   1,   ORL,      A, R7
 -1,
 #50,   2,   JNC,      offset
--1,
+[['NEXT_BYTE'],*PC_add_off_when('PC_/CyIN')],
 #51,   2,   ACALL,    addr11
 0x11,
 #52,   2,   ANL,      direct, A

@@ -28,10 +28,6 @@ FLAG_INSTRUCTION ={
     0x3E:[[]],
 	#1	ADDC	A, R7
     0x3F:[[]],
-    #JC	offset
-    0x40:[[]],
-    #JNC	offset
-    0x50:[[]],
 	#2	SUBB	A, #immed
     0x94:[],
 	#2	SUBB	A, direct
