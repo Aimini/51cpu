@@ -447,13 +447,13 @@ INSTRUCTIONS = [
 #D4,   1,   DA,       A
 [['ACC_OUT','TMP_IN'],['TMP_DA_OUT','TMP_BOP_LOAD_DA_CF','ACC_IN'],['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['BOP_OUT','PSW_LOAD_BUS']],
 #D5,   3,   DJNZ,     direct, offset
-[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAM_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
+[*STEP_DIRECT_ADDRESS,['RAM_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAM_IN','NEXT_BYTE'],*PC_add_off_when('PC_/ZFIN')],
 #D6,   1,   XCHD,     A, @R0
 [['RAR-@RI'],['RAM_OUT','ALU_A_DBUS_L8IN'],['ACC_OUT','ALU_A_H8IN','ADT_H8E','DTOALU'],['ALUEXT_XCHD','ADT_L8E','RAM_IN'],['ALUEXT_XCHD','ADT_H8E','ACC_IN']],
 #D7,   1,   XCHD,     A, @R1
 -1,
 #D8,   2,   DJNZ,     R0, offset
-[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE'],*STEP_PC_ADD_OFFSET],
+[['RAR-RI_OUT','ALU_A_DBUS_L8IN'],['ALU_DEC','ADT_L8E','TMP_IN','RAR-RI_IN','NEXT_BYTE'],*PC_add_off_when('PC_/ZFIN')],
 #D9,   2,   DJNZ,     R1, offset
 -1,
 #DA,   2,   DJNZ,     R2, offset
