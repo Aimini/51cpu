@@ -201,7 +201,7 @@ INSTRUCTIONS = [
 #5F,   1,   ANL,      A, R7
 -1,
 #60,   2,   JZ,       offset
-[],
+[['ACC_OUT','TMP_IN','NEXT_BYTE'],*PC_add_off_when('PC_ZFIN')],
 #61,   2,   AJMP,     addr11
 1,
 #62,   2,   XRL,      direct, A
