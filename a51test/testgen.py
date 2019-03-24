@@ -1,5 +1,7 @@
 import random
-
+import pathlib
+import sys
+test_d = pathlib.Path(sys.argv[0]).parent
 sfr_addrs = {
     "P0" : 0x80,
     "TCON ": 0x88,
@@ -727,3 +729,19 @@ STATE_{cu}:
     MOV 0xF0,#{immed}
     CJNE A,#{immed},STATE_{ne}""".format(cu = x,immed = to_hex(x),ne= x - 1))
     print("FINAL: MOV A,#0xFF")
+
+def open_test_file(num,name):
+    name = name.replace(' ','_')
+    return open(test_d / "({:0>2X}){}.a51".format(num,name),'w')
+    
+
+def X_A4():
+    f = open_test_file(0xA4,"MUL AB")
+    for x in range(0x100):
+        f.write("""
+MOV 0xD0,#0x80
+MOV A,#{0}
+MOV B,#{0}
+MUL AB
+    """.format(to_hex(x)))
+    f.close()
