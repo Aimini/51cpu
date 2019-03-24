@@ -58,8 +58,6 @@ FLAG_INSTRUCTION ={
     0x9F:[],
     },
     'TMP_ZF':{
-    #2	JNZ	offset
-    0x70:[],
     },
     'BIT':{
     #JBC	bit, offset

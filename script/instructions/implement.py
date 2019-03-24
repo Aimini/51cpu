@@ -233,7 +233,7 @@ INSTRUCTIONS = [
 #6F,   1,   XRL,      A, R7
 -1,
 #70,   2,   JNZ,      offset
-[],
+[['ACC_OUT','TMP_IN','NEXT_BYTE'],*PC_add_off_when('PC_/ZFIN')],
 #71,   2,   ACALL,    addr11
 0X11,
 #72,   2,   ORL,      C, bit
