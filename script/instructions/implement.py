@@ -105,7 +105,7 @@ INSTRUCTIONS = [
 #2F,   1,   ADD,      A, R7
 -1,
 #30,   3,   JNB,      bit, offset
-[],
+[['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['BOP_IN','TMP_BITADDR_OUT','RAR_IN'],['RAM_OUT','TMP_IN'],['NEXT_BYTE'],*PC_add_off_when('PC_/BITQIN')],
 #31,   2,   ACALL,    addr11
 0X11,
 #32,   1,   RETI,      

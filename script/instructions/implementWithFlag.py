@@ -60,7 +60,5 @@ FLAG_INSTRUCTION ={
     'TMP_ZF':{
     },
     'BIT':{
-    #JNB    bit, offset
-    0x30:[],
     }   
 }

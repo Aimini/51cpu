@@ -768,5 +768,25 @@ JB {}.{},L{}
     MOV 0xF0,#0xFF""")
     f.close()
 
+def X_30():
+    f = open_test_file(0x30,"JNB bit o")
+    for x in range(0x10):
+            f.write("MOV {},#{}\n".format(to_hex(0x20+x),to_hex(0xFF&(~(1 << (x % 8))))))
+    f.write("""LJMP L15
+L0:
+    MOV A,#00
+    LJMP FINAL
 
-X_20()
+    """)
+
+    for x in range(1,0x10):
+        f.write("""
+L{}:
+MOV A,#{}
+JNB {}.{},L{}
+    """.format(x,to_hex(x), to_hex(0x20+x), x% 8,x-1))
+    f.write("""FINAL:
+    JNB 0x2F.0,L0
+    MOV 0xF0,#0xFF""")
+    f.close()
+X_30()
