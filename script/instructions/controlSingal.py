@@ -9,7 +9,7 @@ circuit_control_label = [
     "ALUADDRTE","ALUTOADDR",
 
     "ALU_OUT","ALU_EXTOUT", "ALU_M", "ALU_S0", "ALU_S1", "ALU_S2", "ALU_S3", "~ALU_CN",
-    "ALU_A_L8IN","ALU_A_H8IN","ALU_A_CN16IN",
+    "ALU_A_S0","ALU_A_S1","ALU_A_S2",
     "ALU_B_S0","ALU_B_S1","ALU_B_OUT",
 
     
@@ -38,7 +38,11 @@ control_function = {
     "ALU_NOT" : ('ALU_M','ALU_OUT'),
     "ALU_DEC" : ('~ALU_CN','ALU_S3','ALU_S2','ALU_S1','ALU_S0','ALU_OUT'),
     "ALU_INC" :('ALU_OUT',),
-    "ALU_A_IN" : ('ALU_A_L8IN','ALU_A_H8IN'),
+    "ALU_A_IN" : ('ALU_A_S0','ALU_A_S1'),
+    'ALU_A_L8IN':('ALU_A_S0',),
+    'ALU_A_H8IN':('ALU_A_S1',),
+    "ALU_A_CNIN" : ('ALU_A_S2',),
+    "ALU_A_BITIN" :('ALU_A_S2','ALU_A_S0'),
     "ALU_B_IN" :('ALU_B_S0','ALU_B_S1'),
     "RAR_IDXR0-7":("RAR_ADDRS0",),
     "RAR_IDXR0-1":("RAR_ADDRS0","RAR_ADDRS1"),
@@ -58,8 +62,8 @@ control_function = {
     "TMP_BOP_OR_TMPN":('TMP_BOP_BS1','TMP_BOP_BS2'),
     "TMP_BOP_AND_TMPN":('TMP_BOP_BS0','TMP_BOP_BS1','TMP_BOP_BS2'),
     "NEXT_BYTE":('PC_OUT','PC_INC','PAR_IN'),
-    "ALU_A_DBUS_L8IN":('DTOALU','ADT_L8E','ALU_A_L8IN','ALU_A_H8IN'),
-    "ALU_A_DBUS_H8IN":('DTOALU','ADT_H8E','ALU_A_L8IN','ALU_A_H8IN'),
+    "ALU_A_DBUS_L8IN":('DTOALU','ADT_L8E','ALU_A_S0','ALU_A_S1'),
+    "ALU_A_DBUS_H8IN":('DTOALU','ADT_H8E','ALU_A_S0','ALU_A_S1'),
     "ALU_B_DBUS_L8IN":('DTOALU','ADT_L8E','ALU_B_S0','ALU_B_S1'),
     "ALU_B_DBUS_H8IN":('DTOALU','ADT_H8E','ALU_B_S0','ALU_B_S1'),
     "ALU_A_OUT":('ALU_OUT','~ALU_CN'),
