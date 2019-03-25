@@ -319,21 +319,21 @@ INSTRUCTIONS = [
 #97,   1,   SUBB,     A, @R1
 -1,
 #98,   1,   SUBB,     A, R0
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-RI_OUT','ALU_B_DBUS_L8IN'],['ALU_SUBB','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #99,   1,   SUBB,     A, R1
-[],
+-1,
 #9A,   1,   SUBB,     A, R2
-[],
+-1,
 #9B,   1,   SUBB,     A, R3
-[],
+-1,
 #9C,   1,   SUBB,     A, R4
-[],
+-1,
 #9D,   1,   SUBB,     A, R5
-[],
+-1,
 #9E,   1,   SUBB,     A, R6
-[],
+-1,
 #9F,   1,   SUBB,     A, R7
-[],
+-1,
 #A0,   2,   ORL,      C, /bit
 [['NEXT_BYTE'],['FLASH_OUT','TMP_IN'],['TMP_BITADDR_OUT','BOP_IN','RAR_IN'],['RAM_OUT','TMP_IN'],['TMP_BOP_TMPN'],['TMP_BOP_CPL','PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_BOP_OR_TMPN'],['BOP_OUT','PSW_LOAD_BUS']],
 #A1,   2,   AJMP,     addr11

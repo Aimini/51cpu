@@ -856,4 +856,12 @@ def X_96():
         print("DB 0xA5")
         gen_Ri(lambda rs,i,order:print("SUBB A,@R{}".format(i)))
 
+def X_98():
+    with redirect_file(0x98,"SUBB A Rn"):
+        gen_Rn(lambda rs,i,order:print("MOV R{},#{}".format(i,to_hex(0xFF - order))))
+        
+        print("DB 0xA5")
+        gen_Rn(lambda rs,i,order:print("SUBB A,R{}".format(i)))
 
+
+X_98()
