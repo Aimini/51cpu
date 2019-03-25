@@ -121,21 +121,21 @@ INSTRUCTIONS = [
 #37,   1,   ADDC,     A, @R1
 -1,
 #38,   1,   ADDC,     A, R0
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-RI_OUT','ALU_B_DBUS_L8IN'],['ALU_ADDC','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #39,   1,   ADDC,     A, R1
-[],
+-1,
 #3A,   1,   ADDC,     A, R2
-[],
+-1,
 #3B,   1,   ADDC,     A, R3
-[],
+-1,
 #3C,   1,   ADDC,     A, R4
-[],
+-1,
 #3D,   1,   ADDC,     A, R5
-[],
+-1,
 #3E,   1,   ADDC,     A, R6
-[],
+-1,
 #3F,   1,   ADDC,     A, R7
-[],
+-1,
 #40,   2,   JC,       offset
 [['NEXT_BYTE'],*PC_add_off_when('PC_CyIN')],
 #41,   2,   AJMP,     addr11

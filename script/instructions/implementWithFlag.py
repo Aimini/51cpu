@@ -4,26 +4,6 @@ STEP_DIRECT_ADDRESS = [['NEXT_BYTE'],['FLASH_OUT','RAR_IN']]
 STEP_PC_ADD_OFFSET = [['FLASH_OUT','ALU_A_DBUS_L8IN'],["ALUEXT_TWO_CMP","ALU_B_IN"],["PC_OUT","ALUADDRTE","ALU_A_IN"],['ALU_ADD','ALUADDRTE','ALUTOADDR','PC_IN']]
 FLAG_INSTRUCTION ={
     'Carry':{
-	#1	ADDC	A, @R0
-    0x36:[[]],
-	#1	ADDC	A, @R1
-    0x37:[[]],
-	#1	ADDC	A, R0
-    0x38:[[]],
-	#1	ADDC	A, R1
-    0x39:[[]],
-	#1	ADDC	A, R2
-    0x3A:[[]],
-	#1	ADDC	A, R3
-    0x3B:[[]],
-	#1	ADDC	A, R4
-    0x3C:[[]],
-	#1	ADDC	A, R5
-    0x3D:[[]],
-	#1	ADDC	A, R6
-    0x3E:[[]],
-	#1	ADDC	A, R7
-    0x3F:[[]],
 	#2	SUBB	A, #immed
     0x94:[],
 	#2	SUBB	A, direct

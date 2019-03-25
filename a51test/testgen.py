@@ -827,3 +827,12 @@ def X_36():
         print("DB 0xA5")
         gen_Ri(lambda rs,i,order:print("ADDC A,@R{}".format(i)))
 
+def X_38():
+    with redirect_file(0x38,"ADDC A Rn"):
+        def do(rs,i,order):
+            print("MOV R{},#{}".format(i,to_hex(order)))
+        gen_Rn(do)
+        print("DB 0xA5")
+        gen_Rn(lambda rs,i,order:print("ADDC A,R{}".format(i)))
+
+X_38()
