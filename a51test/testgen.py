@@ -835,4 +835,14 @@ def X_38():
         print("DB 0xA5")
         gen_Rn(lambda rs,i,order:print("ADDC A,R{}".format(i)))
 
-X_38()
+def X_95():
+    addr = ['0x43', '0x7D', '0x5B', '0x3F', '0x22', '0x46', '0x6A', '0x4E']
+    values = ['0x58', '0x6D', '0x24', '0x63', '0x47', '0x42', '0x79', '0x30']
+    with redirect_file(0x95,"SUBB A d"):
+        for idx,a in enumerate(addr):
+            print("MOV {},#{}".format(a,values[idx]))
+        print("DB 0xA5")
+        for x in addr:
+            print("SUBB A,{}".format(x))
+ 
+
