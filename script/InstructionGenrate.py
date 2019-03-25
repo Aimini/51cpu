@@ -6,6 +6,8 @@ import instructions.info as i_info
 import instructions.Component as i_comp
 import instructions.implementWithFlag as i_impl_flag
 import instructions.controlSingal
+import inuntil
+
 
 oscillation_cycle = 8
 oscillation_cycle_max = 16
@@ -81,30 +83,12 @@ directory = pathlib.Path("eeprom-bin")
 file_prefix = "instruction"
 
 
-def write_as_bin(number8bit):
-    return (number8bit).to_bytes(length=1, byteorder='big')
-
-
-def write_to_file(file, write_func):
-    pass
-
-
 def print_instructions(instructions):
     for idx,x in enumerate(instructions):
         print("{:<8}(0x{:0>2X}) -> ".format(i_info.HEX_TO_NAME[idx],idx),end='')
         print(x)
 
 
-def write_part_of_instrcution(file,max_cycle,instructions_bin,eeprom_index):
-    flags_counter_max = 2**len(i_impl_flag.FLAG)
-    #  generate_fetch_interrupt_flag_instruction(i_impl_flag.FLAG_INSTRUCTION)
-    for instruction_hex, one_instruction in enumerate(instructions_bin):
-        instruction_len = len(one_instruction)
-        for step_order in range(max_cycle):
-            if step_order < instruction_len:
-                file.write(write_as_bin(0xFF & (one_instruction[step_order] >> (eeprom_index * 8))))
-            else:
-                file.write(write_as_bin(0))
 
 def generate_instruction_flag_bin_map(instruction_with_flag,instructionControlSignal):
     instruction_flag_bin_map = dict()
@@ -131,28 +115,10 @@ def replace_with_flag(instructions_bin,instruction_flag_bin_map):
         yield instruction_with_flag_bin         
 
 
-def print_use_label(instruction_bin_generater):
-    print("used control signal:")
-    used_control_label = sorted(instruction_bin_generater.used_control_label, key=lambda label: instruction_bin_generater.contol_labels_bin[label])
-    for label in used_control_label:
-        print(("{:<16} {:0>"+ str(len(instruction_bin_generater.control_singal_label)) +"b}").format(label,instruction_bin_generater.contol_labels_bin[label]))
 
 
-def print_mi_map(startcounter,label_order,mi_bin_map):
-    l = len(mi_bin_map)
-    count = 0
-    for key in label_order:
-        v = mi_bin_map[key]
-        chip_n = math.floor( count / 8)
-        if count % 8 == 0:
-            print("---chip " + str(chip_n))
-        if count >= startcounter:
-           counter_str = str(count - startcounter)
-        else:
-            counter_str = ''
-        print(("{:<16} {:>2} {:0>8b}").format(key,counter_str, (v >> 8*chip_n)&0xFF))
 
-        count += 1
+
         
 
 def write_to_bin():
@@ -164,7 +130,7 @@ def write_to_bin():
     print_instructions(final_instructions)
     try:
         instructions_bin, use_control_label = instructionControlSignal.create_instruction_bin_list(final_instructions)
-        print_use_label(instructionControlSignal)
+        inuntil.print_unused_label(instructionControlSignal)
     except i_comp.MINotFoundError  as e:
         print("unknow control singal label '{}' in instruction 0X{:0>2X} at step {}:".format( e.key, e.order, e.step))
         exit(-1)
@@ -173,15 +139,8 @@ def write_to_bin():
     #print_use_label(instructionControlSignal)
 
     print('---------------chip map------------------')
-    print_mi_map(3,instructionControlSignal.control_singal_label,instructionControlSignal.contol_labels_bin)  
-    mi_counter_max = 2**math.ceil(math.log2(oscillation_cycle_max))
-    # 检查用到几个微指令需要几个eeprom，一个eeprom可以控制8个微指令
-    eeprom_nmuber = math.ceil(len(instructionControlSignal.control_singal_label) / 8)
-    for x in range(eeprom_nmuber):  
-        file = open(directory / (file_prefix + "-" + str(x) + ".bin"), 'bw')
-        # for ins_with_flag in replace_with_flag(instructions_bin,instruction_flag_bin_map):
-        write_part_of_instrcution(file,mi_counter_max,instructions_bin, x)
-        file.close()
+    inuntil.print_mi_map(instructionControlSignal.control_singal_label,instructionControlSignal.contol_labels_bin,3)
+    inuntil.write_to_bin(instructions_bin,oscillation_cycle_max,instructionControlSignal.control_singal_label, str(directory / file_prefix))
 
     
     
