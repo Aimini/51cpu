@@ -29,15 +29,15 @@ circuit_control_label = [
 assert( len(set(circuit_control_label)) == len(circuit_control_label))
 
 control_function = {
-    "ALU_ADD" : ('ALU_S3','ALU_S0','~ALU_CN','ALU_OUT'),
-    "ALU_ADDD": ('ALU_S3','ALU_S0','ALU_OUT'),
+    "ALU_ADD" : ('ALU_S3','ALU_S0','ALU_CN+0_S0','ALU_OUT'),
+    "ALU_ADDC": ('ALU_S3','ALU_S0','ALU_OUT',"ALU_CN+0_S1","ALU_CN+0_S0"),
     "ALU_SUB" : ('ALU_S2','ALU_S1','ALU_OUT'),
-    "ALU_SUBB": ('ALU_S2','ALU_S1','~ALU_CN','ALU_OUT'),
+    "ALU_SUBB": ('ALU_S2','ALU_S1',"ALU_CN+0_S1",'ALU_OUT'),
     "ALU_AND" : ('ALU_M','ALU_S3','ALU_S1','ALU_S0','ALU_OUT'),
     "ALU_OR"  : ('ALU_M','ALU_S3','ALU_S2','ALU_S1','ALU_OUT'),
     "ALU_XOR" : ('ALU_M','ALU_S2','ALU_S1','ALU_OUT'),
     "ALU_NOT" : ('ALU_M','ALU_OUT'),
-    "ALU_DEC" : ('~ALU_CN','ALU_S3','ALU_S2','ALU_S1','ALU_S0','ALU_OUT'),
+    "ALU_DEC" : ('ALU_CN+0_S0','ALU_S3','ALU_S2','ALU_S1','ALU_S0','ALU_OUT'),
     "ALU_INC" :('ALU_OUT',),
     "ALU_A_IN" : ('ALU_A_S0','ALU_A_S1'),
     'ALU_A_L8IN':('ALU_A_S0',),
@@ -71,7 +71,7 @@ control_function = {
     "ALU_A_DBUS_H8IN":('DTOALU','ADT_H8E','ALU_A_S0','ALU_A_S1'),
     "ALU_B_DBUS_L8IN":('DTOALU','ADT_L8E','ALU_B_S0','ALU_B_S1'),
     "ALU_B_DBUS_H8IN":('DTOALU','ADT_H8E','ALU_B_S0','ALU_B_S1'),
-    "ALU_A_OUT":('ALU_OUT','~ALU_CN'),
+    "ALU_A_OUT":('ALU_OUT','ALU_CN+0_S0'),
     "RAR-@RI":("RAR_ADDRS0","RAR_ADDRS1",'RAM_OUT','RAR_IN'),
     "RAR-RI_IN":("RAR_ADDRS0",'RAM_IN'),
     "RAR-RI_OUT":("RAR_ADDRS0",'RAM_OUT'),
@@ -86,9 +86,6 @@ control_function = {
     "PC_/BITQIN":("PC_S2","PC_S0"),
     "PC_CyIN":("PC_S2","PC_S1"),
     "PC_/CyIN":("PC_S2","PC_S1","PC_S0"),
-    "~ALU_CN":("ALU_CN+0_S0",),
-    "ALU_CNCY":("ALU_CN+0_S1",),
-    "ALU_CN/CY":("ALU_CN+0_S1","ALU_CN+0_S0"),
 }
 
     
