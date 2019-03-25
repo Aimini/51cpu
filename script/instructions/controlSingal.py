@@ -8,7 +8,7 @@ circuit_control_label = [
     "ADT_L8E","ADT_H8E","DTOALU",
     "ALUADDRTE","ALUTOADDR",
 
-    "ALU_OUT","ALU_EXTOUT", "ALU_M", "ALU_S0", "ALU_S1", "ALU_S2", "ALU_S3", "~ALU_CN",
+    "ALU_OUT","ALU_EXTOUT", "ALU_M", "ALU_S0", "ALU_S1", "ALU_S2", "ALU_S3", "ALU_CN+0_S0",
     "ALU_A_S0","ALU_A_S1","ALU_A_S2",
     "ALU_B_S0","ALU_B_S1","BOP_CLR_CY",
 
@@ -24,7 +24,7 @@ circuit_control_label = [
     "TMP_DA_OUT","TMP_BITADDR_OUT",
     "IR_IN", "IR_OUT",
 
-    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT","PC_S2"
+    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT","PC_S2","ALU_CN+0_S1",
     ]
 assert( len(set(circuit_control_label)) == len(circuit_control_label))
 
@@ -85,7 +85,10 @@ control_function = {
     "PC_BITQIN":("PC_S2",),
     "PC_/BITQIN":("PC_S2","PC_S0"),
     "PC_CyIN":("PC_S2","PC_S1"),
-    "PC_/CyIN":("PC_S2","PC_S1","PC_S0")
+    "PC_/CyIN":("PC_S2","PC_S1","PC_S0"),
+    "~ALU_CN":("ALU_CN+0_S0",),
+    "ALU_CNCY":("ALU_CN+0_S1",),
+    "ALU_CN/CY":("ALU_CN+0_S1","ALU_CN+0_S0"),
 }
 
     
