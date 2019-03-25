@@ -113,7 +113,7 @@ INSTRUCTIONS = [
 #33,   1,   RLC,      A
 [['ACC_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['TMP_S0', 'TMP_SIS1','TMP_BOP_TMPN'],['TMP_OUT','ACC_IN'],['PSW_OUT','TMP_IN','TMP_BOP_IDX_CY_IN'],['BOP_OUT','PSW_LOAD_BUS']],
 #34,   2,   ADDC,     A, #immed
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_ADDC','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #35,   2,   ADDC,     A, direct
 [],
 #36,   1,   ADDC,     A, @R0
