@@ -168,10 +168,10 @@ def write_to_bin():
     except i_comp.MINotFoundError  as e:
         print("unknow control singal label '{}' in instruction 0X{:0>2X} at step {}:".format( e.key, e.order, e.step))
         exit(-1)
-    final_instructions_with_flag = generate_fetch_interrupt_flag_instruction(i_impl_flag.FLAG_INSTRUCTION)
-    instruction_flag_bin_map = generate_instruction_flag_bin_map(final_instructions_with_flag,instructionControlSignal)
-    
-    print_use_label(instructionControlSignal)
+    # final_instructions_with_flag = generate_fetch_interrupt_flag_instruction(i_impl_flag.FLAG_INSTRUCTION)
+    # instruction_flag_bin_map = generate_instruction_flag_bin_map(final_instructions_with_flag,instructionControlSignal)
+    #print_use_label(instructionControlSignal)
+
     print('---------------chip map------------------')
     print_mi_map(3,instructionControlSignal.control_singal_label,instructionControlSignal.contol_labels_bin)  
     mi_counter_max = 2**math.ceil(math.log2(oscillation_cycle_max))
@@ -179,8 +179,8 @@ def write_to_bin():
     eeprom_nmuber = math.ceil(len(instructionControlSignal.control_singal_label) / 8)
     for x in range(eeprom_nmuber):  
         file = open(directory / (file_prefix + "-" + str(x) + ".bin"), 'bw')
-        for ins_with_flag in replace_with_flag(instructions_bin,instruction_flag_bin_map):
-            write_part_of_instrcution(file,mi_counter_max,ins_with_flag, x)
+        # for ins_with_flag in replace_with_flag(instructions_bin,instruction_flag_bin_map):
+        write_part_of_instrcution(file,mi_counter_max,instructions_bin, x)
         file.close()
 
     
