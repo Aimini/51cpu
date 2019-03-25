@@ -845,4 +845,15 @@ def X_95():
         for x in addr:
             print("SUBB A,{}".format(x))
  
+def X_96():
+    addr = ['0x37', '0x5E', '0x71', '0x65', '0x77', '0x3A', '0x28', '0x4F']
+    values = ['0x58', '0x6D', '0x24', '0x63', '0x47', '0x42', '0x79', '0x30']
+    with redirect_file(0x96,"SUBB A @Ri"):
+        def do(rs,i,order):
+            print("MOV {},#{}".format(addr[order],values[order]))
+            print("MOV R{},#{}".format(i,addr[order]))
+        gen_Ri(do)
+        print("DB 0xA5")
+        gen_Ri(lambda rs,i,order:print("SUBB A,@R{}".format(i)))
+
 

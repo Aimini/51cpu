@@ -315,9 +315,9 @@ INSTRUCTIONS = [
 #95,   2,   SUBB,     A, direct
 [*merge_first(['ACC_OUT','ALU_A_DBUS_L8IN'],STEP_DIRECT_ADDRESS),['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_SUBB','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #96,   1,   SUBB,     A, @R0
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN'],['RAR-@RI'],['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_SUBB','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #97,   1,   SUBB,     A, @R1
-[],
+-1,
 #98,   1,   SUBB,     A, R0
 [],
 #99,   1,   SUBB,     A, R1
