@@ -801,4 +801,29 @@ def X_35():
         f.write("ADDC A,{}\n".format(x))
     f.close()
 
-X_35()
+class redirect_file():
+    def __init__(self,num,name):
+        self.num = num
+        self.name = name
+
+    def __enter__(self):   
+        self.default_stdout = sys.stdout
+        self.file = open_test_file(self.num,self.name)
+        sys.stdout = self.file
+        return self.file
+
+    def __exit__(self,a,b,c):
+        sys.stdout = self.default_stdout
+        self.file.close()
+
+def X_36():
+    addr = ['0x6C', '0x40', '0x38', '0x71', '0x23', '0x53', '0x3E', '0x7C']
+    value = ['0x6C', '0x35', '0x5F', '0x56', '0x6B', '0x3C', '0x79', '0x45']
+    with redirect_file(0x36,"ADDC A @Ri"):
+        def do(rs,i,order):
+            print("MOV {},#{}".format(addr[order],value[order]))
+            print("MOV R{},#{}".format(i,addr[order]))
+        gen_Ri(do)
+        print("DB 0xA5")
+        gen_Ri(lambda rs,i,order:print("ADDC A,@R{}".format(i)))
+
