@@ -311,7 +311,7 @@ INSTRUCTIONS = [
 #93,   1,   MOVC,     A, @A+DPTR
 [['ACC_OUT','ALU_A_DBUS_L8IN'],['DPTR_OUT','ALUADDRTE','ALU_B_IN'],['ALU_ADD','ALUADDRTE','ALUTOADDR','PAR_IN'],['FLASH_OUT','ACC_IN']],
 #94,   2,   SUBB,     A, #immed
-[],
+[['ACC_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_SUBB','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #95,   2,   SUBB,     A, direct
 [],
 #96,   1,   SUBB,     A, @R0
