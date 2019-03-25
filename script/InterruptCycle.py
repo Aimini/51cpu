@@ -9,7 +9,7 @@ MI_LABEL = ["IC_END","INT_ADDR_OUT",
     "PC_IN", "PC_OUT",
     "ALU_A_L8LE","ALU_OUT",
     "DTOALU","ADT_L8E","ADT_H8E","ALUADDRTE",
-    "RAR_IN","RAM_IN","SP_IN","SP_OUT","MIC_CLR"
+    "RAR_IN","RAM_IN","SP_IN","SP_OUT",
    ]
 
 instructionControlSignal = i_comp.InstructionControlSignal(MI_LABEL)
@@ -23,16 +23,7 @@ INSTRUCTIONS = [[
     ["ALU_OUT","ALU_A_L8LE","ADT_L8E","RAR_IN","SP_IN"],
     ["PC_OUT", "ALUADDRTE","ADT_H8E","RAM_IN"],
     ["INT_ADDR_OUT", "PC_IN" ],
-    ["IC_END"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
-    ["MIC_CLR"],
+    ["IC_END"]
 ]]
 
 directory = pathlib.Path("eeprom-bin")

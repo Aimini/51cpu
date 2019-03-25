@@ -86,3 +86,14 @@ CJNE    A,direct,offset
 CJNE    A,#immed,offset
 MUL     AB
 DIV     AB
+JZ  offset
+JB      bit,offset
+JNB     bit,offset
+JC      offset
+JNC     offset
+ADDC    A,#immed
+ADDC    A,direct
+ADDC    A,@Ri
+ADDC    Rn
+SUBB    A,#immed
+SUBB    A,direct
