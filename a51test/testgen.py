@@ -789,4 +789,16 @@ JNB {}.{},L{}
     JNB 0x2F.0,L0
     MOV 0xF0,#0xFF""")
     f.close()
-X_30()
+
+def X_35():
+    a = ['0x76', '0x2A', '0x5B', '0x41', '0x32', '0x34', '0x62', '0x54']
+    v = ['0x3C', '0x24', '0x68', '0x38', '0x64', '0x28', '0x7B', '0x20']
+    f = open_test_file(0x35,"ADDC A d")
+    for idx,value in enumerate(a):
+        f.write("MOV {},#{}\n".format(value,v[idx]))
+    f.write("DB 0xA5\n")
+    for x in a:
+        f.write("ADDC A,{}\n".format(x))
+    f.close()
+
+X_35()

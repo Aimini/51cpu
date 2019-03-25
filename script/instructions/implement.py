@@ -115,7 +115,7 @@ INSTRUCTIONS = [
 #34,   2,   ADDC,     A, #immed
 [['ACC_OUT','ALU_A_DBUS_L8IN','NEXT_BYTE'],['FLASH_OUT','ALU_B_DBUS_L8IN'],['ALU_ADDC','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #35,   2,   ADDC,     A, direct
-[],
+[*merge_first(['ACC_OUT','ALU_A_DBUS_L8IN'],STEP_DIRECT_ADDRESS),['RAM_OUT','ALU_B_DBUS_L8IN'],['ALU_ADDC','ADT_L8E','PSW_LOAD_ALUFLAG','ACC_IN']],
 #36,   1,   ADDC,     A, @R0
 [],
 #37,   1,   ADDC,     A, @R1
