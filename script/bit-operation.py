@@ -1,32 +1,23 @@
-M_CLR = 0
-M_SET = 1
-M_CPL = 2
-M_CARRY = 3
+import pathlib
+import inuntil
 
+directory = pathlib.Path("eeprom-bin")
 def bitoperation_conuter(doit):
-    for carry in range(2**1):
-        for mode in range(2**2):
+    for bit_in in range(2**1):
             for bs in range(2**3):
                 for data in range(2**8):
-                    doit(carry,mode,bs,data)
+                    doit(bit_in,bs,data)
 
 
-def bitop_gen(carry,mode,bitselect,data):
-    lower_mask = 2**bitselect - 1
-    high_mask =  ((~lower_mask) << 1)&0xff
-    low = lower_mask & data
-    high = high_mask & data
-    bitq = (data >> bitselect) & 1
-    
-    if mode == M_CLR:
-        q = 0
-    elif mode== M_SET:
-        q = 1
-    elif mode == M_CPL:
-        q = (~bitq) & 1
-    elif mode == M_CARRY:
-        q = carry & 1
-    result =high + (q << bitselect) + low
-    print('{} {} {} {:0>8b} {:0>8b}'.format(carry,mode,bitselect,data,result))
 
-bitoperation_conuter(bitop_gen)
+def bitop_gen(f):
+    def gen(bit_in,bit_select,data):
+        mask = (1 << bit_select)
+        clear_bit = data & (0xFF&(~mask))
+        result = clear_bit | (bit_in << bit_select)
+        print('{} {} {:0>8b} {:0>8b}'.format(bit_in,bit_select,data,result))
+        f.write(inuntil.write_as_bin(result))
+    return gen
+
+f = open(directory / 'bit_op.bin','wb')    
+bitoperation_conuter(bitop_gen(f))
