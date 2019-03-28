@@ -1,5 +1,5 @@
 import pathlib
- 
+import math 
 BLE    =  0b0000000000000001
 BOE    =  0b0000000000000010
 ACCLE  =  0b0000000000000100
@@ -25,29 +25,33 @@ MMIO[0xD0 - 0x80] = "PSW"
 MMIO[0xB8 - 0x80] = "IP"
 MMIO[0xA8 - 0x80] = "IE"
 MMIO[0x88 - 0x80] = "TCON"
+MMIO[0x83 - 0x80] = "DPH"
+MMIO[0x82 - 0x80] = "DPL"
 MMIO[0x81 - 0x80] = "SP"
 MMIO[0x80 - 0x80] = "P0"
 
-directory =  pathlib.Path("../eeprom-bin")
+directory =  pathlib.Path("eeprom-bin")
 
 
 def write_as_bin(number8bit):
    return (number8bit).to_bytes(length=1, byteorder='big')
 
 
-def write_to_file(file,write_func):
+def write_to_file(file,write_func,file_count):
     count = 1
     for b in range(128):
         if MMIO.get(b,None) is not None:
-            file.write(write_as_bin(count))
+            file.write(write_as_bin(0xFF&(count >> (file_count*8))))
             count = count <<1
         else:
              file.write(write_as_bin(0))
         
 
 def write_to_Bin():
-    file = open(directory / "MMIO.bin",'bw')
-    write_to_file(file,write_as_bin)
-    file.close()
+    file_num = math.ceil(len(MMIO)/8)
+    for file_count in range(file_num):
+        file = open(directory / ("MMIO"+str(file_count)+".bin"),'bw')
+        write_to_file(file,write_as_bin,file_count)
+        file.close()
 
 write_to_Bin()
