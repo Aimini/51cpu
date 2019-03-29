@@ -19,30 +19,40 @@ SPLE   =  0b1000000000000000
 SPOE   = 0b10000000000000000
 
 MMIO = dict() 
-MMIO[0xF0 - 0x80] = "B"
-MMIO[0xE0 - 0x80] = "ACC"
-MMIO[0xD0 - 0x80] = "PSW"
-MMIO[0xB8 - 0x80] = "IP"
-MMIO[0xA8 - 0x80] = "IE"
-MMIO[0x88 - 0x80] = "TCON"
-MMIO[0x83 - 0x80] = "DPH"
-MMIO[0x82 - 0x80] = "DPL"
-MMIO[0x81 - 0x80] = "SP"
-MMIO[0x80 - 0x80] = "P0"
-
+MMIO[0xF0] = "B"
+MMIO[0xE0] = "ACC"
+MMIO[0xD0] = "PSW"
+MMIO[0xB8] = "IP"
+MMIO[0xA8] = "IE"
+MMIO[0x99] = "SBUF"
+MMIO[0x98] = "SCON"
+MMIO[0x88] = "TCON"
+MMIO[0x83] = "DPH"
+MMIO[0x82] = "DPL"
+MMIO[0x81] = "SP"
+MMIO[0x80] = "P0"
+order = ["P0","SP","DPL","DPH","TCON","IE","IP","PSW","ACC","B","SCON","SBUF"]
 directory =  pathlib.Path("eeprom-bin")
 
 
 def write_as_bin(number8bit):
    return (number8bit).to_bytes(length=1, byteorder='big')
 
+def get_order(REG):
+    for idx,x in enumerate(order):
+        if x == REG:
+            return idx
+    return None
 
 def write_to_file(file,write_func,file_count):
-    count = 1
     for b in range(128):
-        if MMIO.get(b,None) is not None:
-            file.write(write_as_bin(0xFF&(count >> (file_count*8))))
-            count = count <<1
+        reg = MMIO.get(b + 0x80,None) 
+        if reg is not None:
+            order = get_order(reg)
+            if order is None:
+                print("reg {} must have a order".format(reg))
+                exit(-1)
+            file.write(write_as_bin(0xFF&((1 << order) >> (file_count*8))))
         else:
              file.write(write_as_bin(0))
         
