@@ -16,6 +16,15 @@ instructionControlSignal.function = instructions.controlSingal.control_function
 # ---------------------------------- RETI,
 ignore_interrupt_check_instruction = [0x32, ]
 
+INTERRUPT_CYCLE_INSTRUCTIONS = [[
+    ["SP_OUT","ALU_A_DBUS_L8IN"],
+    ["ALU_OUT","ALU_A_L8IN","ADT_L8E","RAR_IN"],
+    ["PC_OUT", "ALUADDRTE","ADT_L8E","RAM_IN"],
+    ["ALU_OUT","ALU_A_L8IN","ADT_L8E","RAR_IN","SP_IN"],
+    ["PC_OUT", "ALUADDRTE","ADT_H8E","RAM_IN"],
+    ["INT_ADDR_OUT", "PC_IN" ],
+    ["IC_END"]
+]]
 
 
 def add_fetch(instructions):
@@ -127,9 +136,11 @@ def write_to_bin():
     # file.close()
     
     final_instructions = generate_fetch_interrupt_instruction(i_impl.INSTRUCTIONS)
+    
     print_instructions(final_instructions)
     try:
         instructions_bin, use_control_label = instructionControlSignal.create_instruction_bin_list(final_instructions)
+        interrupt_instructions,use_control_label = instructionControlSignal.create_instruction_bin_list(INTERRUPT_CYCLE_INSTRUCTIONS)
         inuntil.print_unused_label(instructionControlSignal)
     except i_comp.MINotFoundError  as e:
         print("unknow control singal label '{}' in instruction 0X{:0>2X} at step {}:".format( e.key, e.order, e.step))
@@ -139,8 +150,9 @@ def write_to_bin():
     #print_use_label(instructionControlSignal)
 
     print('---------------chip map------------------')
-    inuntil.print_mi_map(instructionControlSignal.control_singal_label,instructionControlSignal.contol_labels_bin,3)
-    inuntil.write_to_bin(instructions_bin,oscillation_cycle_max,instructionControlSignal.control_singal_label, str(directory / file_prefix))
+    inuntil.print_mi_map(instructionControlSignal.control_singal_label,instructionControlSignal.contol_labels_bin)
+    inuntil.write_to_bin(instructions_bin,interrupt_instructions,oscillation_cycle_max,instructionControlSignal.control_singal_label, str(directory / file_prefix))
+   
 
     
     
