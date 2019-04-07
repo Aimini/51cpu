@@ -24,7 +24,7 @@ circuit_control_label = [
     "TMP_DA_OUT","TMP_BITADDR_OUT",
     "IR_IN", "IR_OUT",
 
-    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT","PC_S2","ALU_CN+0_S1",
+    "PSW_FLAG_IN","PSW_USER_IN","PSW_OUT","PSW_BUS/FLAG","DEBUG_HALT","PC_S2","ALU_CN+0_S1","IC_END","INT_ADDR_OUT"
     ]
 assert( len(set(circuit_control_label)) == len(circuit_control_label))
 
