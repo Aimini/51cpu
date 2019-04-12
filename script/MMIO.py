@@ -45,8 +45,8 @@ def get_order(REG):
     return None
 
 def write_to_file(file,write_func,file_count):
-    for b in range(128):
-        reg = MMIO.get(b + 0x80,None) 
+    for b in range(256):
+        reg = MMIO.get(b,None) 
         if reg is not None:
             order = get_order(reg)
             if order is None:
