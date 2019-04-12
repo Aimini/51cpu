@@ -29,11 +29,12 @@ def bitop_gen(f):
             result &= (0xF&(~(1 << lsb)))
         if IRA == 1:
             result |= IPSQn
-        result = result + (lsb << 4) + (empty << 6)
+        IRQ = 1 if IPSQn > 0  else 0
+        result = result + (lsb << 4) + (empty << 6) + (IRQ << 7)
         print('{} {} {:0>4b} {:0>4b} {:0>8b}'.format(ISE,IRA,IPSQn,Qn,result))
         f.write(inuntil.write_as_bin(result))
     return gen
 
 f = open(path,'wb')    
 ISR_conuter(bitop_gen(f))
-
+f.close()
