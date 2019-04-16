@@ -1,4 +1,4 @@
-/eeprom-bin
+/eeprom-bin/arduino
 /keil51test
 __pycache__
 *.workspace
