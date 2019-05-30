@@ -1,7 +1,10 @@
+# interrupt service registers input signal LUT
 import inuntil
 import pathlib
 path =  pathlib.Path("eeprom-bin")/"ISR.bin"
 
+#             Qn    IPSQn  IRA ISE
+# ADDRESS | xxxxx | xxxx | xx | x |  total 11
 def ISR_conuter(doit):
     for ISE in range(2**1):
         for IRA in range(2**1):

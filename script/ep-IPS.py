@@ -36,6 +36,7 @@ def bitop_gen(f):
             if IP&0x2 == 0: 
                 O += (IRRQn&0x2) << 2
             else:
+
                 O += IRRQn&0x2
         lsb,empty = least_sgn(O)
         
