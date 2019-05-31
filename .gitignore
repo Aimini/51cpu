@@ -6,3 +6,5 @@ __pycache__
 document/指令完成进度.xlsx
 document/~$指令完成进度.xlsx
 /Print
+/.vscode/ipch
+/*.EMF
