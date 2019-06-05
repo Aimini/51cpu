@@ -5,6 +5,6 @@ __pycache__
 *.pdsbak
 document/指令完成进度.xlsx
 document/~$指令完成进度.xlsx
-/Print
+/pcb_print
 /.vscode/ipch
 /*.EMF
