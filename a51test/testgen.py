@@ -181,7 +181,7 @@ def X_E6():
             print("NOP")
             print("NOP")
 
-# MOV A, @Ri
+# MOV A, Rn
 def X_E8():
     init_Ri()
     for rs in range(4):
