@@ -184,6 +184,7 @@ _51cpu.prototype.op_dec = function (value) {
         mask = Math.pow(2, value.bitlen) - 1
     val = val <= 0 ? mask : val - 1
     value.set(val)
+    return val
 }
 _51cpu.prototype.op_move = function (dest, src) {
     if (typeof (src) == "number")
@@ -431,8 +432,13 @@ _51cpu.prototype.execute_one = function () {
         // DJNZ direct,offset
         let direct = this.fetch_direct()
         let offset = this.fetch_const()
-        this.op_dec(direct)
-        if(direct.get() != 0)
+        //consider PSW = 0x02  and ACC = 0
+        // when excute PSW dec step,
+        // we consider PSW = 0x02 - 1 = 0x01
+        // but ACC parity flag make PSW = 0x00
+        // but! the standard CPU still using result 0x01 to make judgement
+        let value = this.op_dec(direct)
+        if(value != 0)
             this.op_add_offset(offset)
     }
 }
