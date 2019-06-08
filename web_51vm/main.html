@@ -77,6 +77,7 @@
         function initReg() {
             combine_dom_reg("#reg-a", vm.A)
             combine_dom_reg("#reg-b", vm.B)
+            combine_dom_reg("#reg-sp", vm.SP)
             combine_dom_reg("#reg-psw", vm.PSW)
             combine_dom_reg("#reg-dptr", vm.DPTR, 16)
             combine_dom_reg("#reg-pc", vm.PC, 16)
@@ -172,6 +173,13 @@
     <span id="reg-b" class="reg">
         <span class="title">
             <span class="name">B</span>
+            <span class="type">HEX</span>
+        </span>
+        <span class="value">00</span>
+    </span>
+    <span id="reg-sp" class="reg">
+        <span class="title">
+            <span class="name">SP</span>
             <span class="type">HEX</span>
         </span>
         <span class="value">00</span>
