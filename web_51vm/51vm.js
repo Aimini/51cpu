@@ -75,34 +75,53 @@ function _51cpu() {
     for (let i = 0; i < 128; ++i)
         this.IRAM.push(0);
 
-    let cpu_ptr = this;
+    let cpu_ref = this;
     this.DPL.get = function () {
         this.__proto__.get.call(this)
-        return (cpu_ptr.DPTR.get() & 0xFF)
+        return (cpu_ref.DPTR.get() & 0xFF)
     }
 
     this.DPL.set = function (val_new) {
-        cpu_ptr.DPL.__proto__.set.call(this, val_new)
-        let val = cpu_ptr.DPTR.get()
+        cpu_ref.DPL.__proto__.set.call(this, val_new)
+        let val = cpu_ref.DPTR.get()
         val &= 0xFF00
         val += val_new
-        cpu_ptr.DPTR.set(val)
+        cpu_ref.DPTR.set(val)
     }
 
 
     this.DPH.get = function () {
         this.__proto__.get.call(this)
-        return (cpu_ptr.DPTR.get() & 0xFF00) >> 8
+        return (cpu_ref.DPTR.get() & 0xFF00) >> 8
     }
     this.DPH.set = function (val_new) {
         this.__proto__.set.call(this, val_new)
-        let val = cpu_ptr.DPTR.get()
+        let val = cpu_ref.DPTR.get()
         val &= 0x00FF
         val += (val_new << 8)
-        cpu_ptr.DPTR.set(val)
+        cpu_ref.DPTR.set(val)
     }
+
+    //-------Parity Flag: PSW.0 specialization--------
+    this.PSW.set = function(value_new){
+        let a = cpu_ref.A.get()
+        let parity = cpu_ref.parity()
+        this.__proto__.set.call(this,((value_new & 0xFE) + parity))
+    }
+
+    this.A.set = function(value_new){
+        this.__proto__.set.call(this,value_new)
+        let parity = cpu_ref.parity()
+        cpu_ref.PSW.set(cpu_ref.PSW.get())
+    }
+    
 }
 
+//return parity flag generate by A
+_51cpu.prototype.parity = function(){
+    let a = this.A.get()
+    return (a ^ (a >> 1) ^(a >> 2)^(a >> 3)^(a>>4)^(a>>5)^(a>>6)^(a>>7))&0x01
+}
 
 _51cpu.prototype.extend = function (ext_package) {
 
@@ -124,13 +143,13 @@ _51cpu.prototype.reset = function () {
 // found value in IRAM, otherwise using SFR
 // map to read register' vaule
 _51cpu.prototype.get_iram_cell = function (addr) {
-    let cpu_ptr = this
+    let cpu_ref = this
     return {
         set: function (val) {
-            cpu_ptr.IRAM[addr] = val
+            cpu_ref.IRAM[addr] = val
         },
         get: function () {
-            return cpu_ptr.IRAM[addr]
+            return cpu_ref.IRAM[addr]
         }
     }
 }
@@ -158,6 +177,14 @@ _51cpu.prototype.op_inc = function (value) {
     value.set(val)
 }
 
+_51cpu.prototype.op_dec = function (value) {
+    let val = value.get()
+    let mask = 0xFF
+    if (value.bitlen)
+        mask = Math.pow(2, value.bitlen) - 1
+    val = val <= 0 ? mask : val - 1
+    value.set(val)
+}
 _51cpu.prototype.op_move = function (dest, src) {
     if (typeof (src) == "number")
         dest.set(src)
@@ -219,9 +246,9 @@ _51cpu.prototype.op_ret = function (addr) {
 
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
-    let cpu_this_ref = this;
+    let cpu_ref = this;
     let opcode = {
-        value: cpu_this_ref.IDATA.get(pt),
+        value: cpu_ref.IDATA.get(pt),
         test: function (target_opcode, mask = 0xFF) {
             return (this.value & mask) == target_opcode
         }
@@ -236,10 +263,10 @@ _51cpu.prototype.fetch_opcode = function () {
     opcode.get_Ri = function () {
         return {
             set: function (val) {
-                cpu_this_ref.IRAM[Ri] = val
+                cpu_ref.IRAM[Ri] = val
             },
             get: function () {
-                return cpu_this_ref.IRAM[Ri]
+                return cpu_ref.IRAM[Ri]
             }
         }
     }
@@ -247,17 +274,17 @@ _51cpu.prototype.fetch_opcode = function () {
     opcode.get_Rn = function () {
         return {
             set: function (val) {
-                cpu_this_ref.IRAM[Rn_addr] = val
+                cpu_ref.IRAM[Rn_addr] = val
             },
             get: function () {
-                return cpu_this_ref.IRAM[Rn_addr]
+                return cpu_ref.IRAM[Rn_addr]
             }
         }
     }
 
     opcode.fetch_addr11 = function () {
-        let comb = ((this.value & 0xE0) << 3) + cpu_this_ref.IDATA[cpu_this_ref.PC.get()]
-        let next_PC = cpu_this_ref.PC.inc().get()
+        let comb = ((this.value & 0xE0) << 3) + cpu_ref.IDATA[cpu_ref.PC.get()]
+        let next_PC = cpu_ref.PC.inc().get()
         comb += (next_PC & 0xF800)
         return comb
     }
@@ -296,8 +323,8 @@ _51cpu.prototype.fetch_bit = function () {
         addr = bit_addr & 0xF8
     }
 
-    let cpu_ptr = this
-    let mem_reg = cpu_ptr.get_ram_cell(addr)
+    let cpu_ref = this
+    let mem_reg = cpu_ref.get_ram_cell(addr)
 
 
 
@@ -400,6 +427,13 @@ _51cpu.prototype.execute_one = function () {
         let dest = this.fetch_direct()
         let src = this.fetch_direct()
         this.op_move(dest, src)
+    } else if (opcode.test(0xD5)) {
+        // DJNZ direct,offset
+        let direct = this.fetch_direct()
+        let offset = this.fetch_const()
+        this.op_dec(direct)
+        if(direct.get() != 0)
+            this.op_add_offset(offset)
     }
 }
 
