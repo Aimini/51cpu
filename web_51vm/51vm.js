@@ -228,8 +228,8 @@ _51cpu.prototype.fetch_opcode = function () {
     }
     this.PC.inc()
 
-    let Ri_addr = (this.PSW & 0x18) + (0x01 & opcode);
-    let Rn_addr = (this.PSW & 0x18) + (0x07 & opcode);
+    let Ri_addr = (this.PSW.get() & 0x18) + (0x01 & opcode.value);
+    let Rn_addr = (this.PSW.get() & 0x18) + (0x07 & opcode.value);
 
     let Ri = this.IRAM[Ri_addr]
 
@@ -388,6 +388,10 @@ _51cpu.prototype.execute_one = function () {
         //  MOV   @Ri,#immed
         let Ri = opcode.get_Ri()
         this.op_move(Ri, this.fetch_const())
+    } else if (opcode.test(0x78, 0xF8)) {
+        //  MOV   Rn,#immed
+        let Rn = opcode.get_Rn()
+        this.op_move(Rn, this.fetch_const())
     } else if (opcode.test(0x80)) {
         //SJMP offset
         this.op_add_offset(this.fetch_const())
