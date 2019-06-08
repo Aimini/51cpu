@@ -12,8 +12,10 @@ ext_serial.regs.SBUF.setlistener = function (val_old, val_new) {
     document.body.innerText += val_new;
 }
 
-function reg(value = 0) {
+function reg(value = 0, bitlen = 8) {
     this._value = value;
+    this.bitlen = bitlen
+    this.max = Math.pow(2, bitlen) - 1
 
     this.getlistener = []
     this.setlistener = []
@@ -107,7 +109,7 @@ _51cpu.prototype.extend = function (ext_package) {
 
 }
 
-_51cpu.prototype.reset = function(){
+_51cpu.prototype.reset = function () {
     this.A.set(0)
     this.B.set(0)
     this.PSW.set(0)
@@ -137,14 +139,22 @@ _51cpu.prototype.get_ram_cell = function (addr) {
         return this.get_iram_cell(addr)
     else {
         let sfrname = this.SFR[addr]
-        return this[sfrname]
+        let sfr_reg = this[sfrname]
+        if(sfr_reg){
+            return sfr_reg
+        }else{
+            throw new RangeError("invalid SFR address: 0x" + addr.toString(16))
+        }
     }
 }
 
 
 _51cpu.prototype.op_inc = function (value) {
     let val = value.get()
-    val = (val + 1) & 0xFF
+    let mask = 0xFF
+    if (value.bitlen)
+        mask = Math.pow(2, value.bitlen) - 1
+    val = (val + 1) & mask
     value.set(val)
 }
 
@@ -174,13 +184,13 @@ _51cpu.prototype.op_add_offset = function (offset_raw) {
     this.PC.set(pt + offset)
 }
 
-_51cpu.prototype.op_push= function(store_cell){
-     let sp = this.SP.inc().get()
-     this.IRAM[sp] = typeof (store_cell) == "number" ? store_cell : store_cell.get()
+_51cpu.prototype.op_push = function (store_cell) {
+    let sp = this.SP.inc().get()
+    this.IRAM[sp] = typeof (store_cell) == "number" ? store_cell : store_cell.get()
     return this
 }
 
-_51cpu.prototype.op_pop= function(store_cell){
+_51cpu.prototype.op_pop = function (store_cell) {
     let sp = this.SP.get()
     store_cell.set(this.IRAM(sp))
     this.SP.dec()
@@ -188,14 +198,14 @@ _51cpu.prototype.op_pop= function(store_cell){
 }
 
 
-_51cpu.prototype.op_call = function(addr){
+_51cpu.prototype.op_call = function (addr) {
     this.op_push(this.PC.get() & 0xFF)
     this.op_push((this.PC.get() >> 8) & 0xFF)
     this.PC.set(addr)
     return this
 }
 
-_51cpu.prototype.op_ret = function(addr){
+_51cpu.prototype.op_ret = function (addr) {
     let temp = new reg()
     let low8bit = 0
     let high8bit = 0
@@ -270,10 +280,8 @@ _51cpu.prototype.fetch_const = function () {
 }
 
 _51cpu.prototype.fetch_direct = function () {
-    let pt = this.PC.get()
-    let addr = this.IDATA.get(pt)
-    let cpu_ptr = this;
-    this.PC.set(pt + 1)
+    let addr = this.IDATA.get(this.PC.get())
+    this.PC.inc()
     return this.get_ram_cell(addr)
 }
 
