@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="51vm.js"></script>
+    <script src="test.js"></script>
+    <script>
+
+
+        value_type = ["HEX", "DEC", "BIN"]
+        function change_type() {
+            if (this.value == null) {
+                this.value = 0
+            }
+            else {
+                this.value = (this.value + 1) % (value_type.length)
+            }
+            this.innerHTML = value_type[this.value]
+        }
+
+        function set_dom_value(dom, value, type, len_bit = 8) {
+            dom.value = value
+            let max = Math.pow(2, len_bit) - 1
+            let dec_len = max.toString(10).length
+            let hex_len = max.toString(16).length
+            let bin_len = max.toString(2).length
+            let base = 10;
+            let group = 4
+            let len = dec_len;
+
+            switch (type) {
+                case 0:
+                    base = 16
+                    len = hex_len
+                    group = 2
+                    break
+                case 1:
+                    base = 10
+                    len = dec_len
+                    group = 4
+                    break
+                case 2:
+                    base = 2
+                    len = bin_len
+                    group = 8
+                    break
+            }
+            let str = value.toString(base).toUpperCase()
+            while (str.length < len)
+                str = "0" + str
+
+            let disp = ""
+            for (let i = 0; i < str.length; ++i) {
+                if (i % group == 0 && i != 0)
+                    disp = ' ' + disp
+                disp = str[str.length - 1 - i] + disp
+
+            }
+            dom.innerHTML = disp
+        }
+
+        function combine_dom_reg(dom_id, reg, reg_bit_len = 8) {
+            let dom_value = document.querySelector(dom_id + " .value")
+            let dom_type = document.querySelector(dom_id + " .title .type")
+            dom_type.value = 0
+            dom_value.value = reg.get()
+            dom_type.onclick = function () {
+                change_type.apply(this)
+                set_dom_value(dom_value, dom_value.value, dom_type.value, reg_bit_len)
+
+            }
+            reg.setlistener.push(function (val_old, val_new) {
+                set_dom_value(dom_value, val_new, dom_type.value, reg_bit_len)
+            })
+        }
+
+        function initReg() {
+            combine_dom_reg("#reg-a", vm.A)
+            combine_dom_reg("#reg-b", vm.B)
+            combine_dom_reg("#reg-psw", vm.PSW)
+            combine_dom_reg("#reg-dptr", vm.DPTR, 16)
+            combine_dom_reg("#reg-pc", vm.PC, 16)
+        }
+
+        function readfile() {
+            var file = this.files[0];
+
+            var reader = new FileReader();
+            //将文件以二进制形式读入页面 
+            reader.readAsBinaryString(file);
+            reader.onload = function (f) {
+                let IDATA = []
+                for (let c of this.result) {
+                    IDATA.push(c.charCodeAt())
+                }
+                vm.IDATA = IDATA
+            }
+        }
+
+
+
+    </script>
+    <style>
+        #reg-a {}
+
+        .reg {
+            border-radius: .5em;
+            border: 1px solid rgb(150, 150, 119);
+            box-shadow: .15em .15em .25em rgba(0.3, 0.3, 0.3, 0.3);
+            display: inline-flex;
+            flex-direction: column;
+            width: 6em;
+        }
+
+        .reg.reg16 {
+            width: 12em;
+        }
+
+        .reg .value {
+            padding: .3em .4em;
+
+            box-shadow: .15em .2em .2em rgba(0.3, 0.3, 0.3, 0.1) inset;
+
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .reg .title {
+            width: 100%;
+            display: inline-flex;
+            text-align: center;
+
+        }
+
+        .reg .title .name {
+            width: 50%;
+            padding: .3em .4em;
+        }
+
+        .reg .title .type {
+            padding: .3em .4em;
+            border-top-right-radius: .5em;
+            background: cornflowerblue;
+            color: cornsilk;
+
+            width: 50%;
+            transition-duration: .15s
+        }
+
+        .reg .title .type:hover {
+            cursor: pointer;
+            transform: scale(1.1)
+        }
+
+        .reg .title .type:active {
+            cursor: pointer;
+            transform: scale(1)
+        }
+    </style>
+</head>
+
+
+<body onload="initReg()">
+    <span id="reg-a" class="reg">
+        <span class="title">
+            <span class="name">A</span>
+            <span class="type">HEX</span>
+        </span>
+        <span class="value">00</span>
+    </span>
+    <span id="reg-b" class="reg">
+        <span class="title">
+            <span class="name">B</span>
+            <span class="type">HEX</span>
+        </span>
+        <span class="value">00</span>
+    </span>
+    <span id="reg-psw" class="reg">
+        <span class="title">
+            <span class="name">PSW</span>
+            <span class="type">HEX</span>
+        </span>
+        <span class="value">00</span>
+    </span>
+    <span id="reg-dptr" class="reg reg16">
+        <span class="title">
+            <span class="name">DPTR</span>
+            <span class="type">HEX</span>
+        </span>
+        <span class="value">00 00</span>
+    </span>
+    <span id="reg-pc" class="reg reg16">
+        <span class="title">
+            <span class="name">PC</span>
+            <span class="type">HEX</span>
+        </span>
+        <span class="value">00 00</span>
+    </span>
+    <input type="file" value="../keil_51vm/51vm.bin" onchange="readfile.call(this)" </body> </html>
