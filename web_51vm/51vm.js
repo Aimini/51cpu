@@ -51,8 +51,8 @@ function _51cpu() {
     this.B = new reg()
     this.PSW = new reg()
     this.SP = new reg(7)
-    this.PC = new reg()
-    this.DPTR = new reg()
+    this.PC = new reg(0,16)
+    this.DPTR = new reg(0,16)
     this.DPL = new reg()
     this.DPH = new reg()
     this.ERAM = []
@@ -411,7 +411,7 @@ _51cpu.prototype.execute_one = function () {
         //MOV direct,#immed
         let direct = this.fetch_direct()
         let immed = this.fetch_const()
-        this.op_move(direct, immed)
+        this.op_move(direct, immed) 
     } else if (opcode.test(0x76, 0xFE)) {
         //  MOV   @Ri,#immed
         let Ri = opcode.get_Ri()

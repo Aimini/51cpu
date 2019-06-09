@@ -1,0 +1,94 @@
+A51 MACRO ASSEMBLER  STARTUP                                                              06/09/2019 12:44:31 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02b
+OBJECT MODULE PLACED IN STARTUP.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE STARTUP.A51 SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 752001            1     MOV 0x20,#0x01
+0003 752102            2     MOV 0x21,#0x02
+0006 752204            3     MOV 0x22,#0x04
+0009 752308            4     MOV 0x23,#0x08
+000C 752410            5     MOV 0x24,#0x10
+000F 752520            6     MOV 0x25,#0x20
+0012 752640            7     MOV 0x26,#0x40
+0015 752780            8     MOV 0x27,#0x80
+0018 752801            9     MOV 0x28,#0x01
+001B 752902           10     MOV 0x29,#0x02
+001E 752A04           11     MOV 0x2A,#0x04
+0021 752B08           12     MOV 0x2B,#0x08
+0024 752C10           13     MOV 0x2C,#0x10
+0027 752D20           14     MOV 0x2D,#0x20
+002A 752E40           15     MOV 0x2E,#0x40
+002D 752F80           16     MOV 0x2F,#0x80
+                      17     
+0030 804B             18     SJMP L15
+                      19     
+0032                  20     START:
+0032 7400             21     L0: MOV A,#0
+0034 1000FB           22     JBC 0x00,START
+0037 7401             23     L1: MOV A,#1
+0039 1009F6           24     JBC 0x09,L0
+003C 7402             25     L2: MOV A,#2
+003E 1012F6           26     JBC 0x12,L1
+0041 7403             27     L3: MOV A,#3
+0043 101BF6           28     JBC 0x1B,L2
+0046 7404             29     L4: MOV A,#4
+0048 1024F6           30     JBC 0x24,L3
+004B 7405             31     L5: MOV A,#5
+004D 102DF6           32     JBC 0x2D,L4
+0050 7406             33     L6: MOV A,#6
+0052 1036F6           34     JBC 0x36,L5
+0055 7407             35     L7: MOV A,#7
+0057 103FF6           36     JBC 0x3F,L6
+005A 7408             37     L8: MOV A,#8
+005C 1040F6           38     JBC 0x40,L7
+005F 7409             39     L9: MOV A,#9
+0061 1049F6           40     JBC 0x49,L8
+0064 740A             41     L10: MOV A,#10
+0066 1052F6           42     JBC 0x52,L9
+0069 740B             43     L11: MOV A,#11
+006B 105BF6           44     JBC 0x5B,L10
+006E 740C             45     L12: MOV A,#12
+0070 1064F6           46     JBC 0x64,L11
+0073 740D             47     L13: MOV A,#13
+0075 106DF6           48     JBC 0x6D,L12
+0078 740E             49     L14: MOV A,#14
+007A 1076F6           50     JBC 0x76,L13
+007D 740F             51     L15: MOV A,#15
+007F 107FF6           52     JBC 0x7F,L14
+0082 74FF             53     MOV  A,#0xFF
+*** WARNING #A41 IN 53 (STARTUP.A51, LINE 53): MISSING 'END' STATEMENT
+A51 MACRO ASSEMBLER  STARTUP                                                              06/09/2019 12:44:31 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+L0 . . . . . . . .  C ADDR   0032H   A   
+L1 . . . . . . . .  C ADDR   0037H   A   
+L10. . . . . . . .  C ADDR   0064H   A   
+L11. . . . . . . .  C ADDR   0069H   A   
+L12. . . . . . . .  C ADDR   006EH   A   
+L13. . . . . . . .  C ADDR   0073H   A   
+L14. . . . . . . .  C ADDR   0078H   A   
+L15. . . . . . . .  C ADDR   007DH   A   
+L2 . . . . . . . .  C ADDR   003CH   A   
+L3 . . . . . . . .  C ADDR   0041H   A   
+L4 . . . . . . . .  C ADDR   0046H   A   
+L5 . . . . . . . .  C ADDR   004BH   A   
+L6 . . . . . . . .  C ADDR   0050H   A   
+L7 . . . . . . . .  C ADDR   0055H   A   
+L8 . . . . . . . .  C ADDR   005AH   A   
+L9 . . . . . . . .  C ADDR   005FH   A   
+START. . . . . . .  C ADDR   0032H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  1 WARNING(S), 0 ERROR(S)

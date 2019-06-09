@@ -1,0 +1,105 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        06/09/2019  12:44:32  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj TO 51vm
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (STARTUP)
+
+
+LINK MAP OF MODULE:  51vm (STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0084H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  51vm (STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        STARTUP
+  C:0032H         SYMBOL        L0
+  C:0037H         SYMBOL        L1
+  C:0064H         SYMBOL        L10
+  C:0069H         SYMBOL        L11
+  C:006EH         SYMBOL        L12
+  C:0073H         SYMBOL        L13
+  C:0078H         SYMBOL        L14
+  C:007DH         SYMBOL        L15
+  C:003CH         SYMBOL        L2
+  C:0041H         SYMBOL        L3
+  C:0046H         SYMBOL        L4
+  C:004BH         SYMBOL        L5
+  C:0050H         SYMBOL        L6
+  C:0055H         SYMBOL        L7
+  C:005AH         SYMBOL        L8
+  C:005FH         SYMBOL        L9
+  C:0032H         SYMBOL        START
+  C:0000H         LINE#         1
+  C:0003H         LINE#         2
+  C:0006H         LINE#         3
+  C:0009H         LINE#         4
+  C:000CH         LINE#         5
+  C:000FH         LINE#         6
+  C:0012H         LINE#         7
+  C:0015H         LINE#         8
+  C:0018H         LINE#         9
+  C:001BH         LINE#         10
+  C:001EH         LINE#         11
+  C:0021H         LINE#         12
+  C:0024H         LINE#         13
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/09/2019  12:44:32  PAGE 2
+
+
+  C:0027H         LINE#         14
+  C:002AH         LINE#         15
+  C:002DH         LINE#         16
+  C:0030H         LINE#         18
+  C:0032H         LINE#         21
+  C:0034H         LINE#         22
+  C:0037H         LINE#         23
+  C:0039H         LINE#         24
+  C:003CH         LINE#         25
+  C:003EH         LINE#         26
+  C:0041H         LINE#         27
+  C:0043H         LINE#         28
+  C:0046H         LINE#         29
+  C:0048H         LINE#         30
+  C:004BH         LINE#         31
+  C:004DH         LINE#         32
+  C:0050H         LINE#         33
+  C:0052H         LINE#         34
+  C:0055H         LINE#         35
+  C:0057H         LINE#         36
+  C:005AH         LINE#         37
+  C:005CH         LINE#         38
+  C:005FH         LINE#         39
+  C:0061H         LINE#         40
+  C:0064H         LINE#         41
+  C:0066H         LINE#         42
+  C:0069H         LINE#         43
+  C:006BH         LINE#         44
+  C:006EH         LINE#         45
+  C:0070H         LINE#         46
+  C:0073H         LINE#         47
+  C:0075H         LINE#         48
+  C:0078H         LINE#         49
+  C:007AH         LINE#         50
+  C:007DH         LINE#         51
+  C:007FH         LINE#         52
+  C:0082H         LINE#         53
+  -------         ENDMOD        STARTUP
+
+Program Size: data=8.0 xdata=0 code=132
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
