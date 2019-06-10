@@ -475,6 +475,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x26,0xFE)) {
         //ADD A, @Ri
         this.op_add(this.A,opcode.get_Ri())
+    }else if (opcode.test(0x28,0xF8)) {
+        //ADD A, Rn
+        this.op_add(this.A,opcode.get_Rn())
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
