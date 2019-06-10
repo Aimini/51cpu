@@ -515,6 +515,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x34)) {
         //ADDC A,#immed
         this.op_add(this.A,this.fetch_const(),true)
+    } else if (opcode.test(0x35)) {
+        //ADDC A,direct
+        this.op_add(this.A,this.fetch_direct(),true)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
