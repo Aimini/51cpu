@@ -520,6 +520,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x36,0xFE)) {
         //ADDC A,@Ri
         this.op_add(this.A,opcode.get_Ri(),true)
+    } else if (opcode.test(0x38,0xF8)) {
+        //ADDC A,Rn
+        this.op_add(this.A,opcode.get_Rn(),true)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
