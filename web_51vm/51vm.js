@@ -431,6 +431,12 @@ _51cpu.prototype.execute_one = function () {
     }  else if (opcode.test(0x22)) {
         //RET
         let b = this.op_ret()
+    }  else if (opcode.test(0x23)) {
+        //RL A
+        let value = this.A.get()
+        let high = value & 0x80
+        value =(( value << 1) + (high >> 7)) & 0xFF
+        this.A.set(value)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
