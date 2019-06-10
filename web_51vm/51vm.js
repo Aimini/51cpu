@@ -45,7 +45,6 @@ reg.prototype.dec = function () {
 }
 
 
-
 function _51cpu() {
     this.A = new reg()
     this.B = new reg()
@@ -518,6 +517,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x35)) {
         //ADDC A,direct
         this.op_add(this.A,this.fetch_direct(),true)
+    } else if (opcode.test(0x36,0xFE)) {
+        //ADDC A,@Ri
+        this.op_add(this.A,opcode.get_Ri(),true)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
@@ -538,10 +540,13 @@ _51cpu.prototype.execute_one = function () {
         //SJMP offset
         this.op_add_offset(this.fetch_const())
     } else if (opcode.test(0x85)) {
-        // MOV direct_dest, direct_src
+        // MOV direct_dest, direct_src2
         let dest = this.fetch_direct()
         let src = this.fetch_direct()
         this.op_move(dest, src)
+    } else if (opcode.test(0xA5)) {
+        // USER DEFINED 
+        return 0
     } else if (opcode.test(0xD5)) {
         // DJNZ direct,offset
         let direct = this.fetch_direct()
@@ -559,7 +564,10 @@ _51cpu.prototype.execute_one = function () {
 
 
 _51cpu.prototype.next = function (count = 1) {
-
+    let len = 1
+    for(let i = 0; (i < count)&&(len != 0); ++i){
+        len = this.execute_one()
+    }
 
 }
 
