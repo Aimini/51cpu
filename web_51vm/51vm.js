@@ -162,7 +162,13 @@ _51cpu.prototype.get_ram_cell = function (addr) {
         if(sfr_reg){
             return sfr_reg
         }else{
-            throw new RangeError("invalid SFR address: 0x" + addr.toString(16))
+            err = "invalid SFR address: 0x" + addr.toString(16)
+            if(strict = 0)
+                throw new RangeError(err)
+            else{
+                console.log(err)
+                return new reg()
+            }
         }
     }
 }
@@ -220,7 +226,7 @@ _51cpu.prototype.op_push = function (store_cell) {
 
 _51cpu.prototype.op_pop = function (store_cell) {
     let sp = this.SP.get()
-    store_cell.set(this.IRAM(sp))
+    store_cell.set(this.IRAM[sp])
     this.SP.dec()
     return this
 }
@@ -233,7 +239,7 @@ _51cpu.prototype.op_call = function (addr) {
     return this
 }
 
-_51cpu.prototype.op_ret = function (addr) {
+_51cpu.prototype.op_ret = function () {
     let temp = new reg()
     let low8bit = 0
     let high8bit = 0
@@ -404,6 +410,27 @@ _51cpu.prototype.execute_one = function () {
 
         this.A.set(a)
         this.PSW.set(psw)
+    } else if (opcode.test(0x14)) {
+        //DEC A
+        this.op_dec(this.A)
+    } else if (opcode.test(0x15)) {
+        //DEC direct
+        this.op_dec(this.fetch_direct())
+    }  else if (opcode.test(0x16,0xFE)) {
+        //DEC @Ri
+        this.op_dec(opcode.get_Ri())
+    }  else if (opcode.test(0x18,0xF8)) {
+        //DEC Rn
+        this.op_dec(opcode.get_Rn())
+    } else if (opcode.test(0x20)) {
+        //JB bit, offset
+        let b = this.fetch_bit()
+        let offset_raw = this.fetch_const()
+        if(b.get())
+            this.op_add_offset(offset_raw)
+    }  else if (opcode.test(0x22)) {
+        //RET
+        let b = this.op_ret()
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
