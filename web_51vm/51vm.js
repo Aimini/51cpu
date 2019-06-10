@@ -478,6 +478,12 @@ _51cpu.prototype.execute_one = function () {
     }else if (opcode.test(0x28,0xF8)) {
         //ADD A, Rn
         this.op_add(this.A,opcode.get_Rn())
+    }else if (opcode.test(0x30)) {
+        //JNB bit,offset
+        let bit =this.fetch_bit()
+        let offset_raw = this.fetch_const()
+        if(!bit.get())
+            this.op_add_offset(offset_raw)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
