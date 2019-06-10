@@ -499,6 +499,19 @@ _51cpu.prototype.execute_one = function () {
         for(let l of this.interrupt_end_linstener){
             l()
         }
+    } else if (opcode.test(0x33)) {
+        // RLC A
+        let psw = this.PSW.get()
+        let carry = psw & 0x80
+
+        let a = this.A.get()
+        let high = (a & 0x80)
+
+        a = ((a << 1) & 0xFE) + (carry >> 7)
+        psw = (psw & 0x7F) + high
+
+        this.A.set(a)
+        this.PSW.set(psw)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
