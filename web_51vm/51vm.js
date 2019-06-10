@@ -115,6 +115,9 @@ function _51cpu() {
         cpu_ref.PSW.set(cpu_ref.PSW.get())
     }
 
+
+    this.interrupt_end_linstener = []
+
 }
 
 //return parity flag generate by A
@@ -137,6 +140,12 @@ _51cpu.prototype.reset = function () {
     this.DPTR.set(0)
 }
 
+
+    //--------interrupt service implement------
+this.prototype.start_interrupt = function(order){
+        //TODO : according order to excute a call operation to
+        // corresponding interrupt vector
+}
 
 // paramter : addr; addr that < 0x100
 // get RAM value by addr , whne add < 0x80, 
@@ -484,6 +493,12 @@ _51cpu.prototype.execute_one = function () {
         let offset_raw = this.fetch_const()
         if(!bit.get())
             this.op_add_offset(offset_raw)
+    }else if (opcode.test(0x32)) {
+        //RETI
+        this.op_ret()
+        for(let l of this.interrupt_end_linstener){
+            l()
+        }
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
