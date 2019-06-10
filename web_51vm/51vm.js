@@ -523,6 +523,16 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x38,0xF8)) {
         //ADDC A,Rn
         this.op_add(this.A,opcode.get_Rn(),true)
+    } else if (opcode.test(0x40)) {
+        //JC offset
+        let offset_raw = this.fetch_const()
+        if(this.PSW.get() & 0x80)
+            this.op_add_offset(offset_raw)
+    } else if (opcode.test(0x50)) {
+        //JNC offset
+        let offset_raw = this.fetch_const()
+        if((~this.PSW.get()) & 0x80)
+            this.op_add_offset(offset_raw)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
