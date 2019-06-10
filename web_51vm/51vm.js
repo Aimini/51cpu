@@ -142,7 +142,7 @@ _51cpu.prototype.reset = function () {
 
 
     //--------interrupt service implement------
-this.prototype.start_interrupt = function(order){
+_51cpu.prototype.start_interrupt = function(order){
         //TODO : according order to excute a call operation to
         // corresponding interrupt vector
 }
