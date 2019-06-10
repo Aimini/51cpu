@@ -51,8 +51,8 @@ function _51cpu() {
     this.B = new reg()
     this.PSW = new reg()
     this.SP = new reg(7)
-    this.PC = new reg(0,16)
-    this.DPTR = new reg(0,16)
+    this.PC = new reg(0, 16)
+    this.DPTR = new reg(0, 16)
     this.DPL = new reg()
     this.DPH = new reg()
     this.ERAM = []
@@ -103,24 +103,24 @@ function _51cpu() {
     }
 
     //-------Parity Flag: PSW.0 specialization--------
-    this.PSW.set = function(value_new){
+    this.PSW.set = function (value_new) {
         let a = cpu_ref.A.get()
         let parity = cpu_ref.parity()
-        this.__proto__.set.call(this,((value_new & 0xFE) + parity))
+        this.__proto__.set.call(this, ((value_new & 0xFE) + parity))
     }
 
-    this.A.set = function(value_new){
-        this.__proto__.set.call(this,value_new)
+    this.A.set = function (value_new) {
+        this.__proto__.set.call(this, value_new)
         let parity = cpu_ref.parity()
         cpu_ref.PSW.set(cpu_ref.PSW.get())
     }
-    
+
 }
 
 //return parity flag generate by A
-_51cpu.prototype.parity = function(){
+_51cpu.prototype.parity = function () {
     let a = this.A.get()
-    return (a ^ (a >> 1) ^(a >> 2)^(a >> 3)^(a>>4)^(a>>5)^(a>>6)^(a>>7))&0x01
+    return (a ^ (a >> 1) ^ (a >> 2) ^ (a >> 3) ^ (a >> 4) ^ (a >> 5) ^ (a >> 6) ^ (a >> 7)) & 0x01
 }
 
 _51cpu.prototype.extend = function (ext_package) {
@@ -159,13 +159,13 @@ _51cpu.prototype.get_ram_cell = function (addr) {
     else {
         let sfrname = this.SFR[addr]
         let sfr_reg = this[sfrname]
-        if(sfr_reg){
+        if (sfr_reg) {
             return sfr_reg
-        }else{
+        } else {
             err = "invalid SFR address: 0x" + addr.toString(16)
-            if(strict = 0)
+            if (strict = 0)
                 throw new RangeError(err)
-            else{
+            else {
                 console.log(err)
                 return new reg()
             }
@@ -249,6 +249,35 @@ _51cpu.prototype.op_ret = function () {
     low8bit = temp.get()
     this.PC.set((high8bit << 8) + low8bit)
     return this
+}
+
+_51cpu.prototype.op_add = function (mem_dest, mem_src, using_carry = false) {
+    let psw_carry = 0
+    let psw = this.PSW.get()
+    if (using_carry) {
+        psw_carry = (psw >> 7) & 0x01
+    }
+    let a = mem_dest.get()
+    let b = typeof(mem_src) == "number" ? mem_src : mem_src.get()
+    let sum = a + b + psw_carry
+
+    let carry = 0
+    let ac = 0
+    let ov = 0
+
+    if (sum > 0xFF) {
+        carry = 1
+    }
+    if ((a & 0x0F) + (b & 0x0F) > 0x0F) {
+        ac = 1
+    }
+
+    if ((((~a) & (~b) & sum) | (a & b & (~sum))) & 0x80) {
+        ov = 1
+    }
+    mem_dest.set(sum & 0xFF)
+    this.PSW.set((psw & 0x3B) + (carry << 7) + (ac << 6) + (ov << 2))
+
 }
 
 _51cpu.prototype.fetch_opcode = function () {
@@ -416,27 +445,30 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x15)) {
         //DEC direct
         this.op_dec(this.fetch_direct())
-    }  else if (opcode.test(0x16,0xFE)) {
+    } else if (opcode.test(0x16, 0xFE)) {
         //DEC @Ri
         this.op_dec(opcode.get_Ri())
-    }  else if (opcode.test(0x18,0xF8)) {
+    } else if (opcode.test(0x18, 0xF8)) {
         //DEC Rn
         this.op_dec(opcode.get_Rn())
     } else if (opcode.test(0x20)) {
         //JB bit, offset
         let b = this.fetch_bit()
         let offset_raw = this.fetch_const()
-        if(b.get())
+        if (b.get())
             this.op_add_offset(offset_raw)
-    }  else if (opcode.test(0x22)) {
+    } else if (opcode.test(0x22)) {
         //RET
         let b = this.op_ret()
-    }  else if (opcode.test(0x23)) {
+    } else if (opcode.test(0x23)) {
         //RL A
         let value = this.A.get()
         let high = value & 0x80
-        value =(( value << 1) + (high >> 7)) & 0xFF
+        value = ((value << 1) + (high >> 7)) & 0xFF
         this.A.set(value)
+    }else if (opcode.test(0x24)) {
+        //ADD A, #immed
+        this.op_add(this.A,this.fetch_const())
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
@@ -444,7 +476,7 @@ _51cpu.prototype.execute_one = function () {
         //MOV direct,#immed
         let direct = this.fetch_direct()
         let immed = this.fetch_const()
-        this.op_move(direct, immed) 
+        this.op_move(direct, immed)
     } else if (opcode.test(0x76, 0xFE)) {
         //  MOV   @Ri,#immed
         let Ri = opcode.get_Ri()
@@ -471,7 +503,7 @@ _51cpu.prototype.execute_one = function () {
         // but ACC parity flag make PSW = 0x00
         // but! the standard CPU still using result 0x01 to make judgement
         let value = this.op_dec(direct)
-        if(value != 0)
+        if (value != 0)
             this.op_add_offset(offset)
     }
 }
