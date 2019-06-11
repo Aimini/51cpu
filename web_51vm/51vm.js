@@ -663,6 +663,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
+    } else if (opcode.test(0xD2)) {
+        //SETB bit
+        this.fetch_bit().set(1)
     } else if (opcode.test(0xD5)) {
         // DJNZ direct,offset
         let direct = this.fetch_direct()
