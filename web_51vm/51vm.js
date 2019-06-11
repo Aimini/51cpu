@@ -296,6 +296,9 @@ _51cpu.prototype.op_anl = function(dest,src){
     dest.set(dest.get() & (typeof(src) == "number" ? src : src.get()))
 }
 
+_51cpu.prototype.op_xrl = function(dest,src){
+    dest.set(dest.get() ^ (typeof(src) == "number" ? src : src.get()))
+}
 
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
@@ -590,6 +593,10 @@ _51cpu.prototype.execute_one = function () {
         let offset_raw = this.fetch_const()
         if(this.A.get() == 0)
             this.op_add_offset(offset_raw)
+    }  else if (opcode.test(0x62)) {
+        //XRL direct,A
+        let direct = this.fetch_direct()
+        this.op_xrl(direct,this.A)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
