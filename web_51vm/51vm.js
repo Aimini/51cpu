@@ -551,6 +551,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x46,0xFE)) {
         //ORL A,@Ri
         this.orl(this.A,opcode.get_Ri())
+    } else if (opcode.test(0x48,0xF8)) {
+        //ORL A,Rn
+        this.orl(this.A,opcode.get_Rn())
     } else if (opcode.test(0x50)) {
         //JNC offset
         let offset_raw = this.fetch_const()
