@@ -612,6 +612,9 @@ _51cpu.prototype.execute_one = function () {
     }  else if (opcode.test(0x66,0xFE)) {
         //XRL A,@Ri
         this.op_xrl(this.A,opcode.get_Ri())
+    }  else if (opcode.test(0x68,0xF8)) {
+        //XRL A,Rn
+        this.op_xrl(this.A,opcode.get_Rn())
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
