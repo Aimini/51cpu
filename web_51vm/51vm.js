@@ -288,6 +288,10 @@ _51cpu.prototype.op_add = function (mem_dest, mem_src, using_carry = false) {
 
 }
 
+_51cpu.prototype.orl = function(dest,src){
+    dest.set(dest.get() | (typeof(src) == "number" ? src : src.get()))
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -528,6 +532,10 @@ _51cpu.prototype.execute_one = function () {
         let offset_raw = this.fetch_const()
         if(this.PSW.get() & 0x80)
             this.op_add_offset(offset_raw)
+    } else if (opcode.test(0x42)) {
+        //ORL direct,A
+        let direct = this.fetch_direct()
+        this.orl(direct,this.A)
     } else if (opcode.test(0x50)) {
         //JNC offset
         let offset_raw = this.fetch_const()
