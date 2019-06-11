@@ -541,6 +541,10 @@ _51cpu.prototype.execute_one = function () {
         let direct = this.fetch_direct()
         let immed = this.fetch_const()
         this.orl(direct,immed)
+    } else if (opcode.test(0x44)) {
+        //ORL A,#immed
+        let immed = this.fetch_const()
+        this.orl(this.A,immed)
     } else if (opcode.test(0x50)) {
         //JNC offset
         let offset_raw = this.fetch_const()
