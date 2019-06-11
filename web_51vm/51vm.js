@@ -292,6 +292,11 @@ _51cpu.prototype.orl = function(dest,src){
     dest.set(dest.get() | (typeof(src) == "number" ? src : src.get()))
 }
 
+_51cpu.prototype.op_anl = function(dest,src){
+    dest.set(dest.get() & (typeof(src) == "number" ? src : src.get()))
+}
+
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -559,6 +564,15 @@ _51cpu.prototype.execute_one = function () {
         let offset_raw = this.fetch_const()
         if((~this.PSW.get()) & 0x80)
             this.op_add_offset(offset_raw)
+    } else if (opcode.test(0x52)) {
+        //ANL direct,A
+        let direct = this.fetch_direct()
+        this.op_anl(direct,this.A)
+    } else if (opcode.test(0x53)) {
+        //ANL direct,#immed
+        let direct = this.fetch_direct()
+        let immed = this.fetch_const()
+        this.op_anl(direct,immed)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
