@@ -633,6 +633,9 @@ _51cpu.prototype.execute_one = function () {
     }  else if (opcode.test(0x72)) {
         //ORL C,bit
         this.op_orl_bit(this.fetch_bit())
+    }  else if (opcode.test(0x73)) {
+        //JMP @A+DPTR
+        this.PC.set(this.A.get() + this.DPTR.get())
     }  else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
