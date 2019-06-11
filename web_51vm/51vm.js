@@ -585,6 +585,11 @@ _51cpu.prototype.execute_one = function () {
     }  else if (opcode.test(0x58,0xF8)) {
         //ANL A,Rn
         this.op_anl(this.A,opcode.get_Rn())
+    }  else if (opcode.test(0x60)) {
+        //JZ offset
+        let offset_raw = this.fetch_const()
+        if(this.A.get() == 0)
+            this.op_add_offset(offset_raw)
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
