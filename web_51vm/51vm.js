@@ -300,6 +300,15 @@ _51cpu.prototype.op_xrl = function(dest,src){
     dest.set(dest.get() ^ (typeof(src) == "number" ? src : src.get()))
 }
 
+_51cpu.prototype.op_orl_bit = function(b,invert=false){
+    let psw = this.PSW.get()
+    let bit = b.get()
+    if(invert)
+        bit = (~bit)
+    bit &= 0x01
+    this.PSW.set((psw & 0x7F) | (bit << 7))
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -397,8 +406,9 @@ _51cpu.prototype.fetch_bit = function () {
     }
     this.PC.set(pt + 1)
     return mem_cell
-
 }
+
+
 
 
 _51cpu.prototype.execute_one = function () {
@@ -620,6 +630,9 @@ _51cpu.prototype.execute_one = function () {
         let offset_raw = this.fetch_const()
         if(this.A.get() != 0)
             this.op_add_offset(offset_raw)
+    }  else if (opcode.test(0x72)) {
+        //ORL C,bit
+        this.op_orl_bit(this.fetch_bit())
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
