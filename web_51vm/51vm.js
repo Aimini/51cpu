@@ -633,7 +633,7 @@ _51cpu.prototype.execute_one = function () {
     }  else if (opcode.test(0x72)) {
         //ORL C,bit
         this.op_orl_bit(this.fetch_bit())
-    } else if (opcode.test(0x74)) {
+    }  else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
     } else if (opcode.test(0x75)) {
@@ -657,6 +657,9 @@ _51cpu.prototype.execute_one = function () {
         let dest = this.fetch_direct()
         let src = this.fetch_direct()
         this.op_move(dest, src)
+    } else if (opcode.test(0x90)) {
+        //MOV DPTR,#immed
+        this.DPTR.set(this.fetch_const16())
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
