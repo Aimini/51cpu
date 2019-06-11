@@ -576,6 +576,9 @@ _51cpu.prototype.execute_one = function () {
     }  else if (opcode.test(0x54)) {
         //ANL A,#immed
         this.op_anl(this.A,this.fetch_const())
+    }  else if (opcode.test(0x55)) {
+        //ANL A,direct
+        this.op_anl(this.A,this.fetch_direct())
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
