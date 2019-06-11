@@ -573,6 +573,9 @@ _51cpu.prototype.execute_one = function () {
         let direct = this.fetch_direct()
         let immed = this.fetch_const()
         this.op_anl(direct,immed)
+    }  else if (opcode.test(0x54)) {
+        //ANL A,#immed
+        this.op_anl(this.A,this.fetch_const())
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
