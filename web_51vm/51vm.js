@@ -606,6 +606,9 @@ _51cpu.prototype.execute_one = function () {
         //XRL A,#immed
         let immed = this.fetch_const()
         this.op_xrl(this.A,immed)
+    }  else if (opcode.test(0x65)) {
+        //XRL A,direct
+        this.op_xrl(this.A,this.fetch_direct())
     } else if (opcode.test(0x74)) {
         //MOV A,#immed
         this.A.set(this.fetch_const())
