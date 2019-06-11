@@ -654,8 +654,8 @@ _51cpu.prototype.execute_one = function () {
         this.op_add_offset(this.fetch_const())
     } else if (opcode.test(0x85)) {
         // MOV direct_dest, direct_src2
-        let dest = this.fetch_direct()
         let src = this.fetch_direct()
+        let dest = this.fetch_direct()
         this.op_move(dest, src)
     } else if (opcode.test(0x90)) {
         //MOV DPTR,#immed
@@ -666,6 +666,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
+    } else if (opcode.test(0xD3)) {
+        //SETB C
+        this.PSW.set(this.PSW.get() | 0x80)
     } else if (opcode.test(0xD5)) {
         // DJNZ direct,offset
         let direct = this.fetch_direct()
