@@ -696,6 +696,9 @@ _51cpu.prototype.execute_one = function () {
         let src = this.fetch_direct()
         let dest = this.fetch_direct()
         this.op_move(dest, src)
+    } else if (opcode.test(0x86,0xFE)) {
+        // MOV direct,@Ri
+        this.op_move(this.fetch_direct(), opcode.get_Ri())
     } else if (opcode.test(0x90)) {
         //MOV DPTR,#immed
         this.DPTR.set(this.fetch_const16())
