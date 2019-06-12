@@ -723,7 +723,10 @@ _51cpu.prototype.execute_one = function () {
         let value = this.op_dec(direct)
         if (value != 0)
             this.op_add_offset(offset)
-    } else if (opcode.test(0xE5)) {
+    } else if (opcode.test(0xE4)) {
+        //CLR A
+        this.A.set(0)
+    }  else if (opcode.test(0xE5)) {
         //MOV A,direct
         this.op_move(this.A,this.fetch_direct())
     } else if (opcode.test(0xE6,0xFE)) {
