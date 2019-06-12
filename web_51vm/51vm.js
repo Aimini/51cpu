@@ -701,6 +701,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
+    } else if (opcode.test(0xA6,0xFE)) {
+        // MOV @Ri,direct 
+        this.op_move(opcode.get_Ri(),this.fetch_direct())
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
@@ -719,6 +722,9 @@ _51cpu.prototype.execute_one = function () {
         let value = this.op_dec(direct)
         if (value != 0)
             this.op_add_offset(offset)
+    } else if (opcode.test(0xF4)) {
+        //CPL A
+        this.A.set((~this.A.get())&0xFF)
     } else if (opcode.test(0xF5)) {
         //MOV direct,A
         this.op_move(this.fetch_direct(),this.A)
