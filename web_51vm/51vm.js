@@ -699,6 +699,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x86,0xFE)) {
         // MOV direct,@Ri
         this.op_move(this.fetch_direct(), opcode.get_Ri())
+    } else if (opcode.test(0x88,0xF8)) {
+        // MOV direct,Rn
+        this.op_move(this.fetch_direct(), opcode.get_Rn())
     } else if (opcode.test(0x90)) {
         //MOV DPTR,#immed
         this.DPTR.set(this.fetch_const16())
