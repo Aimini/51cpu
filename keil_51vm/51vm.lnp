@@ -1,2 +1,3 @@
 "STARTUP.obj" 
 TO "51vm" 
+XDATA( 0X0000-0X03FF )

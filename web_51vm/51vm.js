@@ -723,7 +723,10 @@ _51cpu.prototype.execute_one = function () {
         let value = this.op_dec(direct)
         if (value != 0)
             this.op_add_offset(offset)
-    } else if (opcode.test(0xF0)) {
+    } else if (opcode.test(0xE8,0xF8)) {
+        //MOV A,Rn
+        this.op_move(this.A,opcode.get_Rn())
+    }  else if (opcode.test(0xF0)) {
         //MOVX @DPTR,A
         this.ERAM[this.DPTR.get()] = this.A.get()
     } else if (opcode.test(0xF2,0xFE)) {
