@@ -114,6 +114,16 @@ function _51cpu() {
         cpu_ref.PSW.set(cpu_ref.PSW.get())
     }
 
+    //------PSW flag specification---------------
+    let psw_ref =this.PSW
+    this.PSW.carry = {
+        set:function(value){
+            psw_ref._value = (psw_ref._value)&0x7F + ((value&0x01) << 7)
+        },
+        get:function(){
+            return (psw_ref._value >> 7) & 0x01
+        }
+    }
 
     this.interrupt_end_linstener = []
 
@@ -705,6 +715,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x90)) {
         //MOV DPTR,#immed
         this.DPTR.set(this.fetch_const16())
+    } else if (opcode.test(0x92)) {
+        //MOV bit,C
+        this.op_move(this.fetch_bit(),this.PSW.carry)
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0

@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 17:12:35 PAGE     1
+A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 20:23:54 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02b
@@ -7,56 +7,38 @@ ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE STARTUP.A51 SET(SMALL) DEBUG EP
 
 LOC  OBJ            LINE     SOURCE
 
-0000 75F020            1     MOV 0xF0,#0x20
-0003                   2     INIT:
-0003 F500              3             MOV 0x00,A ; use R0 to r/w indirect address 
-0005 F6                4             MOV @R0,A
-0006 04                5             INC A
-0007 D5F0F9            6     DJNZ 0xF0,INIT
-000A 750000            7     MOV 0x00,#0x00
-                       8         
-                       9     
-000D 75D000           10     MOV 0xD0,#0x00
-0010 E8               11     MOV  A,R0
-0011 E9               12     MOV  A,R1
-0012 EA               13     MOV  A,R2
-0013 EB               14     MOV  A,R3
-0014 EC               15     MOV  A,R4
-0015 ED               16     MOV  A,R5
-0016 EE               17     MOV  A,R6
-0017 EF               18     MOV  A,R7
-                      19     
-0018 75D008           20     MOV 0xD0,#0x08
-001B E8               21     MOV  A,R0
-001C E9               22     MOV  A,R1
-001D EA               23     MOV  A,R2
-001E EB               24     MOV  A,R3
-001F EC               25     MOV  A,R4
-0020 ED               26     MOV  A,R5
-0021 EE               27     MOV  A,R6
-0022 EF               28     MOV  A,R7
-                      29     
-0023 75D010           30     MOV 0xD0,#0x10
-0026 E8               31     MOV  A,R0
-0027 E9               32     MOV  A,R1
-0028 EA               33     MOV  A,R2
-0029 EB               34     MOV  A,R3
-002A EC               35     MOV  A,R4
-002B ED               36     MOV  A,R5
-002C EE               37     MOV  A,R6
-002D EF               38     MOV  A,R7
-                      39     
-002E 75D018           40     MOV 0xD0,#0x18
-0031 E8               41     MOV  A,R0
-0032 E9               42     MOV  A,R1
-0033 EA               43     MOV  A,R2
-0034 EB               44     MOV  A,R3
-0035 EC               45     MOV  A,R4
-0036 ED               46     MOV  A,R5
-0037 EE               47     MOV  A,R6
-0038 EF               48     MOV  A,R7
-*** WARNING #A41 IN 48 (STARTUP.A51, LINE 48): MISSING 'END' STATEMENT
-A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 17:12:35 PAGE     2
+0000 7520FE            1     MOV 0x20,#0xFE
+0003 7524FD            2     MOV 0x24,#0xFD
+0006 752AFB            3     MOV     0x2A,#0xFB
+0009 752FF7            4     MOV     0x2F,#0xF7
+000C 7580EF            5     MOV     0x80,#0xEF
+000F 75E0DF            6     MOV 0xE0,#0xDF
+0012 75A8BF            7     MOV     0xA8,#0xBF
+0015 75F07F            8     MOV     0xF0,#0x7F
+0018 A5                9     DB 0xA5
+                      10     ;;;;;;;;;;;;;;;;;;;0xFF
+0019 75D080           11     MOV     0xD0,#0x80
+001C 9200             12     MOV     0x20.0,C        
+001E 9221             13     MOV     0x24.1,C        
+0020 9252             14     MOV     0x2A.2,C        
+0022 927B             15     MOV     0x2F.3,C        
+0024 9284             16     MOV     0x80.4,C        
+0026 92E5             17     MOV     0xE0.5,C        
+0028 92AE             18     MOV     0xA8.6,C        
+002A 92F7             19     MOV     0xF0.7,C        
+                      20     
+                      21     ;;;;;;;;;;;;;;;;;;;0
+002C 75D07F           22     MOV     0xD0,#0x7F
+002F 9207             23     MOV     0x20.7,C
+0031 9226             24     MOV     0x24.6,C
+0033 9255             25     MOV     0x2A.5,C
+0035 927C             26     MOV     0x2F.4,C
+0037 9283             27     MOV     0x80.3,C
+0039 92E2             28     MOV     0xE0.2,C
+003B 92A9             29     MOV     0xA8.1,C
+003D 92F0             30     MOV     0xF0.0,C
+*** WARNING #A41 IN 30 (STARTUP.A51, LINE 30): MISSING 'END' STATEMENT
+A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 20:23:54 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -64,7 +46,6 @@ SYMBOL TABLE LISTING
 
 N A M E             T Y P E  V A L U E   ATTRIBUTES
 
-INIT . . . . . . .  C ADDR   0003H   A   
 
 
 REGISTER BANK(S) USED: 0 
