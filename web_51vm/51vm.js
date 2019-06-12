@@ -723,6 +723,9 @@ _51cpu.prototype.execute_one = function () {
         let value = this.op_dec(direct)
         if (value != 0)
             this.op_add_offset(offset)
+    } else if (opcode.test(0xF0)) {
+        //MOVX @DPTR,A
+        this.ERAM[this.DPTR.get()] = this.A.get()
     } else if (opcode.test(0xF2,0xFE)) {
         //MOVX @Ri,A
         let Ri = opcode.get_Ri()
