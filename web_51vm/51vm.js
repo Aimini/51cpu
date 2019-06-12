@@ -753,8 +753,11 @@ _51cpu.prototype.execute_one = function () {
         //SUBB A,@Ri
         this.op_subb(this.A,opcode.get_Ri() )
     } else if (opcode.test(0x98,0xF8)) {
-        //SUBB A,@Ri
+        //SUBB A,Rn
         this.op_subb(this.A,opcode.get_Rn() )
+    } else if (opcode.test(0xA0)) {
+        // ORL C,/bit
+        this.op_orl_bit(this.fetch_bit(),true)
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
