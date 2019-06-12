@@ -165,7 +165,8 @@ DJNZ 0xF0,INIT
 """)
 
 def X_E5():
-    init_all()
+    for x in range(256):
+        print("MOV  0x{:0>2X}, #0x{:0>2X}".format(x,x))
     for x in range(256):
         print("MOV  A, 0x{:0>2X}".format(x))
 
@@ -203,33 +204,21 @@ def X_D8():
 
 #MOV    @R0, direct
 def X_A6():
-    print("""
-MOV 0x70,#0x40 ;direct start address
-MOV 0x71,#0x20 ;direct start value
-MOV	0x72,#0x00 ;R0~R7 start addrss
-MOV	0x73,#0x20 ;target address for @Ri
-MOV	0xF0,#0x20 ; count
+    for rs in range(4):
+        print()
+        for x in range(2):
+            print("MOV 0x{:0>2X},#0x{:0>2X}".format(0x40 + x + rs*8,0xE0 + x + rs*8))
 
-MOV 0x7F,0x73
-INIT:
-	MOV A, 0x71
-    MOV	0x00,0x70
-	MOV @R0,A
-	MOV	A, 0x73
-	MOV	0x00,0x72
-	MOV @R0,A
-	INC 0x70
-	INC 0x71
-	INC 0x72
-	INC 0x73
-DJNZ 0xF0,INIT
-MOV 0x00,0x7F
-""")
+    for rs in range(4):
+        print()
+        for x in range(2):
+            print("MOV 0x{:0>2X},#0x{:0>2X}".format( x + rs*8,0x20 + x + rs*8))
+
     for rs in range(4):
         print()
         print("MOV 0xD0,#0x{:0>2X}".format(rs << 3 ))
         for x in range(2):
-            print("MOV @R{},#0x{:0>2X}".format(x,0x30 + x + rs*8))
+            print("MOV @R{},0x{:0>2X}".format(x,0x40 + x + rs*8))
 
 #MOV    @R0, #immed
 def X_76():
