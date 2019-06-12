@@ -749,6 +749,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x95)) {
         //SUBB A,direct
         this.op_subb(this.A,this.fetch_direct())
+    } else if (opcode.test(0x96,0xFE)) {
+        //SUBB A,@Ri
+        this.op_subb(this.A,opcode.get_Ri() )
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
