@@ -718,6 +718,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x92)) {
         //MOV bit,C
         this.op_move(this.fetch_bit(),this.PSW.carry)
+    } else if (opcode.test(0x93)) {
+        //MOV A,@A+DPTR
+        this.op_move(this.A,this.IDATA[this.A.get() + this.DPTR.get()])
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
