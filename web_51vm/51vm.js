@@ -319,6 +319,22 @@ _51cpu.prototype.op_anl_bit = function(b,invert=false){
     this.PSW.set(psw  & (bit + 0x7F))
 }
 
+_51cpu.prototype.op_div = function(){
+    let a = this.A.get()
+    let b = this.B.get()
+    this.PSW.set(this.PSW.get() & 0x7B)
+    if( b== 0)
+    {
+        this.PSW.set(this.PSW.get() | 0x04)
+    }else{
+        
+    let quotient = Math.floor(a/b)
+    let remainder = a % b
+    this.A.set(quotient)
+    this.B.set(remainder)
+    }
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -671,6 +687,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x83)) {
         //MOVC A, @A+PC
         this.op_move(this.A,this.IDATA[this.A.get() + this.PC.get()])
+    } else if (opcode.test(0x84)) {
+        //DIV AB
+        this.op_div()
     } else if (opcode.test(0x85)) {
         // MOV direct_dest, direct_src2
         let src = this.fetch_direct()
