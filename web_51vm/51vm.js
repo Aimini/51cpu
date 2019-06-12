@@ -668,6 +668,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x82)) {
         //ANL C,bit
         this.op_anl_bit(this.fetch_bit())
+    } else if (opcode.test(0x83)) {
+        //MOVC A, @A+PC
+        this.op_move(this.A,this.IDATA[this.A.get() + this.PC.get()])
     } else if (opcode.test(0x85)) {
         // MOV direct_dest, direct_src2
         let src = this.fetch_direct()
