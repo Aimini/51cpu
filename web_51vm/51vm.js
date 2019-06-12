@@ -342,7 +342,7 @@ _51cpu.prototype.fetch_opcode = function () {
         value: cpu_ref.IDATA.get(pt),
         test: function (target_opcode, mask = 0xFF) {
             return (this.value & mask) == target_opcode
-        }
+        },
     }
     this.PC.inc()
 
@@ -354,11 +354,12 @@ _51cpu.prototype.fetch_opcode = function () {
     opcode.get_Ri = function () {
         return {
             set: function (val) {
-                cpu_ref.IRAM[Ri] = val
+                this.ram[Ri] = val
             },
             get: function () {
-                return cpu_ref.IRAM[Ri]
-            }
+                return this.ram[Ri]
+            },
+            ram:cpu_ref.IRAM
         }
     }
 
@@ -722,6 +723,11 @@ _51cpu.prototype.execute_one = function () {
         let value = this.op_dec(direct)
         if (value != 0)
             this.op_add_offset(offset)
+    } else if (opcode.test(0xF2,0xFE)) {
+        //MOVX @Ri,A
+        let Ri = opcode.get_Ri()
+        Ri.ram = this.ERAM
+        this.op_move(Ri,this.A)
     } else if (opcode.test(0xF4)) {
         //CPL A
         this.A.set((~this.A.get())&0xFF)
