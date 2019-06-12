@@ -306,7 +306,17 @@ _51cpu.prototype.op_orl_bit = function(b,invert=false){
     if(invert)
         bit = (~bit)
     bit &= 0x01
-    this.PSW.set((psw & 0x7F) | (bit << 7))
+    this.PSW.set((psw & 0x7F)  | (bit << 7))
+}
+
+_51cpu.prototype.op_anl_bit = function(b,invert=false){
+    let psw = this.PSW.get()
+    let bit = b.get()
+    if(invert)
+        bit = (~bit)
+    bit &= 0x01
+    bit <<= 7
+    this.PSW.set(psw  & (bit + 0x7F))
 }
 
 _51cpu.prototype.fetch_opcode = function () {
@@ -655,6 +665,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x80)) {
         //SJMP offset
         this.op_add_offset(this.fetch_const())
+    } else if (opcode.test(0x82)) {
+        //ANL C,bit
+        this.op_anl_bit(this.fetch_bit())
     } else if (opcode.test(0x85)) {
         // MOV direct_dest, direct_src2
         let src = this.fetch_direct()
