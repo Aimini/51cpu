@@ -306,7 +306,7 @@ _51cpu.prototype.op_orl_bit = function(b,invert=false){
     if(invert)
         bit = (~bit)
     bit &= 0x01
-    this.PSW.set((psw & 0x7F)  | (bit << 7))
+    this.PSW.set(psw   | (bit << 7))
 }
 
 _51cpu.prototype.op_anl_bit = function(b,invert=false){
