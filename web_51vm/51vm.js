@@ -298,6 +298,28 @@ _51cpu.prototype.op_add = function (mem_dest, mem_src, using_carry = false) {
 
 }
 
+
+_51cpu.prototype.op_subb = function(dest,src){
+    let a = dest.get()
+    let b = typeof(src) == "number" ? src : src.get()
+    let result = a - b - this.PSW.carry.get()
+    let carry = 0
+    let ac = 0
+    let ov = 0
+    if(result < 0){
+        result = 0x100 + result //two's complement
+        carry = 1
+    }
+    if( (a&0xF) - (b&0xF) - this.PSW.carry.get() < 0){
+        ac = 1
+    }
+    if((((~a)&b&result)|(a&(~b)&(~result)))&0x80){
+        ov = 1
+    }
+    dest.set(result)
+    this.PSW.set((this.PSW.get() & 0x3B) + (carry << 7) + (ac << 6) + (ov << 2))
+}
+
 _51cpu.prototype.orl = function(dest,src){
     dest.set(dest.get() | (typeof(src) == "number" ? src : src.get()))
 }
@@ -721,6 +743,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0x93)) {
         //MOV A,@A+DPTR
         this.op_move(this.A,this.IDATA[this.A.get() + this.DPTR.get()])
+    } else if (opcode.test(0x94)) {
+        //SUBB A,#immed
+        this.op_subb(this.A,this.fetch_const())
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
