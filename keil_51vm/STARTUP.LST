@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 20:23:54 PAGE     1
+A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 21:18:53 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02b
@@ -7,38 +7,27 @@ ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE STARTUP.A51 SET(SMALL) DEBUG EP
 
 LOC  OBJ            LINE     SOURCE
 
-0000 7520FE            1     MOV 0x20,#0xFE
-0003 7524FD            2     MOV 0x24,#0xFD
-0006 752AFB            3     MOV     0x2A,#0xFB
-0009 752FF7            4     MOV     0x2F,#0xF7
-000C 7580EF            5     MOV     0x80,#0xEF
-000F 75E0DF            6     MOV 0xE0,#0xDF
-0012 75A8BF            7     MOV     0xA8,#0xBF
-0015 75F07F            8     MOV     0xF0,#0x7F
-0018 A5                9     DB 0xA5
-                      10     ;;;;;;;;;;;;;;;;;;;0xFF
-0019 75D080           11     MOV     0xD0,#0x80
-001C 9200             12     MOV     0x20.0,C        
-001E 9221             13     MOV     0x24.1,C        
-0020 9252             14     MOV     0x2A.2,C        
-0022 927B             15     MOV     0x2F.3,C        
-0024 9284             16     MOV     0x80.4,C        
-0026 92E5             17     MOV     0xE0.5,C        
-0028 92AE             18     MOV     0xA8.6,C        
-002A 92F7             19     MOV     0xF0.7,C        
-                      20     
-                      21     ;;;;;;;;;;;;;;;;;;;0
-002C 75D07F           22     MOV     0xD0,#0x7F
-002F 9207             23     MOV     0x20.7,C
-0031 9226             24     MOV     0x24.6,C
-0033 9255             25     MOV     0x2A.5,C
-0035 927C             26     MOV     0x2F.4,C
-0037 9283             27     MOV     0x80.3,C
-0039 92E2             28     MOV     0xE0.2,C
-003B 92A9             29     MOV     0xA8.1,C
-003D 92F0             30     MOV     0xF0.0,C
-*** WARNING #A41 IN 30 (STARTUP.A51, LINE 30): MISSING 'END' STATEMENT
-A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 20:23:54 PAGE     2
+0000 754358            1     MOV 0x43,#0x58
+0003 757D6D            2     MOV 0x7D,#0x6D
+0006 755B24            3     MOV 0x5B,#0x24
+0009 753F63            4     MOV 0x3F,#0x63
+000C 752247            5     MOV 0x22,#0x47
+000F 754642            6     MOV 0x46,#0x42
+0012 756A79            7     MOV 0x6A,#0x79
+0015 754E30            8     MOV 0x4E,#0x30
+0018 7515FE            9     MOV 0x15,#0xFE
+001B A5               10     DB 0xA5
+001C 9543             11     SUBB A,0x43 ;A8 C=1 AC=1
+001E 957D             12     SUBB A,0x7D ;3A OV=1 AC=1
+0020 955B             13     SUBB A,0x5B ;16
+0022 953F             14     SUBB A,0x3F ;B3 C=1
+0024 9522             15     SUBB A,0x22 ;6B AC=1 OV=1
+0026 9546             16     SUBB A,0x46 ;29 
+0028 956A             17     SUBB A,0x6A ;B0 C=1
+002A 954E             18     SUBB A,0x4E ;7F AC=1 OV=1
+002C 9515             19     SUBB A,0x15;0x81 C = 1 AC = 0 OV = 1
+*** WARNING #A41 IN 19 (STARTUP.A51, LINE 19): MISSING 'END' STATEMENT
+A51 MACRO ASSEMBLER  STARTUP                                                              06/12/2019 21:18:53 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
