@@ -684,6 +684,9 @@ _51cpu.prototype.execute_one = function () {
         let value = this.op_dec(direct)
         if (value != 0)
             this.op_add_offset(offset)
+    } else if (opcode.test(0xF5)) {
+        //MOV direct,A
+        this.op_move(this.fetch_direct(),this.A)
     } else if (opcode.test(0xF6,0xFE)) {
         //MOV @Ri,A
         this.op_move(opcode.get_Ri(),this.A)
