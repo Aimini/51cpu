@@ -380,6 +380,10 @@ _51cpu.prototype.op_mul = function(){
     this.B.set((product >> 8) & 0xFF)
 }
 
+_51cpu.prototype.op_cpl = function(obj){
+    obj.set((~obj.get()&0x01))
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -792,6 +796,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xB0)) {
         //ANL C,/bit
         this.op_anl_bit(this.fetch_bit(),true)
+    } else if (opcode.test(0xB2)) {
+        //CPL bit
+        this.op_cpl(this.fetch_bit())
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
