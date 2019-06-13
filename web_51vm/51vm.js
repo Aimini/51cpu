@@ -35,12 +35,12 @@ reg.prototype.get = function () {
 }
 
 reg.prototype.inc = function () {
-    this.set(this._value + 1)
+    this.set((this._value + 1)& this.max)
     return this
 }
 
 reg.prototype.dec = function () {
-    this.set(this._value - 1)
+    this.set((this._value + this.max) & this.max)
     return this
 }
 
@@ -246,6 +246,7 @@ _51cpu.prototype.op_pop = function (store_cell) {
     let sp = this.SP.get()
     store_cell.set(this.IRAM[sp])
     this.SP.dec()
+
     return this
 }
 
@@ -864,6 +865,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xC8,0xF8)) {
         //XCH A,Rn
         this.op_xch(this.A,opcode.get_Rn())
+    } else if (opcode.test(0xD0)) {
+        //POP direct
+        this.op_pop(this.fetch_direct())
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
