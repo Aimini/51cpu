@@ -799,6 +799,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xB2)) {
         //CPL bit
         this.op_cpl(this.fetch_bit())
+    } else if (opcode.test(0xB3)) {
+        //CPL C
+        this.op_cpl(this.PSW.carry)
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
