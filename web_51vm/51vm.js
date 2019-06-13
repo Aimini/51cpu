@@ -921,6 +921,13 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xD6,0xFE)) {
         // XCHD A,@Ri
         this.op_xchd(this.A,opcode.get_Ri())
+    } else if (opcode.test(0xD8,0xF8)) {
+        // DJNZ Rn,
+        let Rn = opcode.get_Rn()
+        let offset_raw = this.fetch_const()
+        this.op_dec(Rn)
+        if(Rn.get() != 0)
+            this.op_add_offset(offset_raw)
     } else if (opcode.test(0xE4)) {
         //CLR A
         this.A.set(0)
