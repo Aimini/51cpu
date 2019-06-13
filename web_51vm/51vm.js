@@ -758,6 +758,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xA0)) {
         // ORL C,/bit
         this.op_orl_bit(this.fetch_bit(),true)
+    } else if (opcode.test(0xA2)) {
+        // MOV C,bit
+        this.op_move(this.PSW.carry,this.fetch_bit())
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
