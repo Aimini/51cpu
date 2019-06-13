@@ -9,6 +9,36 @@
 
 
         value_type = ["HEX", "DEC", "BIN"]
+        let run_interval_id = -1
+        function start_or_pause(){
+            // 0 meaning paused of stopped
+            if(run_interval_id <= 0){
+                run_interval_id = setInterval(()=>vm.next(40),1)
+                document.getElementById("btn-start").innerText = "暂停"
+            }else{
+                clearInterval(run_interval_id)
+                run_interval_id = -1
+                document.getElementById("btn-start").innerText = "继续"
+            }
+        }
+
+        function reset(){
+            if(run_interval_id > 0){
+                clearInterval(run_interval_id)
+                run_interval_id = -1
+            }
+            vm.reset()
+            document.getElementById("btn-start").innerText = "开始"
+        }
+
+        function clear_terminal(){
+            let terimal = document.getElementById("virtual-terminal")
+            for(let i = 2; i < terimal.childNodes.length;)
+            {
+                terimal.removeChild(terimal.childNodes[i])
+            }
+        }
+
         function change_type() {
             if (this.value == null) {
                 this.value = 0
@@ -100,7 +130,7 @@
             }
             window.requestAnimationFrame(lookingRAM)
             vm.SBUF.setlistener.push(function(old_value,new_value){
-                document.getElementById("virtual-terminal").innerText += String.fromCharCode(new_value)
+                document.getElementById("virtual-terminal").appendChild(document.createTextNode(String.fromCharCode(new_value)))
                 let scon  = vm.SCON.get()
                 scon |= 0x02
                 vm.SCON.set(scon)
@@ -466,6 +496,7 @@
         <span style="flex-basis: 100%"></span>
     </span>
     <input type="file" value="../keil_51vm/51vm.bin" onchange="readfile.call(this)"/>
-
-    <div id="virtual-terminal"><span>虚拟终端:</span></div>
+    <button type="button" id="btn-start" onclick="start_or_pause()">开始</button>
+    <button type="button" id="btn-reset" onclick="reset()">重置</button>
+    <div id="virtual-terminal"><button type="button" id="btn-clear-terminal" onclick="clear_terminal()">清空</button><span>虚拟终端:</span></div>
  </body> </html>
