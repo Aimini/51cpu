@@ -858,6 +858,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xC5)) {
         //XCH A,direct
         this.op_xch(this.A,this.fetch_direct())
+    } else if (opcode.test(0xC6,0xFE)) {
+        //XCH A,@Ri
+        this.op_xch(this.A,opcode.get_Ri())
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
