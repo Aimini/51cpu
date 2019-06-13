@@ -789,6 +789,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xA8,0xF8)) {
         // MOV Rn,direct 
         this.op_move(opcode.get_Rn(),this.fetch_direct())
+    } else if (opcode.test(0xB0)) {
+        //ANL C,/bit
+        this.op_anl_bit(this.fetch_bit(),true)
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
