@@ -367,6 +367,19 @@ _51cpu.prototype.op_div = function(){
     }
 }
 
+_51cpu.prototype.op_mul = function(){
+    let a = this.A.get()
+    let b = this.B.get()
+    this.PSW.set(this.PSW.get() & 0x7B)
+    let product = a*b
+    if( product > 0xFF)
+    {
+        this.PSW.set(this.PSW.get() | 0x04)
+    }
+    this.A.set(product & 0xFF)
+    this.B.set((product >> 8) & 0xFF)
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -764,6 +777,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xA3)) {
         // INC DPTR
         this.op_inc(this.DPTR)
+    } else if (opcode.test(0xA4)) {
+        // MUL AB
+        this.op_mul()
     } else if (opcode.test(0xA5)) {
         // USER DEFINED 
         return 0
