@@ -384,6 +384,20 @@ _51cpu.prototype.op_cpl = function(obj){
     obj.set((~obj.get()&0x01))
 }
 
+
+_51cpu.prototype.op_cjne = function(dest,src,offset_raw){
+    let a = typeof(dest) == "number" ? dest: dest.get()
+    let b = typeof(src) == "number" ? src: src.get()
+    let result = a - b
+    this.PSW.carry.set(0)
+    if(result != 0){ 
+        this.op_add_offset(offset_raw)
+        if(result < 0){
+            this.PSW.carry.set(1)
+        }
+    }
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -802,6 +816,11 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xB3)) {
         //CPL C
         this.op_cpl(this.PSW.carry)
+    } else if (opcode.test(0xB4)) {
+        //CJNE A,#immed,offset
+        let immed = this.fetch_const()
+        let offset_raw = this.fetch_const()
+        this.op_cjne(this.A,immed,offset_raw)
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
