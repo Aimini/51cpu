@@ -922,15 +922,20 @@ _51cpu.prototype.execute_one = function () {
         // XCHD A,@Ri
         this.op_xchd(this.A,opcode.get_Ri())
     } else if (opcode.test(0xD8,0xF8)) {
-        // DJNZ Rn,
+        // DJNZ Rn,offset
         let Rn = opcode.get_Rn()
         let offset_raw = this.fetch_const()
         this.op_dec(Rn)
         if(Rn.get() != 0)
             this.op_add_offset(offset_raw)
     } else if (opcode.test(0xE0)) {
-        //MOVX A,@DPTR
-        this.A.set(this.ERAM[this.DPTR.get()])
+         //MOVX A,@DPTR
+         this.A.set(this.ERAM[this.DPTR.get()])
+    } else if (opcode.test(0xE2,0xFE)) {
+       //MOVX A,@Ri
+       let Ri = opcode.get_Ri()
+       Ri.ram = this.ERAM
+       this.op_move(this.A,Ri)
     } else if (opcode.test(0xE4)) {
         //CLR A
         this.A.set(0)

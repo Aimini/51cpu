@@ -852,5 +852,15 @@ def X_98():
         print("DB 0xA5")
         gen_Rn(lambda rs,i,order:print("SUBB A,R{}".format(i)))
 
+def X_E2():
+    def set_XRAM(rs,i,order):
+        addr = to_hex((order) *(order + 2))
+        print("MOV R{},#{}".format(i,addr))
+        print("MOV A,#{}".format(to_hex(order + 2)))
+        print("MOVX @R{},A".format(i))
+    with redirect_file(0xE2,"MOVX A @Ri"):
 
-X_98()
+        gen_Ri(set_XRAM)
+        gen_Ri(lambda rs,i,order:print("MOVX A,@R{}".format(i)))
+
+X_E2()
