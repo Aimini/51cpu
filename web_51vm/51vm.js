@@ -831,6 +831,11 @@ _51cpu.prototype.execute_one = function () {
         let immed = this.fetch_const()
         let offset_raw = this.fetch_const()
         this.op_cjne(opcode.get_Ri(),immed,offset_raw)
+    } else if (opcode.test(0xB8,0xF8)) {
+        //CJNE Rn,#immed,offset
+        let immed = this.fetch_const()
+        let offset_raw = this.fetch_const()
+        this.op_cjne(opcode.get_Rn(),immed,offset_raw)
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
