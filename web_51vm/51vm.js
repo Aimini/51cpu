@@ -423,6 +423,17 @@ _51cpu.prototype.op_da = function(){
     this.A.set(a & 0xFF)
 }
 
+_51cpu.prototype.op_xchd = function(dest,src){
+    let a = dest.get()
+    let b =src.get()
+    let al = a&0x0F
+    let bl = b&0x0F
+    a = (a&0xF0) | bl
+    b = (b&0xF0) | al
+    dest.set(a)
+    src.set(b)
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -907,6 +918,9 @@ _51cpu.prototype.execute_one = function () {
         let value = this.op_dec(direct)
         if (value != 0)
             this.op_add_offset(offset)
+    } else if (opcode.test(0xD6,0xFE)) {
+        // XCHD A,@Ri
+        this.op_xchd(this.A,opcode.get_Ri())
     } else if (opcode.test(0xE4)) {
         //CLR A
         this.A.set(0)
