@@ -118,10 +118,10 @@ function _51cpu() {
     let psw_ref =this.PSW
     this.PSW.carry = {
         set:function(value){
-            psw_ref._value = (psw_ref._value)&0x7F + ((value&0x01) << 7)
+            psw_ref.set(((psw_ref._value)&0x7F) + ((value&0x01) << 7))
         },
         get:function(){
-            return (psw_ref._value >> 7) & 0x01
+            return (psw_ref.get() >> 7) & 0x01
         }
     }
 
