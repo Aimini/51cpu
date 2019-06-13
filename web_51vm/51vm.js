@@ -1,16 +1,4 @@
-ext_serial = {
-    SFR: {
-        0x98: "SCON",
-        0x99: "SBUF",
-    },
-    regs: {
-        "SBUF": new reg(),
-        "SCON": new reg()
-    }
-}
-ext_serial.regs.SBUF.setlistener = function (val_old, val_new) {
-    document.body.innerText += val_new;
-}
+
 
 function reg(value = 0, bitlen = 8) {
     this._value = value;
@@ -136,8 +124,17 @@ _51cpu.prototype.parity = function () {
 }
 
 _51cpu.prototype.extend = function (ext_package) {
-
-
+    for(let addr in ext_package.SFR){
+        if(this.SFR[addr]){
+            console.warn("overwrite SFR at address " + addr.toString(16))
+        }
+        this.SFR[addr] = ext_package.SFR[addr]
+    }
+    for(let name in ext_package['regs']){
+        if(this[name])
+        console.warn("overwrite register with name " + name)
+        this[name] = ext_package['regs'][name]
+    }
 }
 
 _51cpu.prototype.reset = function () {

@@ -4,6 +4,7 @@
 <head>
     <script src="51vm.js"></script>
     <script src="test.js"></script>
+    <script src="get_serial.js"></script>
     <script>
 
 
@@ -76,6 +77,7 @@
 
 
         function initReg() {
+            vm.extend(get_serial())
             combine_dom_reg("#reg-a", vm.A)
             combine_dom_reg("#reg-b", vm.B)
             combine_dom_reg("#reg-sp", vm.SP)
@@ -97,6 +99,12 @@
                 window.requestAnimationFrame(lookingRAM)
             }
             window.requestAnimationFrame(lookingRAM)
+            vm.SBUF.setlistener.push(function(old_value,new_value){
+                document.getElementById("virtual-terminal").innerText += String.fromCharCode(new_value)
+                let scon  = vm.SCON.get()
+                scon |= 0x02
+                vm.SCON.set(scon)
+            })
         }
 
         function readfile() {
@@ -225,6 +233,10 @@
             flex-basis: 100%;
             padding: .3em .4em;
             text-align: center;
+        }
+
+        #virtual-terminal{
+            white-space:pre
         }
     </style>
 </head>
@@ -454,4 +466,6 @@
         <span style="flex-basis: 100%"></span>
     </span>
     <input type="file" value="../keil_51vm/51vm.bin" onchange="readfile.call(this)"/>
+
+    <div id="virtual-terminal"><span>虚拟终端:</span></div>
  </body> </html>
