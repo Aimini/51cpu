@@ -928,6 +928,9 @@ _51cpu.prototype.execute_one = function () {
         this.op_dec(Rn)
         if(Rn.get() != 0)
             this.op_add_offset(offset_raw)
+    } else if (opcode.test(0xE0)) {
+        //MOVX A,@DPTR
+        this.A.set(this.ERAM[this.DPTR.get()])
     } else if (opcode.test(0xE4)) {
         //CLR A
         this.A.set(0)
