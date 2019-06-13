@@ -845,6 +845,10 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xC3)) {
         //CLR C
         this.PSW.carry.set(0)
+    } else if (opcode.test(0xC4)) {
+        //SWAP A
+        let a = this.A.get()
+        this.A.set(((a & 0xF0) >> 4) | ((a&0x0F)<<4))
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
