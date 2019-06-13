@@ -839,6 +839,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xC0)) {
         //PUSH direct
         this.op_push(this.fetch_direct())
+    } else if (opcode.test(0xC2)) {
+        //CLR bit
+        this.fetch_bit().set(0)
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
