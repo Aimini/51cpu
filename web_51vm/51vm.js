@@ -405,6 +405,24 @@ _51cpu.prototype.op_xch = function(dest,src){
     src.set(tmp)
 }
 
+_51cpu.prototype.op_da = function(){
+    let a = this.A.get()
+    let carry = this.PSW.carry.get()
+    if(((a&0x0F) > 9)||(this.PSW.get() & 0x40)){
+        a += 6
+    }
+    if(a > 0xFF)
+        carry = 1
+    if(((a&0xF0) > 0x90)||(carry)){
+        a += 0x60
+    }
+    if(a>0xFF)
+        carry = 1
+    if(carry)
+        this.PSW.carry.set(1)
+    this.A.set(a & 0xFF)
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -874,6 +892,9 @@ _51cpu.prototype.execute_one = function () {
     } else if (opcode.test(0xD3)) {
         //SETB C
         this.PSW.set(this.PSW.get() | 0x80)
+    } else if (opcode.test(0xD4)) {
+        //DA A
+        this.op_da()
     } else if (opcode.test(0xD5)) {
         // DJNZ direct,offset
         let direct = this.fetch_direct()
