@@ -836,6 +836,9 @@ _51cpu.prototype.execute_one = function () {
         let immed = this.fetch_const()
         let offset_raw = this.fetch_const()
         this.op_cjne(opcode.get_Rn(),immed,offset_raw)
+    } else if (opcode.test(0xC0)) {
+        //PUSH direct
+        this.op_push(this.fetch_direct())
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
