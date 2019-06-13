@@ -398,6 +398,12 @@ _51cpu.prototype.op_cjne = function(dest,src,offset_raw){
     }
 }
 
+_51cpu.prototype.op_xch = function(dest,src){
+    let tmp = dest.get()
+    dest.set(src.get())
+    src.set(tmp)
+}
+
 _51cpu.prototype.fetch_opcode = function () {
     let pt = this.PC.get()
     let cpu_ref = this;
@@ -849,6 +855,9 @@ _51cpu.prototype.execute_one = function () {
         //SWAP A
         let a = this.A.get()
         this.A.set(((a & 0xF0) >> 4) | ((a&0x0F)<<4))
+    } else if (opcode.test(0xC5)) {
+        //XCH A,direct
+        this.op_xch(this.A,this.fetch_direct())
     } else if (opcode.test(0xD2)) {
         //SETB bit
         this.fetch_bit().set(1)
