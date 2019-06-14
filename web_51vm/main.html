@@ -10,10 +10,14 @@
 
         value_type = ["HEX", "DEC", "BIN"]
         let run_interval_id = -1
+        function excute_tick(){
+            vm.next(2000)
+        }
+
         function start_or_pause(){
             // 0 meaning paused of stopped
             if(run_interval_id <= 0){
-                run_interval_id = setInterval(()=>vm.next(40),1)
+                run_interval_id = setInterval(excute_tick,1)
                 document.getElementById("btn-start").innerText = "暂停"
             }else{
                 clearInterval(run_interval_id)
@@ -95,25 +99,24 @@
             let dom_type = document.querySelector(dom_id + " .title .type")
             dom_type.value = 0
             dom_value.value = reg.get()
-            dom_type.onclick = function () {
-                change_type.apply(this)
-                set_dom_value(dom_value, dom_value.value, dom_type.value, reg_bit_len)
 
+            return function(){
+                if(dom_value.value != reg.get())
+                set_dom_value(dom_value, reg.get(), dom_type.value, reg_bit_len)
             }
-            reg.setlistener.push(function (val_old, val_new) {
-                set_dom_value(dom_value, val_new, dom_type.value, reg_bit_len)
-            })
         }
 
 
         function initReg() {
             vm.extend(get_serial())
-            combine_dom_reg("#reg-a", vm.A)
-            combine_dom_reg("#reg-b", vm.B)
-            combine_dom_reg("#reg-sp", vm.SP)
-            combine_dom_reg("#reg-psw", vm.PSW)
-            combine_dom_reg("#reg-dptr", vm.DPTR, 16)
-            combine_dom_reg("#reg-pc", vm.PC, 16)
+
+            let lookingCallback = []
+            lookingCallback.push(combine_dom_reg("#reg-a", vm.A))
+            lookingCallback.push(combine_dom_reg("#reg-b", vm.B))
+            lookingCallback.push(combine_dom_reg("#reg-sp", vm.SP))
+            lookingCallback.push(combine_dom_reg("#reg-psw", vm.PSW))
+            lookingCallback.push(combine_dom_reg("#reg-dptr", vm.DPTR, 16))
+            lookingCallback.push(combine_dom_reg("#reg-pc", vm.PC, 16))
 
             let cells = document.querySelectorAll("#ram .row .cell");
             for(let one of cells){
@@ -126,11 +129,16 @@
                         cells[i].classList.add("changed")
                     }
                 }
+                for(let c of lookingCallback){
+                    c()
+                }
                 window.requestAnimationFrame(lookingRAM)
             }
             window.requestAnimationFrame(lookingRAM)
+
+            let virtual_terminal = document.getElementById("virtual-terminal")
             vm.SBUF.setlistener.push(function(old_value,new_value){
-                document.getElementById("virtual-terminal").appendChild(document.createTextNode(String.fromCharCode(new_value)))
+                virtual_terminal.appendChild(document.createTextNode(String.fromCharCode(new_value)))
                 let scon  = vm.SCON.get()
                 scon |= 0x02
                 vm.SCON.set(scon)
