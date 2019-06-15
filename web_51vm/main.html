@@ -37,11 +37,8 @@
         }
 
         function clear_terminal(){
-            let terimal = document.getElementById("virtual-terminal")
-            for(let i = 2; i < terimal.childNodes.length;)
-            {
-                terimal.removeChild(terimal.childNodes[i])
-            }
+            let terimal = document.getElementById("terminal-content")
+            terimal.innerText = ''
         }
 
         function change_type() {
@@ -137,9 +134,9 @@
             }
             window.requestAnimationFrame(lookingRAM)
 
-            let virtual_terminal = document.getElementById("virtual-terminal")
+            let virtual_terminal = document.getElementById("terminal-content")
             vm.SBUF.setlistener.push(function(old_value,new_value){
-                virtual_terminal.appendChild(document.createTextNode(String.fromCharCode(new_value)))
+                virtual_terminal.innerHTML += String.fromCharCode(new_value)
                 let scon  = vm.SCON.get()
                 scon |= 0x02
                 vm.SCON.set(scon)
@@ -287,7 +284,18 @@
         }
 
         #virtual-terminal{
+            border-radius: .5em;
+            
+            border: 1px solid grey;
+            box-shadow: .15em .2em .2em rgba(0.3, 0.3, 0.3, 0.1);
+            width: 100%;
             white-space:pre
+        }
+
+        #terminal-content{
+            width: 100%;
+    overflow: scroll;
+    white-space: pre;
         }
     </style>
 </head>
@@ -519,5 +527,9 @@
     <input type="file" value="../keil_51vm/51vm.bin" accept=".bin,.hex" onchange="readfile.call(this)"/>
     <button type="button" id="btn-start" onclick="start_or_pause()">开始</button>
     <button type="button" id="btn-reset" onclick="reset()">重置</button>
-    <div id="virtual-terminal"><button type="button" id="btn-clear-terminal" onclick="clear_terminal()">清空</button><span>虚拟终端:</span></div>
+    <div id="virtual-terminal">
+        <div>
+            <button type="button" id="btn-clear-terminal" onclick="clear_terminal()">清空</button><span>虚拟终端:</span>
+        </div><div id='terminal-content'></div>
+    </div>
  </body> </html>
