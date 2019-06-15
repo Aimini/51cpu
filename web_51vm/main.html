@@ -146,17 +146,25 @@
         }
 
         function readfile() {
-            var file = this.files[0];
+            let file = null
+            if(this.files.length > 0)
+                file = this.files[0];
+            else
+                return
+            //---------------!-----------------
+            reset()
+            
+            let SuffixStartPos = file.name.lastIndexOf('.')
+            let fileSuffix = file.name.substring(SuffixStartPos)
 
-            var reader = new FileReader();
-            //将文件以二进制形式读入页面 
-            reader.readAsBinaryString(file);
-            reader.onload = function (f) {
-                let IDATA = []
-                for (let c of this.result) {
-                    IDATA.push(c.charCodeAt())
+            
+            if(fileSuffix == ".bin"){
+                let reader = new FileReader();
+                //将文件以二进制形式读入页面 
+                reader.readAsArrayBuffer(file);
+                reader.onloadend = function (f) {
+                    vm.IDATA.content = new Uint8Array(reader.result)
                 }
-                vm.IDATA = IDATA
             }
         }
 
@@ -503,7 +511,7 @@
         </span>
         <span style="flex-basis: 100%"></span>
     </span>
-    <input type="file" value="../keil_51vm/51vm.bin" onchange="readfile.call(this)"/>
+    <input type="file" value="../keil_51vm/51vm.bin" accept=".bin,.hex" onchange="readfile.call(this)"/>
     <button type="button" id="btn-start" onclick="start_or_pause()">开始</button>
     <button type="button" id="btn-reset" onclick="reset()">重置</button>
     <div id="virtual-terminal"><button type="button" id="btn-clear-terminal" onclick="clear_terminal()">清空</button><span>虚拟终端:</span></div>

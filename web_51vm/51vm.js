@@ -32,6 +32,17 @@ reg.prototype.dec = function () {
     return this
 }
 
+function memory(content){
+    this.content = content
+}
+memory.prototype.get = function(idx){
+    return this.content[idx]
+}
+
+memory.prototype.set = function(idx,value){
+    this.content[idx]  = value
+}
+    
 
 function _51cpu() {
     this.A = new reg()
@@ -44,7 +55,7 @@ function _51cpu() {
     this.DPH = new reg()
     this.ERAM = []
     this.IRAM = []
-    this.IDATA = []
+    this.IDATA = new memory()
     this.SFR = {
         0x81: "SP",
         0x82: "DPL",
@@ -53,11 +64,6 @@ function _51cpu() {
         0xE0: "A",
         0xF0: "B",
     }
-    let array_get = function (index) {
-        return this[index];
-    }
-
-    this.IDATA.__proto__.get = array_get
 
     for (let i = 0; i < 128; ++i)
         this.IRAM.push(0);
@@ -783,7 +789,7 @@ _51cpu.prototype.execute_one = function () {
         this.op_anl_bit(this.fetch_bit())
     } else if (opcode.test(0x83)) {
         //MOVC A, @A+PC
-        this.op_move(this.A,this.IDATA[this.A.get() + this.PC.get()])
+        this.op_move(this.A,this.IDATA.get(this.A.get() + this.PC.get()))
     } else if (opcode.test(0x84)) {
         //DIV AB
         this.op_div()
@@ -806,7 +812,7 @@ _51cpu.prototype.execute_one = function () {
         this.op_move(this.fetch_bit(),this.PSW.carry)
     } else if (opcode.test(0x93)) {
         //MOV A,@A+DPTR
-        this.op_move(this.A,this.IDATA[this.A.get() + this.DPTR.get()])
+        this.op_move(this.A,this.IDATA.get(this.A.get() + this.DPTR.get()))
     } else if (opcode.test(0x94)) {
         //SUBB A,#immed
         this.op_subb(this.A,this.fetch_const())
