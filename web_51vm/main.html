@@ -5,6 +5,7 @@
     <script src="51vm.js"></script>
     <script src="test.js"></script>
     <script src="get_serial.js"></script>
+    <script src="hex_decoder.js"></script>
     <script>
 
 
@@ -165,6 +166,10 @@
                 reader.onloadend = function (f) {
                     vm.IDATA.content = new Uint8Array(reader.result)
                 }
+            }else if(fileSuffix == ".hex"){
+                decode_hex(file,function(data){
+                    vm.IDATA.content = data
+                })
             }
         }
 
