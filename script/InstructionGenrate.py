@@ -9,7 +9,7 @@ import instructions.controlSingal
 import inuntil
 
 
-oscillation_cycle = 8
+
 oscillation_cycle_max = 16
 instructionControlSignal = i_comp.InstructionControlSignal(instructions.controlSingal.circuit_control_label)
 instructionControlSignal.function = instructions.controlSingal.control_function
@@ -37,15 +37,15 @@ def add_recount_and_interrupt_check(instructions):
     for idx, one in enumerate(instructions):
         # check instruction's oscil cycle len
         instruction_len = len(one)
-        add_where = math.ceil(instruction_len/oscillation_cycle)*oscillation_cycle
-        one.extend([[] for __ in range(add_where  - instruction_len)])
-        if add_where < oscillation_cycle_max:
+        if instruction_len > 0:
+            one[-1].append('MIC_RST')
+        else:
             one.append(['MIC_RST'])
 
         if idx in ignore_interrupt_check_instruction:
             print("{}(0x{:0>2x}) ignore interrupt check.".format(i_info.HEX_TO_NAME[idx], idx))
         else:
-            one[add_where - 1].append('INT_CHK')
+            one[-1].append('INT_CHK')
         
         
         if len(one) > oscillation_cycle_max:
