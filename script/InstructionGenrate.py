@@ -23,7 +23,7 @@ INTERRUPT_CYCLE_INSTRUCTIONS = [[
     ["ALU_OUT","ALU_A_L8IN","ADT_L8E","RAR_IN","SP_IN"],
     ["PC_OUT", "ALUADDRTE","ADT_H8E","RAM_IN"],
     ["INT_ADDR_OUT", "PC_IN" ],
-    ["IC_END"]
+    ["IC_END","MIC_RST"]
 ]]
 
 
