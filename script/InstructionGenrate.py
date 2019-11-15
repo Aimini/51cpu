@@ -64,7 +64,7 @@ def generate_complete_instruction(instructions):
         elif x > 0:
             new_instructions_list.append(copy.deepcopy(new_instructions_list[x]))
         elif x == 0:
-            new_instructions_list.append([])
+            new_instructions_list.append([[]])
             print('no action instruction {}(0x{:0>2X})'.format(i_info.HEX_TO_NAME[idx],idx))
         elif x == -1:
             new_instructions_list.append(copy.deepcopy(new_instructions_list[idx - 1]))
