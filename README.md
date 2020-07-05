@@ -1,4 +1,7 @@
+
 # 51cpu
+## The design of the project from the beginning did not consider hardware implementation, so that it was too complicated to be implemented with simple hardware, so the project was no longer maintained.
+
 Using 74ls chip to create a 51 cpu
 (completing school final project now, I will write the document soon(After July))
 ## what you need(software)
